@@ -10,4 +10,8 @@ Adafruit rgb matrix panels
 
 https://github.com/adafruit/RGB-matrix-Panel
 
+http://www.rayslogic.com/propeller/Programming/AdafruitRGB/AdafruitRGB.htm
+
+
+
 
