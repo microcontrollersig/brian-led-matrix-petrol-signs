@@ -12,7 +12,7 @@
 
 
 void setBrightness(uint8_t val) {
-
+  analogWrite(PIN_OE, val);
 }
 
 void setup() {
@@ -28,6 +28,16 @@ void setup() {
   pinMode(PIN_G1, OUTPUT);
   pinMode(PIN_G2, OUTPUT);
   
+  delay(5000);
+  
+  setBrightness(255/4);
+  
+  digitalWrite(PIN_LAT, LOW);
+  for (int i=0; i<8; i++) {
+    shiftOut(PIN_R1, PIN_CLK, MSBFIRST, 0b10101010);
+    shiftOut(PIN_R1, PIN_CLK, MSBFIRST, 0b10101010);  
+  }
+  digitalWrite(PIN_LAT, LOW);
 }
 
 void loop() {
