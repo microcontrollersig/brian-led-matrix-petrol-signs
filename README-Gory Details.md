@@ -7,6 +7,9 @@ https://gist.github.com/liftoff/f9fbb9ce79f4a6687ebf
 
 https://github.com/madworm/MBI5030_demo
 
+https://github.com/freetronics/DMD2
+
+https://github.com/JonRussell00/LEDpanels
 
 
 ###Similar chip (with almost identical datasheet)
