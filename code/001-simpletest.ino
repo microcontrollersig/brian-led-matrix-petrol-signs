@@ -41,13 +41,14 @@ void setup() {
 
   setBrightness(255/2);
   
-  digitalWrite(PIN_LAT, LOW);
+  digitalWrite(PIN_LATCH, LOW);
   for (int i=0; i<4; i++) {
     shiftOut(PIN_R1, PIN_CLK, MSBFIRST, 0b10101010);
     shiftOut(PIN_R1, PIN_CLK, MSBFIRST, 0b10101010);  
   }
-  digitalWrite(PIN_LAT, HIGH);
-  digitalWrite(PIN_LAT, LOW);
+  digitalWrite(PIN_LATCH, HIGH);
+  delayMicroseconds(1);
+  digitalWrite(PIN_LATCH, LOW);
   
   delay(5000);
   
