@@ -29,5 +29,5 @@ Because the image is big, in most browsers, clicking on the image downloads the 
 
 ![MBI5039 pinout](https://raw.githubusercontent.com/microcontrollersig/brian-led-matrix-petrol-signs/main/mbi5039-pinout.png)
 
-The pin marked REXT is connected to an external resistor, an easy way to identify other pins such as GND and VCC.
+The pin marked R-EXT is connected to an external resistor, an easy way to identify other pins such as GND and VCC.
 
