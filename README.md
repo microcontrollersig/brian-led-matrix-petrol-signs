@@ -23,10 +23,11 @@ Because the image is big, in most browsers, clicking on the image downloads the 
 
 **74HC245**
 
-
+![74HC245 pinout](https://raw.githubusercontent.com/microcontrollersig/brian-led-matrix-petrol-signs/main/74HC245-pinout.png)
 
 **MBI5039**
 
+![MBI5039 pinout](https://raw.githubusercontent.com/microcontrollersig/brian-led-matrix-petrol-signs/main/mbi5039-pinout.png)
 
 
 
