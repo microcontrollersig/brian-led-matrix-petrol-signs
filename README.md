@@ -19,3 +19,14 @@ Because the image is big, in most browsers, clicking on the image downloads the 
    - possibly a regulator like LM2576 (reference [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/blob/main/lm2576.pdf) )
 
 
+#### Pinouts
+
+**74HC245**
+
+
+
+**MBI5039**
+
+
+
+
