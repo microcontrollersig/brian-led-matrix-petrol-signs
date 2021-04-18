@@ -1,7 +1,7 @@
-#define DATA1 A0
-#define DATA2 A1
-#define DATA3 A2
-#define DATA4 A3
+#define PIN_DATA1 A0
+#define PIN_DATA2 A1
+#define PIN_DATA3 A2
+#define PIN_DATA4 A3
 
 #define PIN_NOE 11
 #define PIN_LATCH 10 // sometimes called strobe pin
@@ -17,7 +17,7 @@ void fourChannelShiftOut(uint16_t data1, uint16_t data2, uint16_t data3, uint16_
     uint16_t mask = 0x8000;
   
 	for (uint16_t i = 15; i >=3 ; i--)  {
-        PORTC = (data1 & mask) >> i | (data2 & mask) >> (i-1) | (data3 & mask) >> (i-2) | (data4 & mask) >> (i-3);
+        PORTC |= (data1 & mask) >> i | (data2 & mask) >> (i-1) | (data3 & mask) >> (i-2) | (data4 & mask) >> (i-3);
         mask = mask >> 1;
 		digitalWrite(PIN_CLK, HIGH);
 		digitalWrite(PIN_CLK, LOW);
@@ -28,7 +28,7 @@ void fourChannelShiftOut(uint16_t data1, uint16_t data2, uint16_t data3, uint16_
         #endif
 	}
   
-    PORTC = (data1 & mask) >> 2 | (data2 & mask) >> 1 | (data3 & mask) | (data4 & mask) << 1;
+    PORTC |= (data1 & mask) >> 2 | (data2 & mask) >> 1 | (data3 & mask) | (data4 & mask) << 1;
   	digitalWrite(PIN_CLK, HIGH);
 	digitalWrite(PIN_CLK, LOW);		
     #ifdef DEBUG
@@ -37,7 +37,7 @@ void fourChannelShiftOut(uint16_t data1, uint16_t data2, uint16_t data3, uint16_
         delay(5000);
     #endif
     mask = mask >> 1;
-    PORTC = (data1 & mask) >> 1 | (data2 & mask)  | (data3 & mask) << 1 | (data4 & mask) << 2;
+    PORTC |= (data1 & mask) >> 1 | (data2 & mask)  | (data3 & mask) << 1 | (data4 & mask) << 2;
     digitalWrite(PIN_CLK, HIGH);
 	digitalWrite(PIN_CLK, LOW);		
     #ifdef DEBUG
@@ -46,7 +46,7 @@ void fourChannelShiftOut(uint16_t data1, uint16_t data2, uint16_t data3, uint16_
         delay(5000);
     #endif
     mask = mask >> 1;
-    PORTC = (data1 & mask) | (data2 & mask) << 1 | (data3 & mask) << 2 | (data4 & mask) << 3;
+    PORTC |= (data1 & mask) | (data2 & mask) << 1 | (data3 & mask) << 2 | (data4 & mask) << 3;
   	digitalWrite(PIN_CLK, HIGH);
 	digitalWrite(PIN_CLK, LOW);    
     #ifdef DEBUG
