@@ -9,7 +9,7 @@
 
 #define SEGMENTS_PER_PANEL 4
 
-//#define DEBUG 
+#define DEBUG 
 
 
 void fourChannelShiftOut(uint16_t data1, uint16_t data2, uint16_t data3, uint16_t data4) 
@@ -17,7 +17,7 @@ void fourChannelShiftOut(uint16_t data1, uint16_t data2, uint16_t data3, uint16_
     uint16_t mask = 0x8000;
   
 	for (uint16_t i = 15; i >=3 ; i--)  {
-        PORTC = (data1 & mask) >> i | (data2 & mask) >> (i-1) | (data3 & mask) >> (i-2) | (data4 & mask) >> (i-3);
+        PORTC = (PORTC & 0xf0) |  (data1 & mask) >> i | (data2 & mask) >> (i-1) | (data3 & mask) >> (i-2) | (data4 & mask) >> (i-3);
         mask = mask >> 1;
 		digitalWrite(PIN_CLK, HIGH);
 		digitalWrite(PIN_CLK, LOW);
@@ -28,7 +28,7 @@ void fourChannelShiftOut(uint16_t data1, uint16_t data2, uint16_t data3, uint16_
         #endif
 	}
   
-    PORTC = (data1 & mask) >> 2 | (data2 & mask) >> 1 | (data3 & mask) | (data4 & mask) << 1;
+    PORTC = (PORTC & 0xf0) |  (data1 & mask) >> 2 | (data2 & mask) >> 1 | (data3 & mask) | (data4 & mask) << 1;
   	digitalWrite(PIN_CLK, HIGH);
 	digitalWrite(PIN_CLK, LOW);		
     #ifdef DEBUG
@@ -37,7 +37,7 @@ void fourChannelShiftOut(uint16_t data1, uint16_t data2, uint16_t data3, uint16_
         delay(5000);
     #endif
     mask = mask >> 1;
-    PORTC = (data1 & mask) >> 1 | (data2 & mask)  | (data3 & mask) << 1 | (data4 & mask) << 2;
+    PORTC = (PORTC & 0xf0) |  (data1 & mask) >> 1 | (data2 & mask)  | (data3 & mask) << 1 | (data4 & mask) << 2;
     digitalWrite(PIN_CLK, HIGH);
 	digitalWrite(PIN_CLK, LOW);		
     #ifdef DEBUG
@@ -46,7 +46,7 @@ void fourChannelShiftOut(uint16_t data1, uint16_t data2, uint16_t data3, uint16_
         delay(5000);
     #endif
     mask = mask >> 1;
-    PORTC = (data1 & mask) | (data2 & mask) << 1 | (data3 & mask) << 2 | (data4 & mask) << 3;
+    PORTC = (PORTC & 0xf0) | (data1 & mask) | (data2 & mask) << 1 | (data3 & mask) << 2 | (data4 & mask) << 3;
   	digitalWrite(PIN_CLK, HIGH);
 	digitalWrite(PIN_CLK, LOW);    
     #ifdef DEBUG
