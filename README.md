@@ -32,3 +32,8 @@ Because the image is big, in most browsers, clicking on the image downloads the 
 The pin marked R-EXT is connected to an external resistor, an easy way to identify other pins such as GND and VCC.
 
 ![MBI5039 timing diagram](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/MBI5039-timing.png)
+
+#### Schematic (accuracy needs to be verfied)
+
+![LED Schematic](https://raw.githubusercontent.com/microcontrollersig/brian-led-matrix-petrol-signs/main/circuit.svg)
+
