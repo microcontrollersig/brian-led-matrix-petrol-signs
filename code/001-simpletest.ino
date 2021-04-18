@@ -1,61 +1,93 @@
-#define PIN_OE 11
-#define PIN_LATCH 12 // sometimes called strobe pin
-#define PIN_A 2
-#define PIN_B 3
-#define PIN_C 4
-#define PIN_D 5
-#define PIN_CLK 6
-#define PIN_R1 7
-#define PIN_R2 8
-#define PIN_G1 9
-#define PIN_G2 10
+#define DATA1 A0
+#define DATA2 A1
+#define DATA3 A2
+#define DATA4 A3
 
-uint16_t row = 0;
+#define PIN_NOE 11
+#define PIN_LATCH 10 // sometimes called strobe pin
+#define PIN_CLK 9
 
-void setBrightness(uint8_t val) {
-  analogWrite(PIN_OE, val);
+#define SEGMENTS_PER_PANEL 4
+
+//#define DEBUG 
+
+
+void fourChannelShiftOut(uint16_t data1, uint16_t data2, uint16_t data3, uint16_t data4) 
+{  
+    uint16_t mask = 0x8000;
+  
+	for (uint16_t i = 15; i >=3 ; i--)  {
+        PORTC = (data1 & mask) >> i | (data2 & mask) >> (i-1) | (data3 & mask) >> (i-2) | (data4 & mask) >> (i-3);
+        mask = mask >> 1;
+		digitalWrite(PIN_CLK, HIGH);
+		digitalWrite(PIN_CLK, LOW);
+        #ifdef DEBUG
+        Serial.print("0b");
+        Serial.println(PORTC, BIN);
+        delay(5000);
+        #endif
+	}
+  
+    PORTC = (data1 & mask) >> 2 | (data2 & mask) >> 1 | (data3 & mask) | (data4 & mask) << 1;
+  	digitalWrite(PIN_CLK, HIGH);
+	digitalWrite(PIN_CLK, LOW);		
+    #ifdef DEBUG
+          Serial.print("0b");
+        Serial.println(PORTC, BIN);
+        delay(5000);
+    #endif
+    mask = mask >> 1;
+    PORTC = (data1 & mask) >> 1 | (data2 & mask)  | (data3 & mask) << 1 | (data4 & mask) << 2;
+    digitalWrite(PIN_CLK, HIGH);
+	digitalWrite(PIN_CLK, LOW);		
+    #ifdef DEBUG
+          Serial.print("0b");
+        Serial.println(PORTC, BIN);
+        delay(5000);
+    #endif
+    mask = mask >> 1;
+    PORTC = (data1 & mask) | (data2 & mask) << 1 | (data3 & mask) << 2 | (data4 & mask) << 3;
+  	digitalWrite(PIN_CLK, HIGH);
+	digitalWrite(PIN_CLK, LOW);    
+    #ifdef DEBUG
+          Serial.print("0b");
+        Serial.println(PORTC, BIN);
+        delay(5000);
+    #endif
 }
 
-void cycle() {
 
-  digitalWrite(PIN_A, (row & 0b1000) >> 3);
-  digitalWrite(PIN_B, (row & 0b0100) >> 2);
-  digitalWrite(PIN_C, (row & 0b0010) >> 1);
-  digitalWrite(PIN_D,  row & 0b0001);
+void setup()
+{
+  Serial.begin(9600);
 
-  row = (row + 1) % 16;
-}
-
-void setup() {
-  pinMode(PIN_OE, OUTPUT);
-  pinMode(PIN_LATCH, OUTPUT);
-  pinMode(PIN_A, OUTPUT);
-  pinMode(PIN_B, OUTPUT);
-  pinMode(PIN_C, OUTPUT);
-  pinMode(PIN_D, OUTPUT);
+  //sets analog pins(A0-A3) as output
+  DDRC |= 0x0f;
+  
   pinMode(PIN_CLK, OUTPUT);
-  pinMode(PIN_R1, OUTPUT);
-  pinMode(PIN_R2, OUTPUT);
-  pinMode(PIN_G1, OUTPUT);
-  pinMode(PIN_G2, OUTPUT);
+  pinMode(PIN_LATCH, OUTPUT);
+  //pinMode(PIN_NOE, OUTPUT);
+  
+  analogWrite(PIN_NOE, 255);
+ 
+  
+  uint16_t data1 = 0b1010101010101010;
+  uint16_t data2 = 0b1110011111100111;
+  uint16_t data3 = 0b0000000000000000;
+  uint16_t data4 = 0b1111111111111111;
 
-  setBrightness(255/2);
-  
-  digitalWrite(PIN_LATCH, LOW);
-  for (int i=0; i<4; i++) {
-    shiftOut(PIN_R1, PIN_CLK, MSBFIRST, 0b10101010);
-    shiftOut(PIN_R1, PIN_CLK, MSBFIRST, 0b10101010);  
+  for (int i=0; i < SEGMENTS_PER_PANEL; i++) {
+    fourChannelShiftOut(data1, data2, data3, data4);  
   }
+  
   digitalWrite(PIN_LATCH, HIGH);
-  delayMicroseconds(1);
   digitalWrite(PIN_LATCH, LOW);
-  
-  delay(5000);
-  
+  analogWrite(PIN_NOE, 255/2);
+
 
 }
 
-void loop() {
-  cycle();
-  delay(3000);
+void loop()
+{
+
 }
