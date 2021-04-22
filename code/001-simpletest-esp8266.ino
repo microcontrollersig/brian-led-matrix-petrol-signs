@@ -11,53 +11,25 @@
 
 #define SEGMENTS_PER_PANEL 8
 
-#define DEBUG 
-
+#define DEBUG
 
 void fourChannelShiftOut(uint16_t data1, uint16_t data2, uint16_t data3, uint16_t data4) 
 {  
-    uint16_t mask = 0x8000;
+    uint16_t mask1 = 0x8000;
   
-	for (uint16_t i = 15; i >=3 ; i--)  {
-      digitalWrite(PIN_DATA1, (data & mask));
-    
-        PORTC = (PORTC & 0xf0) |  (data1 & mask) >> i | (data2 & mask) >> (i-1) | (data3 & mask) >> (i-2) | (data4 & mask) >> (i-3);
-        mask = mask >> 1;
-		digitalWrite(PIN_CLK, HIGH);
-		digitalWrite(PIN_CLK, LOW);
-        #ifdef DEBUG
-        Serial.print("0b");
-        Serial.println(PORTC, BIN);
-        delay(5000);
-        #endif
+	for (uint16_t i = 0; i <16 ; i++)  {
+            digitalWrite(PIN_DATA1, (data1 & mask));
+	    digitalWrite(PIN_DATA2, (data2 & mask));
+            digitalWrite(PIN_DATA3, (data3 & mask));
+	    digitalWrite(PIN_DATA4, (data4 & mask));    
+            mask = mask >> 1;
+	    digitalWrite(PIN_CLK, HIGH);
+	    delayMicroseconds(1);
+	    digitalWrite(PIN_CLK, LOW);
+	    #ifdef DEBUG
+	    delay(1000);	
+            #endif
 	}
-  
-    PORTC = (PORTC & 0xf0) |  (data1 & mask) >> 2 | (data2 & mask) >> 1 | (data3 & mask) | (data4 & mask) << 1;
-  	digitalWrite(PIN_CLK, HIGH);
-	digitalWrite(PIN_CLK, LOW);		
-    #ifdef DEBUG
-          Serial.print("0b");
-        Serial.println(PORTC, BIN);
-        delay(5000);
-    #endif
-    mask = mask >> 1;
-    PORTC = (PORTC & 0xf0) |  (data1 & mask) >> 1 | (data2 & mask)  | (data3 & mask) << 1 | (data4 & mask) << 2;
-    digitalWrite(PIN_CLK, HIGH);
-	digitalWrite(PIN_CLK, LOW);		
-    #ifdef DEBUG
-          Serial.print("0b");
-        Serial.println(PORTC, BIN);
-        delay(5000);
-    #endif
-    mask = mask >> 1;
-    PORTC = (PORTC & 0xf0) | (data1 & mask) | (data2 & mask) << 1 | (data3 & mask) << 2 | (data4 & mask) << 3;
-  	digitalWrite(PIN_CLK, HIGH);
-	digitalWrite(PIN_CLK, LOW);    
-    #ifdef DEBUG
-          Serial.print("0b");
-        Serial.println(PORTC, BIN);
-        delay(5000);
-    #endif
 }
 
 
@@ -65,14 +37,16 @@ void setup()
 {
   Serial.begin(9600);
 
-  //sets analog pins(A0-A3) as output
-  DDRC |= 0x0f;
+  pinMode(PIN_DATA1, OUTPUT);
+  pinMode(PIN_DATA2, OUTPUT);
+  pinMode(PIN_DATA3, OUTPUT);
+  pinMode(PIN_DATA4, OUTPUT);
   
   pinMode(PIN_CLK, OUTPUT);
   pinMode(PIN_LATCH, OUTPUT);
-  //pinMode(PIN_NOE, OUTPUT);
+  pinMode(PIN_NOE, OUTPUT);
   
-  analogWrite(PIN_NOE, 255);
+  digitalWrite(PIN_NOE, HIGH);
  
   
   uint16_t data1 = 0b1010101010101010;
