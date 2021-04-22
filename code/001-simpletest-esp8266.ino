@@ -59,6 +59,7 @@ void setup()
   }
   
   digitalWrite(PIN_LATCH, HIGH);
+  delayMicroseconds(1);
   digitalWrite(PIN_LATCH, LOW);
   analogWrite(PIN_NOE, 1023/2);
 
