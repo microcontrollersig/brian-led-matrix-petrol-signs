@@ -60,7 +60,7 @@ void setup()
   
   digitalWrite(PIN_LATCH, HIGH);
   digitalWrite(PIN_LATCH, LOW);
-  analogWrite(PIN_NOE, 255/2);
+  analogWrite(PIN_NOE, 1023/2);
 
 
 }
