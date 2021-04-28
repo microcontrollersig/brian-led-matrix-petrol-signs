@@ -1045,7 +1045,8 @@ int Bitmap::drawChar(int x, int y, char ch)
     //uint8_t heightBytes = (height + 7) >> 3;;
     uint8_t heightBytes = 2;
     uint8_t width;
-    const uint8_t *image, *image2;
+    const uint8_t *image;
+    uint8_t image2;
   
     if (fontIsFixed(_font)) {
         // Fixed-width font.
@@ -1057,8 +1058,12 @@ int Bitmap::drawChar(int x, int y, char ch)
         //Serial.print("width:");
         //Serial.println(width);
         //image = ((const uint8_t *)_font) + 6 + index * heightBytes * width;
-        image = ((const uint8_t *)_font) + 6 + (index -1) * width * 2;
-        
+        image = ((const uint8_t *)_font) + 6 + (index -1) * width * 2 + 14;
+      
+      
+        image2 = pgm_read_byte((const uint8_t *)_font + 6+32*10);
+        //Serial.print("imagecount:");
+        //Serial.println(6 + (index -1) * width * 2 + 14);
         //Serial.print("imagecount:");
         //Serial.println( 6 + index  * width );
         //Serial.print("image: 0x");
@@ -1145,9 +1150,9 @@ int Bitmap::drawChar(int x, int y, char ch)
                     */
                   
                     if (value & 0x01) 
-                        setPixel(cx/2, y + yoffset + bit, _textColor);
+                        setPixel(cx/2 - 1, y + yoffset + bit, _textColor);
                     else
-                        setPixel(cx/2, y + yoffset + bit, invColor);  
+                        setPixel(cx/2 - 1, y + yoffset + bit, invColor);  
               
               
                 }
@@ -2217,7 +2222,7 @@ void setup()
   display.setFont(ArialFont16x16);
   //for (int j=0; j<10; j++)
   //display.setPixel(3,j,DMD3::White);
-  display.drawChar(0,0,'0' ); //#=35 , "=34
+  display.drawChar(0,0,'E' ); //#=35 , "=34
   for (int i=0; i<16; i++) {
     display.debugPixelLine(i, buf);
     Serial.println(buf);
