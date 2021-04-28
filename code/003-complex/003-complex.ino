@@ -5,8 +5,8 @@
 #define PIN_DATA3 D6
 #define PIN_DATA4 D8
 #define PIN_CLK D7
-#define PIN_LATCH D5
-#define PIN_NOE D4
+#define PIN_LATCH D0
+#define PIN_NOE D5
 
 #define DATA_SEGMENTS_PER_PANEL 4
 
@@ -48,10 +48,17 @@ void setup() {
     delayMicroseconds(250);
   }
 
+  /*
+    p3.sendData(0b1111111111111111, 0b1111111111111111, 0b1111111111111111, 0b1111111100000000, false);
+    p3.sendData(0b1111111111111111, 0b1111111111111111, 0b1111111111111111, 0b1111111111111111, false);
+    p3.sendData(0b1111111111111111, 0b1111111111111111, 0b1111111111111111, 0b1111111111111111, false);
+    p3.sendData(0b1111111111111111, 0b1111111111111111, 0b1111111111111111, 0b1111111111111111, false);   
+   */
+
   digitalWrite(PIN_LATCH, HIGH);
   delayMicroseconds(250);
-  digitalWrite(PIN_LATCH, HIGH);
-
+  digitalWrite(PIN_LATCH, LOW);
+  delayMicroseconds(250);
   digitalWrite(PIN_NOE, LOW);
   delay(5000);
   digitalWrite(PIN_NOE, HIGH);
