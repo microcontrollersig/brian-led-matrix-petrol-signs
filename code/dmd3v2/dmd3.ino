@@ -1,5 +1,14 @@
 #include "dmd3.h"
 
+//#include "digit_16.h"
+//#define DigitFont10x16 digit_16
+
+//#include "Arial14.h"
+//#define ArialFont10x14 Arial_14
+
+#include "Arial16.h"
+#define ArialFont16x16 Arial16x16
+
 DMD3 display(6,1);
 
 void setup()
@@ -9,6 +18,8 @@ void setup()
   Serial.println("\n\nDraw buffer.....\n\n");
   
   char buf[1000];
+  //display.setFont(DigitFont10x16);
+  //display.setFont(ArialFont10x14);
   display.setFont(ArialFont16x16);
   //for (int j=0; j<10; j++)
   //display.setPixel(3,j,DMD3::White);
@@ -18,6 +29,9 @@ void setup()
   display.drawChar(48,0,'1');
   display.drawChar(64,0,'2');
   display.drawChar(82,0,'3');
+  //display.drawChar(0,0,'4');
+  //display.drawChar(16,0,'5');
+  //display.drawChar(32,0,'6');  
   for (int i=0; i<16; i++) {
     display.debugPixelLine(i, buf);
     Serial.println(buf);
