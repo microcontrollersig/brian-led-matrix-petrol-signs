@@ -6,7 +6,7 @@ Here is the 16x16 panel up close and personal (Thanks to Brian D. for awesome sh
 
 Because the image is big, in most browsers, clicking on the image downloads the file.
 
-![LED Panel](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/IMG_1820.JPG)
+![LED Panel](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/IMG_1820-redacted.jpg)
 
 
 #### Things to glean from image
