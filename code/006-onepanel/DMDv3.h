@@ -1,5 +1,7 @@
 //#include <inttypes.h>
 //#include <avr/pgmspace.h>
+#pragma once
+#include "MBI5039.h"
 
 #define PIN_DATA1 D2
 #define PIN_DATA2 D1
@@ -8,6 +10,7 @@
 #define PIN_CLK D7
 #define PIN_LATCH D0
 #define PIN_NOE D5
+
 
 
 class DMD3;
@@ -1511,6 +1514,8 @@ public:
     void swapBuffers();
     void swapBuffersAndCopy();
 
+    void setMBI5039(MBI5039 *m);
+
     void loop();
     void refresh();
     void update();
@@ -1543,6 +1548,7 @@ private:
     uint8_t *displayfb;
     unsigned long lastRefresh;
     int _widthPanels, _heightPanels;
+    MBI5039 *mbi;
 };
 
 /**
@@ -2160,13 +2166,26 @@ void DMD3::print(String key, uint8_t data)
 
 void DMD3::sendData(uint8_t *data1, uint8_t *data2, uint8_t *data3, uint8_t *data4, bool bitOrder) 
 {
+
+  
+  if (bitOrder) {
+    mbi->sendDataMSB(data1, data2, data3, data4);
+  }
+
+  else {
+    mbi->sendDataLSB(data1, data2, data3, data4);
+  }
+
   print("d1", *data1);
   print("d2", *data2);
   print("d3", *data3);
   print("d4", *data4);
   Serial.println();
-  
-  
+}
+
+void DMD3::setMBI5039(MBI5039 *m) 
+{
+  mbi = m;
 }
 
 void DMD3::update() {
@@ -2353,4 +2372,3 @@ void DMD3::sendOneBit(uint8_t data1, uint8_t data2, uint8_t data3, uint8_t data4
   digitalWrite(PIN_DATA3, (data3 & mask) ? HIGH:LOW);
   digitalWrite(PIN_DATA4, (data4 & mask) ? HIGH:LOW);
 }
-

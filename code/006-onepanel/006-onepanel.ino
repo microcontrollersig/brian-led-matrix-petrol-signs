@@ -1,3 +1,4 @@
+#pragma once
 #include "MBI5039.h"
 #include "DMDv3.h"
 
@@ -32,6 +33,7 @@ void setup()
   Serial.begin(115200);
   delay(2000);
   char buf[100];
+  display.setMBI5039(&p3);
   display.setFont(ArialFont16x16);
   //for (int j=0; j<10; j++)
   //display.setPixel(00,0,DMD3::White);
@@ -74,10 +76,10 @@ void setup()
   //display.getD1BankData(1);
   //display.refreshData();
   
-  //for (int i=0; i<16; i++) {
-  //      display.debugPixelLine(i, buf);
-  //  Serial.println(buf);
-  //}
+  for (int i=0; i<16; i++) {
+        display.debugPixelLine(i, buf);
+    Serial.println(buf);
+  }
   
   display.update();
   
