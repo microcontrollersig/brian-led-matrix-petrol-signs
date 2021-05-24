@@ -1,6 +1,7 @@
 #pragma once
-#include "MBI5039.h"
+
 #include "DMDv3.h"
+#include "Arial16.h"
 
 //Old wrong assignments
 /*
@@ -22,10 +23,6 @@
 #define PIN_LATCH D0
 #define PIN_NOE D5
 
-//#define DATA_SEGMENTS_PER_PANEL 4
-
-MBI5039 p3(PIN_CLK, PIN_LATCH, PIN_NOE, PIN_DATA1, PIN_DATA2, PIN_DATA3, PIN_DATA4);
-
 int brightness;
 
 void setPanelBrightness(float b) 
@@ -45,54 +42,16 @@ void setup()
   Serial.begin(115200);
   delay(2000);
   char buf[100];
-  display.setMBI5039(&p3);
+  display.setPins(PIN_CLK, PIN_LATCH, PIN_NOE, PIN_DATA1, PIN_DATA2, PIN_DATA3, PIN_DATA4);
   display.setFont(ArialFont16x16);
-  //for (int j=0; j<10; j++)
-  display.setPixel(0,0,DMD3::White);
+  //display.setPixel(0,0,DMD3::White);
   //display.setPixel(0,15,DMD3::White);
   //display.setPixel(15,15,DMD3::White);
   //display.setPixel(15,0,DMD3::White);
-  //display.drawChar(0,0,'Q');
-  
-  //display.drawChar(80,0,'E' ); 
-  
-  /*
-  for (int i=0; i<8; i++) {
-    display.debugPixelLine(i, buf);
-    Serial.println(buf);
-    
-  }
-  */
-  
-  /*
-  for (int i=8; i<16; i++) {
-    display.debugPixelLine(i, buf);
-    Serial.println(buf);
-    
-  }
-  */
-  
-    /*
-  for (int i=16; i<24; i++) {
-    display.debugPixelLine(i, buf);
-    Serial.println(buf);
-    
-  }
-  */
-  
-    /*
-  for (int i=24; i<32; i++) {
-    display.debugPixelLine(i, buf);
-    Serial.println(buf);
-    
-  }
-  */
-  
-  //display.getD1BankData(1);
-  //display.refreshData();
+  display.drawChar(0,0,'Q');
   
   for (int i=0; i<16; i++) {
-        display.debugPixelLine(i, buf);
+    display.debugPixelLine(i, buf);
     Serial.println(buf);
   }
   
