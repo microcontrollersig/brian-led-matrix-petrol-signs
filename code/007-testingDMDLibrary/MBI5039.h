@@ -11,6 +11,10 @@ class MBI5039
                 {
                 }
     void IRAM_ATTR isr();
+    void enable();
+    void disable();
+    void latch();
+    void setBrightness(float brightness);
     void sendData(uint16_t data1, uint16_t data2, uint16_t data3, uint16_t data4, bool bitOrder);
     void sendDataMSB(uint8_t *data1, uint8_t *data2, uint8_t *data3, uint8_t *data4);
     void sendDataLSB(uint8_t *data1, uint8_t *data2, uint8_t *data3, uint8_t *data4)  ;
@@ -26,4 +30,5 @@ class MBI5039
             data4_pin;
      volatile uint8_t clockCount;
      volatile bool fallingClockEdge;
+     int brightness;
 };

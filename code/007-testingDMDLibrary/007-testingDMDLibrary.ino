@@ -3,6 +3,8 @@
 #include "DMDv3.h"
 #include "Arial16.h"
 
+
+
 //Old wrong assignments
 /*
 #define PIN_DATA1 D2
@@ -23,39 +25,68 @@
 #define PIN_LATCH D0
 #define PIN_NOE D5
 
-int brightness;
+#define PANELS_WIDTH 1
+#define PANELS_HEIGHT 1
 
-void setPanelBrightness(float b) 
+DMD3 display(PANELS_WIDTH, PANELS_HEIGHT);
+
+//top-left corner
+void test1() 
 {
- brightness = (int) ((1.0 - b) * 255);
+  display.setPixel(0,0,DMD3::White);
 }
 
-void panelsON()
+//top right corner
+void test2() 
 {
-  analogWrite(PIN_NOE, brightness);
+  display.setPixel(0,15,DMD3::White);
 }
 
-DMD3 display(1,1);
+//bottom right corner
+void test3() 
+{
+  display.setPixel(15,15,DMD3::White);
+}
+
+//bottom left corner
+void test4() 
+{
+  display.setPixel(15,0,DMD3::White);
+}
+
+void test5() 
+{
+  display.drawChar(0,0,'Q');
+}
 
 void setup()
 {
   Serial.begin(115200);
   delay(2000);
   char buf[100];
-  display.setPins(PIN_CLK, PIN_LATCH, PIN_NOE, PIN_DATA1, PIN_DATA2, PIN_DATA3, PIN_DATA4);
+  display.begin(PIN_CLK, PIN_LATCH, PIN_NOE, PIN_DATA1, PIN_DATA2, PIN_DATA3, PIN_DATA4);
+  display.setBrightness(0.1);
   display.setFont(ArialFont16x16);
-  //display.setPixel(0,0,DMD3::White);
-  //display.setPixel(0,15,DMD3::White);
-  //display.setPixel(15,15,DMD3::White);
-  //display.setPixel(15,0,DMD3::White);
-  display.drawChar(0,0,'Q');
+
+  //unsigned long timeStart = micros();
+  test1();
+  //test2();
+  //test3();
+  //test4();
+  //test5();
+  
   
   for (int i=0; i<16; i++) {
     display.debugPixelLine(i, buf);
     Serial.println(buf);
   }
   
+  
   display.update();
+  //unsigned long timeEnd = micros();
+  //unsigned long duration = timeEnd - timeStart;
+  //Serial.print("Duration(us):");
+  //Serial.println(duration);
   
 }
 

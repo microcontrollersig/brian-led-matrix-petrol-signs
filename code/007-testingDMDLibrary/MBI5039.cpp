@@ -6,6 +6,30 @@ void IRAM_ATTR MBI5039::isr()
   clockCount++;
 }
 
+void MBI5039::setBrightness(float b)
+{
+  brightness = (int) ((1.0 - b) * 1023);
+}
+
+void MBI5039::disable()
+{
+  digitalWrite(noe_pin, HIGH);
+}
+
+void MBI5039::enable()
+{
+  analogWrite(noe_pin, brightness);
+}
+
+void MBI5039::latch()
+{
+  delayMicroseconds(250);
+  digitalWrite(latch_pin, HIGH);
+  delayMicroseconds(250);
+  digitalWrite(latch_pin, LOW);
+  delayMicroseconds(250);
+}
+
 void MBI5039::sendDataMSB(uint8_t *data1, uint8_t *data2, uint8_t *data3, uint8_t *data4)
 {
     clockCount = 0;
