@@ -47,7 +47,7 @@ char buf[100];
 //Instead of Serial monitor, use mobaxterm/minicom
 void clearSerialMonitor() 
 {
-  Serial.print("\033[2J\033[H");
+  Serial.print("\033[2J\033[H\033[?25l");
 }
 
 void printCanvas()
