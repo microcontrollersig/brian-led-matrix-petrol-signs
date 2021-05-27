@@ -54,7 +54,8 @@ public:
     void clear(Color color = Black);
 
     Color pixel(int x, int y) const;
-    void setPixel(int x, int y, Color color);
+    void setPixel(int x, int y, Color color = White);
+    void clearPixel(int x, int y);
 
     void drawLine(int x1, int y1, int x2, int y2, Color color = White);
     void drawRect(int x1, int y1, int x2, int y2, Color borderColor = White, Color fillColor = NoFill);
@@ -204,6 +205,11 @@ void Bitmap::setPixel(int x, int y, Color color)
         *ptr &= ~(((uint8_t)0x80) >> (x & 0x07));
     else
         *ptr |= (((uint8_t)0x80) >> (x & 0x07));
+}
+
+void Bitmap::clearPixel(int x, int y)
+{
+  setPixel(x, y, Black);
 }
 
 /**
