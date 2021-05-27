@@ -1,6 +1,6 @@
-#include <Arduino.h>
+//#include <Arduino.h>
 
-//#pragma once
+
 
 #include "DMDv3.h"
 #include "Arial16.h"
