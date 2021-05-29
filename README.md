@@ -51,3 +51,4 @@ The pin marked R-EXT is connected to an external resistor, an easy way to identi
 
 ![pinout](https://i2.wp.com/randomnerdtutorials.com/wp-content/uploads/2019/05/ESP8266-WeMos-D1-Mini-pinout-gpio-pin.png?w=715&quality=100&strip=all&ssl=1)
 
+![footprint](https://i0.wp.com/i.ibb.co/dQFPJr2/Board-de-desarrollo-We-Mos-D1-Mini-ESP32-Wi-Fi-Bluetooth-BLE-Dimensiones-768x499.jpg)
