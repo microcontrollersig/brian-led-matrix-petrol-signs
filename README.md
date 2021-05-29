@@ -37,3 +37,17 @@ The pin marked R-EXT is connected to an external resistor, an easy way to identi
 
 ![LED Schematic](https://raw.githubusercontent.com/microcontrollersig/brian-led-matrix-petrol-signs/main/circuitnew.svg)
 
+#### Plan
+
+## Raspberry Pi Pico
+
+![pinout](https://www.raspberrypi-spy.co.uk/wp-content/uploads/2021/01/raspberry_pi_pico_pinout.png)
+
+![pwm](https://i0.wp.com/www.etechnophiles.com/wp-content/uploads/2021/02/Screenshot-671.png)
+
+
+
+## ESP8266 wemos d1 mini
+
+![pinout](https://i2.wp.com/randomnerdtutorials.com/wp-content/uploads/2019/05/ESP8266-WeMos-D1-Mini-pinout-gpio-pin.png?w=715&quality=100&strip=all&ssl=1)
+
