@@ -11,6 +11,7 @@ class Dispatcher
 
   private:
     std::vector<Command*> commands;
+    bool *movingcommands;
     char receivedChars[Dispatcher::RECEIVED_SERIAL_SIZE];  
     bool recvInProgress = false;
     uint8_t ndx = 0;
@@ -18,6 +19,7 @@ class Dispatcher
     char endMarker = '}';
     bool newData = false;
     DMD3 *canvas;
+    int currentCommand = -1;
 
   public:
     Dispatcher(DMD3 *dmd);

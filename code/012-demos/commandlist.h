@@ -53,4 +53,16 @@ class CommandList
 
       return commands;
     }
+
+   bool* registerMovingCommands() {
+      static bool movingcommands[255];
+ 
+      for (int i=0; i<255; i++) {
+        movingcommands[i] = false;
+      }
+
+      movingcommands['4'] = true;
+      
+      return movingcommands;
+   }
 };

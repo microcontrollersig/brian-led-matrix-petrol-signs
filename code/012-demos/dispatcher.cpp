@@ -6,6 +6,7 @@ Dispatcher::Dispatcher(DMD3 *dmd)
   canvas = dmd;
   CommandList cl;
   commands = cl.registerCommands();
+  movingcommands = cl.registerMovingCommands();
 }
 
 void Dispatcher::handleSerialInput()
@@ -39,12 +40,27 @@ void Dispatcher::handleSerialInput()
         newData = false;
         parseSerialInput();
    }
+
+   
+   else if (currentCommand > 0 ) {
+      bool *m = movingcommands + currentCommand;
+      if (m != NULL && *m) {
+        //Serial.print("Dispatch command:...");
+        //Serial.println(currentCommand);
+        dispatch(currentCommand);
+      }
+      //dispatch(currentCommand);
+      //Serial.print("Dispatch command:...");
+      //Serial.println(currentCommand);
+   } 
+    
   
 }
 
 void Dispatcher::parseSerialInput()
 {
   char command = receivedChars[0];
+  currentCommand = (int)command;
   commands[command]->execute(canvas);
 }
 
