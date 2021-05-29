@@ -55,8 +55,10 @@ The pin marked R-EXT is connected to an external resistor, an easy way to identi
 
 # PCB Design
 
-![PCB](https://raw.githubusercontent.com/microcontrollersig/brian-led-matrix-petrol-signs/main/B.png)
+![PCB](https://raw.githubusercontent.com/microcontrollersig/brian-led-matrix-petrol-signs/main/D.png)
 
 ![Schematic](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/blob/main/C.png)
+
+[Eagle board file](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/Brians%20test%20board%202.brd)
 
 
