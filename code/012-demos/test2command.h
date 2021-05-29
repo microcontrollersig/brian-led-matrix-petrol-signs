@@ -10,5 +10,6 @@ class Test2Command : public Command
       canvas->clear();
       canvas->setPixel(15,15);
       printCanvas(canvas);
+      canvas->update();
     }
 };

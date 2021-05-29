@@ -8,6 +8,9 @@
 #include "test4command.h"
 #include "test5command.h"
 #include "test6command.h"
+#include "test7command.h"
+#include "test8command.h"
+#include "test9command.h"
 
 class CommandList
 {
@@ -38,6 +41,15 @@ class CommandList
 
       Test6Command *test6 = new Test6Command();
       commands['5'] = test6;     
+
+      Test7Command *test7 = new Test7Command();
+      commands['6'] = test7;   
+
+      Test8Command *test8 = new Test8Command();
+      commands['7'] = test8;   
+
+      Test9Command *test9 = new Test9Command();
+      commands['8'] = test9;               
 
       return commands;
     }

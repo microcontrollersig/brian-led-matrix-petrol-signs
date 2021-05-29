@@ -1205,6 +1205,10 @@ void DMD3::update() {
   d2 = ptr + 1 + 15 * _stride;
   d3 = ptr + 7 * _stride ;
   d4 = ptr + 15 * _stride ; 
+
+  #ifdef DEBUG
+   Serial.println("\n");
+  #endif
     
   for (int i=0; i<4; i++) {
     sendData(d1,d2,d3,d4, true);
