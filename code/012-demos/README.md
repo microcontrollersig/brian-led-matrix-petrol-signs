@@ -11,8 +11,9 @@ Example:
 
 Commands available
 
-|Command|Description|
-|0|Top Left|
+| Command |Description|
+|---------|-----------|
+| 0       |Top Left   |
 
 
 
