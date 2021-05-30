@@ -1,24 +1,19 @@
 #pragma once
 
 #include "command.h"
-
-enum class Test5Modes
-{
-  Horizontal,
-  Vertical
-};
+#include "testmode.h"
 
 class Test5Command : public Command
 {
   private:
-    Test5Modes mode = Test5Modes::Horizontal;
+    TestMovingMode mode = TestMovingMode::Horizontal;
     int i = 0;
     int j = 0;
-    unsigned long timeStart = 0;
+    unsigned long timeStart = 0UL;
   
   public:
     void execute(DMD3 *canvas)  override {
-      if ( millis() - timeStart > 50) {
+      if ( millis() - timeStart > 200) {
         clearSerialMonitor();
         canvas->clear();
 
@@ -28,7 +23,7 @@ class Test5Command : public Command
         char buf[100];
 
         switch(mode) {
-          case Test5Modes::Horizontal:
+          case TestMovingMode::Horizontal:
             if ((j % 2) == 1)
               canvas->setPixel(width - i - 1, j);
             else
@@ -45,10 +40,10 @@ class Test5Command : public Command
             if (j == 16) {
               i=0;
               j=0;
-              mode = Test5Modes::Vertical;
+              mode = TestMovingMode::Vertical;
             }
             break;                    
-          case Test5Modes::Vertical:
+          case TestMovingMode::Vertical:
             if ((i % 2) == 1)
               canvas->setPixel(i, height - j -1);
             else
@@ -65,7 +60,7 @@ class Test5Command : public Command
             if (i == 16) {
               i=0;
               j=0;
-              mode = Test5Modes::Horizontal;
+              mode = TestMovingMode::Horizontal;
             }
             break;         
       }
