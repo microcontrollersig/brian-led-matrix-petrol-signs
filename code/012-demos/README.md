@@ -1,3 +1,5 @@
+# One Panel demos
+
 Use minicom/mobaxterm as serial terminal.
 
 
@@ -17,6 +19,11 @@ Commands available
 |1|Bottom right|
 |2|Top right|
 |3|Bottom left|
+|4|Test Pattern 1|
+|5|Test Pattern 2|
+|6|Single character|
+|7||
+|8||
 
 
 
