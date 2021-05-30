@@ -14,6 +14,9 @@ Commands available
 | Command |Description|
 |---------|-----------|
 | 0       |Top Left   |
+| 1       |Bottom right|
+|2        |Top right|
+|3|Bottom left|
 
 
 
