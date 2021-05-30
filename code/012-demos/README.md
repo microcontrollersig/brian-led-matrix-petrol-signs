@@ -5,7 +5,7 @@ Use minicom/mobaxterm as serial terminal.
 
 The input format is:
 
-{<command}
+{**command**}
 
 Example:
 
