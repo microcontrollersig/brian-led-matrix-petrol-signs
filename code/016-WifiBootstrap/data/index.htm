@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+<meta charset='utf-8'>
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+<title>
+Brian's LED Panel Main Page</title>
+<style>
+body {
+  font-family: Verdana, sans-serif;
+  text-align: center;
+  background: #222;
+  color: #fff;
+  line-height: 200%;
+  margin: 0;
+}
+hr {
+  border-color: #666;
+}
+button {
+  background: #333;
+  color: #fff;
+  font-family: Verdana, sans-serif;
+  border: 0.3ch solid #333;
+  display: inline-block;
+  font-size: 20px;
+  margin: 8px;
+  margin-top: 12px;
+}
+.helpB {
+  text-align: left;
+  position: absolute;
+  width: 60px;
+}
+input {
+  background: #333;
+  color: #fff;
+  font-family: Verdana, sans-serif;
+  border: 0.5ch solid #333;
+}
+input[type="number"] {
+  width: 4em;
+}
+select {
+  background: #333;
+  color: #fff;
+  font-family: Verdana, sans-serif;
+  border: 0.5ch solid #333;
+}
+td {
+  padding: 2px;
+}
+.d5 {
+  width: 4.5em !important;
+}
+</style>
+<head>
+<body>
+
+<h2>Settings Page</h2>
+<h3>Commands</h3>
+<label for="commands">Choose a command</label>
+<select name="commands" id="commands">
+	<option value="@">---NONE---</option>
+	<option value="0">Top left</option>
+	<option value="1">Bottom right</option>
+    <option value="2">Top right</option>
+    <option value="3">Bottom left</option>
+    <option value="4">Pixel scan</option>
+    <option value="5">Snake game</option>
+    <option value="6">Static Text</option>
+    <option value="7">Scrolling Text</option>
+    <option value="8">Effect 1</option>
+    <option value="9">Effect 2</option>
+</select>
+</body>
+</html>
