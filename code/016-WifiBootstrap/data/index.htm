@@ -53,25 +53,130 @@ td {
 .d5 {
   width: 4.5em !important;
 }
+
+
+.chosen { background-color: #06c; height: 30vh; padding-bottom: 8vh;}
+.notchosen { background-color: grey; height: 30vh; padding-bottom: 8vh;}
+
+*, *:after, *:before {
+  box-sizing: border-box;
+}
+
+html { font-size: 62.5%; }
+body { margin: 0; padding: 0; }
+
+/* buttons */
+
+.btn-align { position: relative; top: 45%; }
+.btn-ghost {
+  display: block;
+  width: 340px; width: 34rem;
+  height: 66px; height: 6.6rem;
+  font: 700 20px/66px "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; font: 2.0rem/6.6rem;
+  letter-spacing: 0.01rem;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all .16s ease;
+  margin: 0 auto;
+}
+.btn-blue  { color: #06c; border: 2px solid #06c; }
+.btn-blue:hover, .btn-blue:active, .btn-blue:focus  {
+  color: #fff;
+  background-color: #06c;
+  border: 2px solid #06c;
+}
+.btn-white { color: #fff; border: 2px solid #fff; }
+.btn-white:hover, .btn-white:active, .btn-white:focus  {
+  color: #06c;
+  background-color: #fff;
+  border: 2px solid #fff;
+}
+
+@media screen and (max-width: 420px) { /* iPhone Landscape */
+  .btn-ghost {
+    width: 290px; width: 29.0rem;
+    height: 50px; height: 5.0rem;
+    font-size: 16px; font-size: 1.6rem;
+    line-height: 50px; line-height: 5.0rem;
+  }
+}
+
+
+
 </style>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll(".chosen a,.notchosen a").forEach(item => {
+      item.addEventListener("click", event => {
+        event.preventDefault();
+        let chosenOne = document.getElementsByClassName("chosen")[0]
+        chosenOne.classList.remove('notchosen', 'chosen');
+        chosenOne.classList.add('notchosen');
+        event.target.parentElement.classList.remove('notchosen');  
+        event.target.parentElement.classList.add('chosen');        
+      });    
+  });
+});
+</script>
 <head>
 <body>
 
-<h2>Settings Page</h2>
-<h3>Commands</h3>
-<label for="commands">Choose a command</label>
-<select name="commands" id="commands">
-	<option value="@">---NONE---</option>
-	<option value="0">Top left</option>
-	<option value="1">Bottom right</option>
-    <option value="2">Top right</option>
-    <option value="3">Bottom left</option>
-    <option value="4">Pixel scan</option>
-    <option value="5">Snake game</option>
-    <option value="6">Static Text</option>
-    <option value="7">Scrolling Text</option>
-    <option value="8">Effect 1</option>
-    <option value="9">Effect 2</option>
-</select>
+<h2>Brian's LED Panel Main Page</h2>
+
+<div class="chosen">
+    <a class="btn-ghost btn-white btn-align">
+      IDLE
+    </a>
+</div>
+
+<div class="notchosen">
+    <a class="btn-ghost btn-white btn-align">
+      Top-Left Single Pixel
+    </a>
+</div>
+
+<div class="notchosen">
+  <a class="btn-ghost btn-white btn-align">
+   Bottom-Right Single Pixel 
+  </a>
+</div>
+
+<div class="notchosen">
+    <a class="btn-ghost btn-white btn-align">
+      Top-Right Single Pixel
+    </a>
+</div>
+
+<div class="notchosen">
+  <a class="btn-ghost btn-white btn-align">
+   Bottom-Left Single Pixel 
+  </a>
+</div>
+
+<div class="notchosen">
+    <a class="btn-ghost btn-white btn-align">
+      Pixel scan
+    </a>
+</div>
+
+<div class="notchosen">
+  <a class="btn-ghost btn-white btn-align">
+   Snake game
+  </a>
+</div>
+
+<div class="notchosen">
+    <a class="btn-ghost btn-white btn-align">
+     Static Text
+    </a>
+</div>
+
+<div class="notchosen">
+  <a class="btn-ghost btn-white btn-align">
+    Scrolling Text
+  </a>
+</div>
+
 </body>
 </html>
