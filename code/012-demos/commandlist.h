@@ -11,6 +11,7 @@
 #include "test7command.h"
 #include "test8command.h"
 #include "test9command.h"
+#include "testidle.h"
 
 class CommandList
 {
@@ -50,6 +51,9 @@ class CommandList
 
       Test9Command *test9 = new Test9Command();
       commands['8'] = test9;               
+
+      TestIdleCommand *testidle = new TestIdleCommand();
+      commands['@'] = testidle;      
 
       return commands;
     }

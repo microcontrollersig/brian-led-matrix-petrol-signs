@@ -6,7 +6,7 @@
 class Test5Command : public Command
 {
   private:
-    TestMovingMode mode = TestMovingMode::Horizontal;
+    TestMovingMode mode = TestMovingMode::HORIZONTAL;
     int i = 0;
     int j = 0;
     unsigned long timeStart = 0UL;
@@ -23,7 +23,7 @@ class Test5Command : public Command
         char buf[100];
 
         switch(mode) {
-          case TestMovingMode::Horizontal:
+          case TestMovingMode::HORIZONTAL:
             if ((j % 2) == 1)
               canvas->setPixel(width - i - 1, j);
             else
@@ -40,10 +40,10 @@ class Test5Command : public Command
             if (j == 16) {
               i=0;
               j=0;
-              mode = TestMovingMode::Vertical;
+              mode = TestMovingMode::VERTICAL;
             }
             break;                    
-          case TestMovingMode::Vertical:
+          case TestMovingMode::VERTICAL:
             if ((i % 2) == 1)
               canvas->setPixel(i, height - j -1);
             else
@@ -60,7 +60,7 @@ class Test5Command : public Command
             if (i == 16) {
               i=0;
               j=0;
-              mode = TestMovingMode::Horizontal;
+              mode = TestMovingMode::HORIZONTAL;
             }
             break;         
       }

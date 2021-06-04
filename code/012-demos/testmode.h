@@ -1,6 +1,15 @@
+#pragma once
 
 enum class TestMovingMode
 {
-  Horizontal,
-  Vertical
+  HORIZONTAL,
+  VERTICAL
+};
+
+enum class TestDirectionMode
+{
+  UP,
+  DOWN,
+  LEFT,
+  RIGHT
 };

@@ -41,7 +41,7 @@ void setup() {
   display.setFont(ArialFont16x16);
   
   runner = new Dispatcher(&display);
-  //runner->dispatch('0');
+  runner->dispatch('@');
 }
 
 void loop() {

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Arduino.h>
+#include <vector>
 #include "command.h"
 #include "commandlist.h"
 #include "DMD3.h"
