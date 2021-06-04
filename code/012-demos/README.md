@@ -20,10 +20,10 @@ Commands available
 |2|Top right|
 |3|Bottom left|
 |4|Test Pattern 1|
-|5|Test Pattern 2|
+|5|Snake Game|
 |6|Single character|
-|7||
-|8||
+|7|Static Text|
+|8|Scrolling Text|
 
 
 
