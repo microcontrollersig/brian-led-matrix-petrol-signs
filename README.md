@@ -45,7 +45,7 @@ The pin marked R-EXT is connected to an external resistor, an easy way to identi
 
 ![pwm](https://i0.wp.com/www.etechnophiles.com/wp-content/uploads/2021/02/Screenshot-671.png)
 
-
+![powertrain](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/pico-powertrain.png)
 
 ## ESP8266 wemos d1 mini
 
