@@ -59,37 +59,92 @@ class Test6Command : public Command
       
       switch(d) {
         case TestDirectionMode::RIGHT :
-        snake.body[0].y = snake.body[0].y;
-        snake.body[0].x = snake.body[0].x + 1; 
-        break;
-      }           
+          snake.body[0].y = snake.body[0].y;
+          snake.body[0].x = snake.body[0].x + 1; 
+          break;
+        case TestDirectionMode::DOWN :
+          snake.body[0].x = snake.body[0].x;
+          snake.body[0].y = snake.body[0].y + 1;           
+          break;
+        case TestDirectionMode::LEFT :
+          snake.body[0].y = snake.body[0].y;
+          snake.body[0].x = snake.body[0].x - 1; 
+          break;
+        case TestDirectionMode::UP :
+          snake.body[0].x = snake.body[0].x;
+          snake.body[0].y = snake.body[0].y - 1;           
+          break;          
+      }    
+
+      currentDirection = d;
     }
 
     bool isValidMove() {
     }
 
+    void moveHorizontal() {
+      if (fruit.x > snake.body[0].x) 
+        moveSnake(TestDirectionMode::RIGHT);          
+      else if (fruit.x < snake.body[0].x ) 
+        moveSnake(TestDirectionMode::LEFT);         
+    }
+
+    void moveVertical() {
+      if (fruit.y > snake.body[0].y) 
+        moveSnake(TestDirectionMode::DOWN);      
+      else if (fruit.y < snake.body[0].y ) 
+        moveSnake(TestDirectionMode::UP);           
+    }
+
     void nextMove() {
       if (currentDirection == TestDirectionMode::RIGHT) {
-        if (fruit.x >  snake.body[0].x) {
+        if (fruit.x >  snake.body[0].x)
           moveSnake(TestDirectionMode::RIGHT);
-        }
-
-        else {
-          if (fruit.y > snake.body[0].y) {
-             moveSnake(TestDirectionMode::DOWN);
-          }
-
-          else if (fruit.y < snake.body[0].y ) {
-              moveSnake(TestDirectionMode::UP);
-          }
-        }
+        else 
+          moveVertical();        
       }
+
+      else if (currentDirection == TestDirectionMode::DOWN) {
+        if (fruit.y > snake.body[0].y) 
+           moveSnake(TestDirectionMode::DOWN);        
+        else 
+           moveHorizontal();        
+      }
+
+      else if (currentDirection == TestDirectionMode::LEFT) {
+        if (fruit.x < snake.body[0].x) 
+          moveSnake(TestDirectionMode::LEFT);        
+        else
+          moveVertical();        
+      }
+
+      else if (currentDirection == TestDirectionMode::UP) {
+        if (fruit.y < snake.body[0].y)
+          moveSnake(TestDirectionMode::UP);
+        else
+          moveHorizontal();
+      }            
+    }
+
+    bool hasGameEnded() {
+      return false;
+    }
+
+    bool hasSnakeEatenFruit() {
+      return (snake.body[0].x == fruit.x) && (snake.body[0].y == fruit.y); 
+    }
+
+    void randomFruitPosition() {
+       int random_x = random(0, 15);
+       int random_y = random(0, 15);
+       fruit.x = random_x;
+       fruit.y = random_y;  
     }
   
   public:
     void execute(DMD3 *canvas)  override {
 
-      if ( millis() - timeStart > 5000) {
+      if ( millis() - timeStart > 1000) {
         _canvas = canvas;
         clearSerialMonitor();
         canvas->clear();
@@ -109,6 +164,14 @@ class Test6Command : public Command
         for (int z=0; z< height; z++) {
           canvas->debugPixelLine(z, buf);
           Serial.println(buf);    
+        }
+
+        if (hasGameEnded()) {
+          gameEnded = true;
+        }
+
+        if (hasSnakeEatenFruit()){
+          randomFruitPosition();  
         }
         
         timeStart = millis();
