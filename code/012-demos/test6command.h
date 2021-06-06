@@ -86,7 +86,13 @@ class Test6Command : public Command
       if (fruit.x > snake.body[0].x) 
         moveSnake(TestDirectionMode::RIGHT);          
       else if (fruit.x < snake.body[0].x ) 
-        moveSnake(TestDirectionMode::LEFT);         
+        moveSnake(TestDirectionMode::LEFT); 
+      else {
+        if (snake.body[0].y <8) 
+          moveSnake(TestDirectionMode::DOWN);
+        else
+          moveSnake(TestDirectionMode::UP);        
+      }        
     }
 
     void moveVertical() {
@@ -94,6 +100,12 @@ class Test6Command : public Command
         moveSnake(TestDirectionMode::DOWN);      
       else if (fruit.y < snake.body[0].y ) 
         moveSnake(TestDirectionMode::UP);           
+      else {
+        if (snake.body[0].x <8) 
+          moveSnake(TestDirectionMode::RIGHT);
+        else
+          moveSnake(TestDirectionMode::LEFT);  
+      }
     }
 
     void nextMove() {
@@ -134,11 +146,24 @@ class Test6Command : public Command
       return (snake.body[0].x == fruit.x) && (snake.body[0].y == fruit.y); 
     }
 
+    bool isPositionOnSnakeBody(int pos_x, int pos_y) {
+      for (int i=0; i<snake.body_size; i++) {
+        Position p = snake.body[i];
+        if (p.x == pos_x && p.y == pos_y)
+            return true;  
+      }
+      return false;
+    }
+
     void randomFruitPosition() {
        int random_x = random(0, 15);
        int random_y = random(0, 15);
-       fruit.x = random_x;
-       fruit.y = random_y;  
+       if (!isPositionOnSnakeBody(random_x, random_y)) {
+           fruit.x = random_x;
+           fruit.y = random_y;  
+       }
+       else 
+         randomFruitPosition();
     }
   
   public:
