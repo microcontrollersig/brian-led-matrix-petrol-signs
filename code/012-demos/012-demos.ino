@@ -4,14 +4,14 @@
 #include "customglcdfonts.h"
 
 #if defined(ARDUINO_ARCH_RP2040)
-#define PIN_DATA1 6 
-#define PIN_DATA2 7
-#define PIN_DATA3 8
-#define PIN_DATA4 9
+#define PIN_DATA1 3 
+#define PIN_DATA2 4
+#define PIN_DATA3 5
+#define PIN_DATA4 2
 
-#define PIN_CLK 2
-#define PIN_LATCH 3 
-#define PIN_NOE 4
+#define PIN_CLK 12
+#define PIN_LATCH 11 
+#define PIN_NOE 10
 #elif defined(ESP8266)
 #define PIN_DATA1 D6
 #define PIN_DATA2 D2

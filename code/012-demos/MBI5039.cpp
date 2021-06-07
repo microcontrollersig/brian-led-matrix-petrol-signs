@@ -198,3 +198,12 @@ void MBI5039::sendOneBit(uint16_t data1, uint16_t data2, uint16_t data3, uint16_
   digitalWrite(data3_pin, (data3 & mask) ? HIGH:LOW);
   digitalWrite(data4_pin, (data4 & mask) ? HIGH:LOW);
 }
+
+void MBI5039::myAnalogWrite(pin_size_t pin, int val) 
+{
+    mbed::PwmOut* pwm = new mbed::PwmOut(digitalPinToPinName(pin));
+    //pwm->period_ms(2); //500Hz
+    pwm->period_us(10); //100kHz
+    float percent = val/255.0;
+    pwm->write(percent);
+}

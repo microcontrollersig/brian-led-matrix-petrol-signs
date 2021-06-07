@@ -3,7 +3,9 @@
 #ifdef ESP8266
 #include <FunctionalInterrupt.h>
 #endif
+#include "mbed.h"
 
+#define debug.h
 
 class MBI5039
 {
@@ -34,6 +36,7 @@ class MBI5039
      volatile uint8_t clockCount;
      volatile bool fallingClockEdge;
      int brightness;
+     void myAnalogWrite(pin_size_t pin, int val);
 };
 
 void fakeisr(MBI5039 *m);

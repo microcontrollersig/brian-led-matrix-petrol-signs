@@ -1157,8 +1157,6 @@ void DMD3::print(String key, uint8_t data)
 
 void DMD3::sendData(uint8_t *data1, uint8_t *data2, uint8_t *data3, uint8_t *data4, bool bitOrder) 
 {
-
-  /*
   if (bitOrder) {
     mbi->sendDataMSB(data1, data2, data3, data4);
   }
@@ -1166,7 +1164,7 @@ void DMD3::sendData(uint8_t *data1, uint8_t *data2, uint8_t *data3, uint8_t *dat
   else {
     mbi->sendDataLSB(data1, data2, data3, data4);
   }
-  */
+  
   
   #ifdef DEBUG
   print("d1", *data1);
@@ -1188,7 +1186,7 @@ void DMD3::update() {
   
   ptr = fb;
 
-  //mbi->disable();
+  mbi->disable();
 
   //for (int i=0; i < _heightPanels; i++) 
   //{
@@ -1226,9 +1224,8 @@ void DMD3::update() {
     d4 = d4 - _stride;    
     
   }
-
-
-  //mbi->latch();
-  //mbi->enable();
+  
+  mbi->latch();
+  mbi->enable();
     
 }
