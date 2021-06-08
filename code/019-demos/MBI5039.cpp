@@ -46,7 +46,7 @@ void MBI5039::sendData(uint8_t *data1, uint8_t *data2, uint8_t *data3, uint8_t *
 {
   uint8_t mask;
   if (bitOrder) 
-    mask = 0x8000;
+    mask = 0x80;
   else
     mask = 1;
 
@@ -55,7 +55,7 @@ void MBI5039::sendData(uint8_t *data1, uint8_t *data2, uint8_t *data3, uint8_t *
   for (int i=0; i<8; i++)
   {
     
-    sendOneBit(data1, data2, data3, data4, mask);
+    sendOneBit(*data1, *data2, *data3, *data4, mask);
 
     if (bitOrder)
       mask = mask >> 1;
@@ -68,6 +68,11 @@ void MBI5039::sendData(uint8_t *data1, uint8_t *data2, uint8_t *data3, uint8_t *
     delay(1);
     digitalWrite(clock_pin, LOW);
   }
+
+  digitalWrite(data1_pin, LOW);
+  digitalWrite(data2_pin, LOW);
+  digitalWrite(data3_pin, LOW);
+  digitalWrite(data4_pin, LOW);
 }
 
 void MBI5039::sendData(uint16_t data1, uint16_t data2, uint16_t data3, uint16_t data4, bool bitOrder) 
@@ -75,12 +80,12 @@ void MBI5039::sendData(uint16_t data1, uint16_t data2, uint16_t data3, uint16_t 
 
 }
 
-void MBI5039::sendOneBit(uint8_t *data1, uint8_t *data2, uint8_t *data3, uint8_t *data4, uint8_t mask)
+void MBI5039::sendOneBit(uint8_t data1, uint8_t data2, uint8_t data3, uint8_t data4, uint8_t mask)
 {
-  digitalWrite(data1_pin, (*data1 & mask) ? HIGH:LOW);
-  digitalWrite(data2_pin, (*data2 & mask) ? HIGH:LOW);
-  digitalWrite(data3_pin, (*data3 & mask) ? HIGH:LOW);
-  digitalWrite(data4_pin, (*data4 & mask) ? HIGH:LOW);  
+  digitalWrite(data1_pin, (data1 & mask) ? HIGH:LOW);
+  digitalWrite(data2_pin, (data2 & mask) ? HIGH:LOW);
+  digitalWrite(data3_pin, (data3 & mask) ? HIGH:LOW);
+  digitalWrite(data4_pin, (data4 & mask) ? HIGH:LOW);  
 }
 
 void MBI5039::sendOneBit(uint16_t data1, uint16_t data2, uint16_t data3, uint16_t data4, uint16_t mask)

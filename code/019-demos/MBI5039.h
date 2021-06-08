@@ -25,7 +25,7 @@ class MBI5039
     void sendDataMSB(uint8_t *data1, uint8_t *data2, uint8_t *data3, uint8_t *data4);
     void sendDataLSB(uint8_t *data1, uint8_t *data2, uint8_t *data3, uint8_t *data4)  ;
     void sendOneBit(uint16_t data1, uint16_t data2, uint16_t data3, uint16_t data4, uint16_t mask);
-    void sendOneBit(uint8_t *data1, uint8_t *data2, uint8_t *data3, uint8_t *data4, uint8_t mask);
+    void sendOneBit(uint8_t data1, uint8_t data2, uint8_t data3, uint8_t data4, uint8_t mask);
   private:
     uint8_t clock_pin, 
             latch_pin,
