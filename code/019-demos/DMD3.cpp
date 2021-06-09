@@ -1210,7 +1210,6 @@ void DMD3::update() {
   #endif
     
   for (int i=0; i<4; i++) {
-    Serial.println("Send MSB...");
     sendData(d1,d2,d3,d4, true);
     
   
@@ -1219,7 +1218,6 @@ void DMD3::update() {
     d3 = d3 - _stride;
     d4 = d4 - _stride;
 
-    Serial.println("Send LSB...");
     sendData(d1,d2,d3,d4, false);
 
     d1 = d1 - _stride;

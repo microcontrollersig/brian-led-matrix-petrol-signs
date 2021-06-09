@@ -37,7 +37,7 @@ void setup() {
   delay(1000);
 
   display.begin(PIN_CLK, PIN_LATCH, PIN_NOE, PIN_DATA1, PIN_DATA2, PIN_DATA3, PIN_DATA4);
-  display.setBrightness(0.1);
+  display.setBrightness(0.12);
   display.setFont(ArialFont16x16);
   
   runner = new Dispatcher(&display);

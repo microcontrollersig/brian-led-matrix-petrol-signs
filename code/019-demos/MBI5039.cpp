@@ -6,7 +6,8 @@
 #define MAX_PWM_VALUE 255
 #endif
 
-
+#define CLOCK_PERIOD_USECS 500
+#define HALF_CLOCK_PERIOD CLOCK_PERIOD_USECS/2
 
 void MBI5039::setBrightness(float b)
 {
@@ -63,9 +64,9 @@ void MBI5039::sendData(uint8_t *data1, uint8_t *data2, uint8_t *data3, uint8_t *
       mask = mask << 1;
 
     digitalWrite(clock_pin, LOW);
-    delay(1);
+    delayMicroseconds(HALF_CLOCK_PERIOD);
     digitalWrite(clock_pin, HIGH);
-    delay(1);
+    delayMicroseconds(HALF_CLOCK_PERIOD);
     digitalWrite(clock_pin, LOW);
   }
 
