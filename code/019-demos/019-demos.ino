@@ -45,6 +45,6 @@ void setup() {
 }
 
 void loop() {
-  runner->handleSerialInput();
+  runner->handleSerialInput(Serial);
   //delay(5000);
 }

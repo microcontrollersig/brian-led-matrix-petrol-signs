@@ -9,12 +9,12 @@ Dispatcher::Dispatcher(DMD3 *dmd)
   movingcommands = cl.registerMovingCommands();
 }
 
-void Dispatcher::handleSerialInput()
+void Dispatcher::handleSerialInput(Stream& serial)
 {
   char rc;
   
-  while (Serial.available() > 0 && newData == false) {
-    rc = Serial.read();
+  while (serial.available() > 0 && newData == false) {
+    rc = serial.read();
 
     if (recvInProgress) {
       if (rc != endMarker) {

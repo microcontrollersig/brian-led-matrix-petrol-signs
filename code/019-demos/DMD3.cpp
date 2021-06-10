@@ -1,6 +1,7 @@
 #pragma once
 
 #include "DMD3.h"
+//#include "debug.h"
 
 #if defined(ARDUINO_ARCH_RP2040)
 #define pgm_read_byte(addr) (*(const unsigned char *)(addr))
@@ -1166,15 +1167,16 @@ void DMD3::sendData(uint8_t *data1, uint8_t *data2, uint8_t *data3, uint8_t *dat
     mbi->sendDataLSB(data1, data2, data3, data4);
   }
   
-  
-  #ifdef DEBUG
+  /*
+  if (DEBUG) {
   print("d1", *data1);
   print("d2", *data2);
   print("d3", *data3);
   print("d4", *data4);
   Serial.println();
   delay(50);
-  #endif
+  }
+  */
 }
 
 void DMD3::setMBI5039(MBI5039 *m) 

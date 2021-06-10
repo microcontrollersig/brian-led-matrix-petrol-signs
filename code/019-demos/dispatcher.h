@@ -25,7 +25,7 @@ class Dispatcher
   public:
     Dispatcher(DMD3 *dmd);
     void dispatch(uint8_t command);
-    void handleSerialInput();
+    void handleSerialInput(Stream& s);
     void parseSerialInput();
     void updatePanels();
 };
