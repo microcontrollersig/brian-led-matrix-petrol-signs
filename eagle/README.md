@@ -1,9 +1,11 @@
 # Eagle Files
 
-![Schematic](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/eagle/Brians%20Schema%205.jpg)
+![Schematic](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/eagle/Brians%20test%20board%2012-schematic.png)
 
-![Board](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/eagle/Brians%20board%207.jpg)
+![Board](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/eagle/Brians%20test%20board%2012.png)
 
+![JLCPCB Top](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/eagle/jlcpcb-12-top.png)
+![JLCPCB Bottom](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/eagle/jlcpcb-12-bottom.png)
 
 ![PCB1](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/eagle/Brians%20LED%20Brd6..jpg)
 
