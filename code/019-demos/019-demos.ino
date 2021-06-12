@@ -4,10 +4,17 @@
 #include "customglcdfonts.h"
 
 #if defined(ARDUINO_ARCH_RP2040)
+/*
 #define PIN_DATA1 3 
 #define PIN_DATA2 4
 #define PIN_DATA3 5
 #define PIN_DATA4 2
+*/
+
+#define PIN_DATA1 3 
+#define PIN_DATA2 2
+#define PIN_DATA3 4
+#define PIN_DATA4 5
 
 #define PIN_CLK 12
 #define PIN_LATCH 11 
@@ -37,7 +44,7 @@ void setup() {
   delay(1000);
 
   display.begin(PIN_CLK, PIN_LATCH, PIN_NOE, PIN_DATA1, PIN_DATA2, PIN_DATA3, PIN_DATA4);
-  display.setBrightness(0.12);
+  display.setBrightness(0.05);
   display.setFont(ArialFont16x16);
   
   runner = new Dispatcher(&display);
