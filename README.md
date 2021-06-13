@@ -19,7 +19,7 @@ They usually come in 6 panels wide, 2 panels height (effectively becomes a 96x32
 | Qty | |Code                                             | Where to Buy            | Optional |
 | --- |---|-------------------------------------------------| ---------------------- | --------- |
 | 1   | ![Pico](https://raw.githubusercontent.com/microcontrollersig/brian-led-matrix-petrol-signs/main/pico.jpg)|[Raspberry Pico](https://www.raspberrypi.org/documentation/rp2040/getting-started/) | [Pi Australia](https://raspberry.piaustralia.com.au/products/raspberry-pi-pico?variant=32587824070705)<br/>[Altronics](https://www.altronics.com.au/p/z6421-raspberry-pi-pico-microcontroller-board/)<br/>[Element 14](https://au.element14.com/raspberry-pi/raspberry-pi-pico/raspberry-pi-32bit-arm-cortex/dp/3643332)<br/>[Core Electronics](https://core-electronics.com.au/raspberry-pi-pico.html)|    N     |
-| 1   | | [ESP8266 Wemos D1 mini](https://www.wemos.cc/en/latest/d1/d1_mini.html)         | [Aliexpress - color: d1 mini](https://www.aliexpress.com/item/32651747570.html)  |    N     |
+| 1   | ![D1 mini](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/d1_mini_v3.1.0_1_16x16.jpg) | [ESP8266 Wemos D1 mini](https://www.wemos.cc/en/latest/d1/d1_mini.html)         | [Aliexpress - color: d1 mini](https://www.aliexpress.com/item/32651747570.html)  |    N     |
 | 1   |  | [16 Pin IDC Locking Vertical Header](https://www.jaycar.com.au/16-pin-idc-locking-vertical-header/p/PP1138) | Jaycar CAT.NO:PP1138| N | 
 | 1   |  | [Round Female Pin Header connector - snapable](https://www.aliexpress.com/item/32848204130.html)  | Aliexpress | Y | 
 
