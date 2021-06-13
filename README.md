@@ -1,6 +1,6 @@
 # Big LED Matrix from Petrol Pump Signage
 
-## Info
+#### Info
 
 Here is the backside of one 16x16 panel up close and personal (Thanks to Brian D. for awesome shot).
 
@@ -14,7 +14,7 @@ They usually come in 6 panels wide, 2 panels height (effectively becomes a 96x32
 
 # Create PCB Controller for LED matrix
 
-## Bill of Materials
+#### Bill of Materials
 
 | Qty | Code                                             | Where to Buy            | Optional |
 | --- | -------------------------------------------------| ---------------------- |----------|
@@ -22,22 +22,22 @@ They usually come in 6 panels wide, 2 panels height (effectively becomes a 96x32
 | 1   | [ESP8266 Wemos D1 mini](https://www.wemos.cc/en/latest/d1/d1_mini.html)         | [Aliexpress - color: d1 mini](https://www.aliexpress.com/item/32651747570.html)  |    N     |
 | 1   | [16 Pin IDC Locking Vertical Header](https://www.jaycar.com.au/16-pin-idc-locking-vertical-header/p/PP1138) | Jaycar CAT.NO:PP1138| N | 
 
-## EAGLE Schematic for PCB Board
+#### EAGLE Schematic for PCB Board
 ![schematic](https://raw.githubusercontent.com/microcontrollersig/brian-led-matrix-petrol-signs/main/eagle/Brians%20test%20board%2012-schematic.png)
 
-## EAGLE Board file for PCB Board
+#### EAGLE Board file for PCB Board
 
 ![board](https://raw.githubusercontent.com/microcontrollersig/brian-led-matrix-petrol-signs/main/eagle/Brians%20test%20board%2012.png)
 
-## PCB Top Layer
+### PCB Top Layer
 
-## PCB Bottom Layer
+#### PCB Bottom Layer
 
-## Raspberry Pi Pico
+#### Raspberry Pi Pico
 
 ![pinout](https://www.raspberrypi-spy.co.uk/wp-content/uploads/2021/01/raspberry_pi_pico_pinout.png)
 
-## ESP8266 wemos d1 mini
+#### ESP8266 wemos d1 mini
 
 ![pinout](https://i2.wp.com/randomnerdtutorials.com/wp-content/uploads/2019/05/ESP8266-WeMos-D1-Mini-pinout-gpio-pin.png?w=715&quality=100&strip=all&ssl=1)
 
