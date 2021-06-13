@@ -1,6 +1,6 @@
 # Big LED Matrix from Petrol Pump Signage
 
-#### Info
+## Info
 
 Here is the backside of one 16x16 panel up close and personal (Thanks to Brian D. for awesome shot).
 
@@ -12,7 +12,16 @@ Not the usual HUB08/HUB12/HUB40/HUB75 style setup. Inner workings [here](https:/
 
 They usually come in 6 panels wide, 2 panels height (effectively becomes a 96x32 single-color LED matrix)
 
-#### Plan
+# Create PCB Controller for LED matrix
+
+## Bill of Materials
+
+| Qty | Code                                             | Where to Buy            | Optional |
+| --- | -------------------------------------------------| ---------------------- |----------|
+| 1   | [Raspberry Pico](https://www.raspberrypi.org/documentation/rp2040/getting-started/) | [Pi Australia](https://raspberry.piaustralia.com.au/products/raspberry-pi-pico?variant=32587824070705)   
+[Altronics](https://www.altronics.com.au/p/z6421-raspberry-pi-pico-microcontroller-board/)
+|    N     |
+| 1   | [ESP8266 Wemos D1 mini](https://www.wemos.cc/en/latest/d1/d1_mini.html)         | 240 x 320 Touch screen |    N     |
 
 ## Raspberry Pi Pico
 
