@@ -9,6 +9,16 @@
 #define CLOCK_PERIOD_USECS 500
 #define HALF_CLOCK_PERIOD CLOCK_PERIOD_USECS/2
 
+void MBI5039::myAnalogWrite(pin_size_t pin, int val)
+{
+    int write_resolution = 8;
+    mbed::PwmOut* pwm = new mbed::PwmOut(digitalPinToPinName(pin));
+    //pwm->period_ms(2); //500Hz
+    pwm->period_us(100); //100kHz
+    float percent = (float)val/(float)((1 << write_resolution)-1);
+    pwm->write(percent);
+}
+
 void MBI5039::setBrightness(float b)
 {
   brightness = (int) ((1.0 - b) * MAX_PWM_VALUE);
@@ -21,7 +31,11 @@ void MBI5039::disable()
 
 void MBI5039::enable()
 {
-  analogWrite(noe_pin, brightness);
+  analogWrite(noe_pin, 254);
+  //myAnalogWrite(noe_pin, 251);
+  //myAnalogWrite(noe_pin, brightness);
+  //analogWrite(noe_pin, brightness);
+  //analogWrite(noe_pin, 900);
 }
 
 void MBI5039::latch()
@@ -51,7 +65,6 @@ void MBI5039::sendData(uint8_t *data1, uint8_t *data2, uint8_t *data3, uint8_t *
   else
     mask = 1;
 
-  //Serial.println("What...");
 
   for (int i=0; i<8; i++)
   {

@@ -5,7 +5,8 @@
 #endif
 //#include "mbed.h"
 
-
+#include "pins_arduino.h"
+#include "pinDefinitions.h"
 
 #define debug.h
 
@@ -21,6 +22,7 @@ class MBI5039
     void enable();
     void disable();
     void latch();
+    void myAnalogWrite(pin_size_t pin, int val);
     void setBrightness(float brightness);
     void sendData(uint8_t *data1, uint8_t *data2, uint8_t *data3, uint8_t *data4, bool bitOrder);
     void sendData(uint16_t data1, uint16_t data2, uint16_t data3, uint16_t data4, bool bitOrder);
