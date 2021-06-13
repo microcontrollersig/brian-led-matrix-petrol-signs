@@ -57,11 +57,14 @@ The purpose of the Raspberry Pico:
 * receive commands from the D1 mini via serial(RX).
 
 You can either upload code using the Arduino IDE or simply use the binary file with extension **uf2**
+
 Procedure for either method [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/tree/main/code/pico).
 
 ## Uploading code to D1 mini
 
 You can either upload code using the Arduino IDE or using an ESP8266 flashing tool such as ESPHome Flasher and the binary file that ends with extension **bin**
+
+Procedure for either method [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/tree/main/code/d1mini)
 
 The purpose of the D1 mini:
 
