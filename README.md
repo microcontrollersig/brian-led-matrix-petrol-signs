@@ -31,7 +31,11 @@ They usually come in 6 panels wide, 2 panels height (effectively becomes a 96x32
 
 ### PCB Top Layer
 
+![PCB Top Layer](https://raw.githubusercontent.com/microcontrollersig/brian-led-matrix-petrol-signs/main/eagle/jlcpcb-12-top.png)
+
 #### PCB Bottom Layer
+
+![PCB Bottom Layer](https://raw.githubusercontent.com/microcontrollersig/brian-led-matrix-petrol-signs/main/eagle/jlcpcb-12-bottom.png)
 
 #### Raspberry Pi Pico
 
