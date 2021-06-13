@@ -4,12 +4,13 @@
 
 Here is the backside of one 16x16 panel up close and personal (Thanks to Brian D. for awesome shot).
 
-
 ![LED Panel](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/IMG_1820-redacted.jpg)
 
 Important note: The 74HC245 operates at **3.3V**, and therefore any inputs connected to the 16-pin input connector has to operate at 3.3V.
 
-They usually come in 6 panels wide, 2 panels height (effectively becomes a 96x32)
+Not the usual HUB08/HUB12/HUB40/HUB75 style setup. Inner workings [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/blob/main/REVERSEENGINEER.md)
+
+They usually come in 6 panels wide, 2 panels height (effectively becomes a 96x32 single-color LED matrix)
 
 #### Plan
 
