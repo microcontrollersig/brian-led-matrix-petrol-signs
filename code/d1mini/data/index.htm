@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+<meta charset='utf-8'>
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+<title>
+Brian's LED Panel Main Page</title>
+<style>
+body {
+  font-family: Verdana, sans-serif;
+  text-align: center;
+  background: #222;
+  color: #fff;
+  line-height: 200%;
+  margin: 0;
+}
+hr {
+  border-color: #666;
+}
+button {
+  background: #333;
+  color: #fff;
+  font-family: Verdana, sans-serif;
+  border: 0.3ch solid #333;
+  display: inline-block;
+  font-size: 20px;
+  margin: 8px;
+  margin-top: 12px;
+}
+.helpB {
+  text-align: left;
+  position: absolute;
+  width: 60px;
+}
+
+label {
+	font-size: 1.6rem;
+	padding-right: 10px;
+	font-weight: bold;
+}
+
+input {
+  color: #000;
+  font-family: Verdana, sans-serif;
+  border: 0.5ch solid purple;
+  line-height: 10vh
+}
+input[type="number"] {
+  width: 4em;
+}
+select {
+  background: #333;
+  color: #fff;
+  font-family: Verdana, sans-serif;
+  border: 0.5ch solid #333;
+}
+td {
+  padding: 2px;
+}
+.d5 {
+  width: 4.5em !important;
+}
+
+
+.chosen { background-color: #06c; height: 30vh; padding-bottom: 8vh;}
+.notchosen { background-color: grey; height: 30vh; padding-bottom: 8vh;}
+
+*, *:after, *:before {
+  box-sizing: border-box;
+}
+
+html { font-size: 62.5%; }
+body { margin: 0; padding: 0; }
+
+/* buttons */
+
+.btn-align { position: relative; top: 45%; }
+.btn-ghost {
+  display: block;
+  width: 340px; width: 34rem;
+  height: 66px; height: 6.6rem;
+  font: 700 20px/66px "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; font: 2.0rem/6.6rem;
+  letter-spacing: 0.01rem;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all .16s ease;
+  margin: 0 auto;
+}
+.btn-blue  { color: #06c; border: 2px solid #06c; }
+.btn-blue:hover, .btn-blue:active, .btn-blue:focus  {
+  color: #fff;
+  background-color: #06c;
+  border: 2px solid #06c;
+}
+.btn-white { color: #fff; border: 2px solid #fff; }
+.btn-white:hover, .btn-white:active, .btn-white:focus  {
+  color: #06c;
+  background-color: #fff;
+  border: 2px solid #fff;
+}
+
+@media screen and (max-width: 420px) { /* iPhone Landscape */
+  .btn-ghost {
+    width: 290px; width: 29.0rem;
+    height: 50px; height: 5.0rem;
+    font-size: 16px; font-size: 1.6rem;
+    line-height: 50px; line-height: 5.0rem;
+  }
+}
+
+
+
+</style>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    document.querySelectorAll(".commandonly a").forEach(item => {
+      item.addEventListener("click", event => {
+        event.preventDefault();
+        let chosenOne = document.getElementsByClassName("chosen")[0]
+        chosenOne.classList.remove('notchosen', 'chosen');
+        chosenOne.classList.add('notchosen');
+        event.target.parentElement.classList.remove('notchosen');  
+        event.target.parentElement.classList.add('chosen');   
+
+        let command = event.target.getAttribute('data-command'); 
+        document.querySelector("#noargs input").value = command;
+        document.querySelector("#noargs").submit();
+      });    
+  });
+
+  document.querySelectorAll(".textparam button").forEach(item => {
+    item.addEventListener("click", event => {
+    	event.preventDefault();
+    	let parent = event.target.parentElement;
+    	let command = parent.querySelector("input").getAttribute("data-command");
+    	let textarg = parent.querySelector("input").value;
+        document.querySelectorAll("#oneargs input")[0].value = command;
+        document.querySelectorAll("#oneargs input")[1].value = textarg;
+        document.querySelector("#oneargs").submit();
+
+        let chosenOne = document.getElementsByClassName("chosen")[0]
+        chosenOne.classList.remove('notchosen', 'chosen');
+        chosenOne.classList.add('notchosen');
+
+        let newChosen = parent.previousElementSibling;
+        newChosen.classList.remove('notchosen');
+        newChosen.classList.add('chosen');
+
+    });
+  });
+
+});
+</script>
+<head>
+<body>
+
+<h2>Brian's LED Panel Main Page</h2>
+
+<div class="chosen commandonly">
+    <a class="btn-ghost btn-white btn-align" data-command="@">
+      IDLE
+    </a>
+</div>
+
+<div class="notchosen commandonly">
+    <a class="btn-ghost btn-white btn-align" data-command="0">
+      Top-Left Single Pixel
+    </a>
+</div>
+
+<div class="notchosen commandonly">
+  <a class="btn-ghost btn-white btn-align" data-command="1">
+   Bottom-right pixel
+  </a>
+</div>
+
+<div class="notchosen commandonly">
+    <a class="btn-ghost btn-white btn-align" data-command="2">
+      Top-Right Single Pixel
+    </a>
+</div>
+
+<div class="notchosen commandonly">
+  <a class="btn-ghost btn-white btn-align" data-command="3">
+   Bottom-Left Single Pixel 
+  </a>
+</div>
+
+<div class="notchosen commandonly">
+    <a class="btn-ghost btn-white btn-align" data-command="4">
+      Pixel scan
+    </a>
+</div>
+
+<div class="notchosen commandonly">
+  <a class="btn-ghost btn-white btn-align" data-command="5">
+   Snake game
+  </a>
+</div>
+
+<div class="notchosen singleparam">
+    <a class="btn-ghost btn-white btn-align" >
+     Static Text
+    </a>    
+</div>
+<div class="textparam" >
+	<label for="statictext">TEXT</label><input type="text" name="statictext" maxlength="16" data-command="6"/><button>SEND</button>
+</div>
+
+<div class="notchosen singleparam">
+  <a class="btn-ghost btn-white btn-align">
+    Scrolling Text
+  </a>
+</div>
+<div class="textparam" >
+	<label for="statictext">TEXT</label><input type="text" name="scrollingtext"  maxlength="16" data-command="7"/><button>SEND</button>
+</div>
+
+
+<form method="post" action="/command" name="noargs" id="noargs">
+  <input type="hidden" name="command"/>
+</form>
+
+<form method="post" action="/command" name="oneargs" id="oneargs">
+  <input type="hidden" name="command"/>
+  <input type="hidden" name="arg1">
+</form>
+
+</body>
+</html>
