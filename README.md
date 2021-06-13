@@ -26,17 +26,9 @@ They usually come in 6 panels wide, 2 panels height (effectively becomes a 96x32
 
 ![pinout](https://www.raspberrypi-spy.co.uk/wp-content/uploads/2021/01/raspberry_pi_pico_pinout.png)
 
-![pwm](https://i0.wp.com/www.etechnophiles.com/wp-content/uploads/2021/02/Screenshot-671.png)
-
-![powertrain](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/pico-powertrain.png)
-
-![schottky modification](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/pico-powertrain-schottky.png)
-
 ## ESP8266 wemos d1 mini
 
 ![pinout](https://i2.wp.com/randomnerdtutorials.com/wp-content/uploads/2019/05/ESP8266-WeMos-D1-Mini-pinout-gpio-pin.png?w=715&quality=100&strip=all&ssl=1)
-
-![footprint](https://i0.wp.com/i.ibb.co/dQFPJr2/Board-de-desarrollo-We-Mos-D1-Mini-ESP32-Wi-Fi-Bluetooth-BLE-Dimensiones-768x499.jpg)
 
 # PCB Design
 
