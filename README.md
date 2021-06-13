@@ -47,6 +47,42 @@ They usually come in 6 panels wide, 2 panels height (effectively becomes a 96x32
 
 ![pinout](https://i2.wp.com/randomnerdtutorials.com/wp-content/uploads/2019/05/ESP8266-WeMos-D1-Mini-pinout-gpio-pin.png?w=715&quality=100&strip=all&ssl=1)
 
+# Software
+
+## Uploading code to Raspberry Pico
+
+The purpose of the Raspberry Pico:
+
+* update LED matrix 
+* receive commands from the D1 mini via serial(RX).
+
+You can either upload code using the Arduino IDE or simply use the binary file with extension **uf2**
+Procedure for either method [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/tree/main/code/pico).
+
+## Uploading code to D1 mini
+
+You can either upload code using the Arduino IDE or using an ESP8266 flashing tool such as ESPHome Flasher and the binary file that ends with extension **bin**
+
+The purpose of the D1 mini:
+
+* Present user with web interface for controlling LED matrix. 
+* Send commands for the Pico to execute on the LED matrix via Serial(TX).
+
+There are two modes of operation to connect:
+
+* Captive portal mode: You will connect to a Wifi SSID created by the D1 mini, if you then go to http://192.168.4.1
+  you will presented with the following page:
+
+  Enter the username/password of your local wifi network, then click **Save and Connect**
+
+  You now reconnect to your normal wifi network, and you will then need to find the IP address of the device on your network.
+  Angry IP scanner is a good tool to use for this task. 
+  
+* Normal mode: If you have done the captival portal mode and saved your wifi password, subsequent reboots of the D1 mini will
+  attempt to your wifi network. You can then control the LED matrix with a webpage like the one below.
+  
+  
+
 # References
 
 * [How LED matrix was reverse engineered](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/blob/main/REVERSEENGINEER.md)
