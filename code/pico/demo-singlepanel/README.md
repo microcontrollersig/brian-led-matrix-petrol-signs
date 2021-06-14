@@ -21,6 +21,8 @@
 
 #### Method 2 Using the Arduino IDE (harder)
 
+TODO
+
 # Interacting with the demo from a Serial Monitor program
 
 It is highly recommended to use MobaXterm for the demo.
