@@ -20,3 +20,30 @@
 
 
 #### Method 2 Using the Arduino IDE (harder)
+
+# Interacting with the demo from a Serial Monitor program
+
+It is highly recommended to use MobaXterm for the demo.
+
+The input format is:
+
+{**command**}
+
+Example:
+
+{0}
+
+Commands available
+
+| Command |Description|
+|---------|-----------|
+|0|Top Left|
+|1|Bottom right|
+|2|Top right|
+|3|Bottom left|
+|4|Test Pattern 1|
+|5|Snake Game|
+|6|Single character|
+|7|Multiple characters|
+|8|Pong|
+
