@@ -4,7 +4,7 @@ Use the latest Arduino IDE (1.8.15 at the time of writing).
 
 1. Install the Arduino Mbed board for RP2040 
    ![Mbed Arduino](https://raw.githubusercontent.com/microcontrollersig/brian-led-matrix-petrol-signs/main/images/mbedarduino.png)
-2. Install LittleFS Arduino Plugin [here](https://github.com/earlephilhower/arduino-esp8266littlefs-plugin
+2. Install LittleFS Arduino Plugin [here](https://github.com/earlephilhower/arduino-esp8266littlefs-plugin)
 3. In Arduino preferences, enable **Show verbose output during** for both compilation and upload.
 4. Build. The last line will indicate the location of the **elf** binary file. You will need access to this file.
 5. Install elf2uf2 tool from the Pico SDK.
