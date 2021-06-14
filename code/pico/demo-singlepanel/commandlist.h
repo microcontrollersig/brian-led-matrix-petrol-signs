@@ -68,6 +68,7 @@ class CommandList
       movingcommands['4'] = true;
       movingcommands['5'] = true;
       movingcommands['7'] = true;
+      movingcommands['8'] = true;
       
       return movingcommands;
    }
