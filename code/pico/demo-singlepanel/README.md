@@ -9,11 +9,11 @@
 
 2. Press and hold the **BOOTSEL** button on the Raspberry Pico while connecting the USB cable to the PC. Once USB is connected to PC, release button.
 
-![bootsel button](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/images/pico-bootsel.png&s=200)
+<img src="https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/images/pico-bootsel.png" width="200" />
 
 3. If successful, the Pico will show up as USB drive in Windows Explorer as **RPI-RP2**.
 
-![rpi-rp2](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/images/rpi-rp2.png&s=200)
+<img src="https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/images/rpi-rp2.png" width="200" />
 
 4. Copy the UF2 binary file to the USB drive. After copying, the USB drive will disappear. The program has been
    successfully uploaded!
