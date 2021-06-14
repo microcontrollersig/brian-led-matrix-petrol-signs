@@ -11,7 +11,7 @@
 
 <img src="https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/images/pico-bootsel.png" width="300" />
 
-3. If successful, the Pico will show up as USB drive in Windows Explorer as **RPI-RP2**.
+3. If successful, the Pico will show up as USB drive in File Explorer as **RPI-RP2**.
 
 <img src="https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/images/rpi-rp2.png" width="500" />
 
