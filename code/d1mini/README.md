@@ -1,5 +1,14 @@
 # Uploading software to D1 mini
 
+### Use ESPHome Flasher (easiest method)
+
+1. Download ESPHome Flasher [here](https://github.com/esphome/esphome-flasher/releases)
+2. Download **d1mini.bin** binary file
+3. Flash.
+
+### Use Arduino IDE (hard method)
+
+TODO
 
 # Usage
 
