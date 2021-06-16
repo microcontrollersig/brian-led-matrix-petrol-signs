@@ -18,15 +18,17 @@ class Pong
     int batsize = 4;
     int playerOneScore = 0;
     int playerTwoScore = 0;
-    int ballX = 0;
-    int ballY = 0;
     int paddleX = (16 - batsize)/2;
     int paddleY = (16 - batsize)/2;
+    int speedX = 0;
+    int speedY = 0;
         
   public:
     DMD3 *canvas;
     PongGameState gameState = PongGameState::INITIALIZE;
     int scoreboardCounter = 0;
+    int ballX = 0;
+    int ballY = 0;
     void setCanvas(DMD3 *c) { canvas = c; }
     void drawNet() {
       for (int i=0; i<8; i++) {
@@ -39,7 +41,7 @@ class Pong
     }
     void randomBall() {
       ballX = 8;
-      ballY = random(0,15);
+      ballY = random(8,15);
     }
     void drawBall() {
       canvas->setPixel(ballX, ballY);
@@ -66,11 +68,44 @@ class Pong
         canvas->setPixel(15, paddleY + i);
       }
     }
+
+    void startingPositions() {
+      ballX = 8;
+      ballY = random(8,15);
+      speedX = 1;
+      speedY = -1;
+    }
+
     void resetGame() {
       playerOneScore = 0;
       playerTwoScore = 0;
-      ballX = 0;
-      ballY = 0;
+      startingPositions();
+    }
+
+
+
+
+    
+    bool moveBall() {
+      ballX = ballX + speedX;
+      ballY = ballY + speedY;
+
+      if (ballX > 15) {
+        playerOneScore++;
+        return true;
+      }
+      
+      if (ballX < 0) {
+        playerTwoScore++;
+        return true;
+      }
+
+      else if (ballY < 0 || ballY > 15) {
+        speedY = -speedY;  
+      }
+
+      return false;
+      
     }
 };
 
@@ -85,31 +120,35 @@ class Test9Command : public Command
        if ( millis() - timeStart > 1000) {
           clearSerialMonitor();
           canvas->clear();
+          uint16_t adc;
+
+          if (pong.gameState == PongGameState::PLAYING && (pong.ballX > 15 | pong.ballX <0)) {
+            pong.startingPositions();
+            pong.gameState = PongGameState::SCOREUPDATE;
+          }
 
           switch(pong.gameState) {
             case PongGameState::INITIALIZE:
               pong.setCanvas(canvas);
+              pong.resetGame();
               pong.drawNet();
               pong.drawPaddles();
               pong.drawScore();
-              if (pong.scoreboardCounter > 5) {
-                pong.gameState = PongGameState::STARTGAME;
-                pong.scoreboardCounter = 0;                
-                adc_init();
-                adc_set_temp_sensor_enabled(true);
-                adc_select_input(4);
-                uint16_t adc = adc_read();
-                randomSeed(adc);                  
-              }
-              else 
-                pong.scoreboardCounter++;              
+              pong.gameState = PongGameState::STARTGAME;            
+              adc_init();
+              adc_set_temp_sensor_enabled(true);
+              adc_select_input(4);
+              adc = adc_read();
+              randomSeed(adc);                  
               break;
 
             case PongGameState::STARTGAME:
               pong.randomBall();
-              pong.gameState = PongGameState::PLAYING;
+              pong.gameState = PongGameState::PLAYING;              
+              break;
 
             case PongGameState::PLAYING:
+               pong.moveBall();
                pong.drawBall();
                pong.drawPaddles();
                break;
@@ -118,13 +157,14 @@ class Test9Command : public Command
                pong.drawNet();
                pong.drawPaddles();
                pong.drawScore();
+               pong.gameState = PongGameState::PLAYING;
                break;                            
           }
           
 
 
           printCanvas(canvas);
-          //canvas->update();
+          canvas->update();
           timeStart = millis();
        } 
     }
