@@ -131,16 +131,23 @@ class Test9Command : public Command
             case PongGameState::INITIALIZE:
               pong.setCanvas(canvas);
               pong.resetGame();
-              pong.drawNet();
-              pong.drawPaddles();
-              pong.drawScore();
-              pong.gameState = PongGameState::STARTGAME;            
+              pong.gameState = PongGameState::SCOREUPDATE;            
               adc_init();
               adc_set_temp_sensor_enabled(true);
               adc_select_input(4);
               adc = adc_read();
               randomSeed(adc);                  
-              break;
+              [[fallthrough]];
+
+            case PongGameState::SCOREUPDATE:
+               pong.drawNet();
+               pong.drawPaddles();
+               pong.drawScore();
+               if (pong.scoreboardCounter++ > 3) {
+                 pong.scoreboardCounter = 0; 
+                 pong.gameState = PongGameState::PLAYING;
+               }
+               break;  
 
             case PongGameState::STARTGAME:
               pong.randomBall();
@@ -153,12 +160,7 @@ class Test9Command : public Command
                pong.drawPaddles();
                break;
 
-            case PongGameState::SCOREUPDATE:
-               pong.drawNet();
-               pong.drawPaddles();
-               pong.drawScore();
-               pong.gameState = PongGameState::PLAYING;
-               break;                            
+                          
           }
           
 
