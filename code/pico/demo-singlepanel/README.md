@@ -48,4 +48,5 @@ Commands available
 |6|Single character|
 |7|Multiple characters|
 |8|Pong|
+|@|IDLE|
 
