@@ -18,8 +18,8 @@ class Pong
     int batsize = 4;
     int playerOneScore = 0;
     int playerTwoScore = 0;
-    int paddleX = (16 - batsize)/2;
-    int paddleY = (16 - batsize)/2;
+    int paddleOne = (16 - batsize)/2;
+    int paddleTwo = (16 - batsize)/2;
     int speedX = 0;
     int speedY = 0;
         
@@ -61,11 +61,11 @@ class Pong
     }
     void drawPaddles() {
       for (int i=0; i<batsize; i++) {
-        canvas->setPixel(0, paddleX + i);
+        canvas->setPixel(0, paddleOne + i);
       }
 
       for (int i=0; i<batsize; i++) {
-        canvas->setPixel(15, paddleY + i);
+        canvas->setPixel(15, paddleTwo + i);
       }
     }
 
@@ -95,13 +95,27 @@ class Pong
         return true;
       }
       
-      if (ballX < 0) {
+      else if (ballX < 0) {
         playerTwoScore++;
         return true;
       }
 
-      else if (ballY < 0 || ballY > 15) {
+      if (ballY <= 0) {
+        ballY = 0;
+        speedY = -speedY;    
+      } 
+      
+      else if (ballY >= 15) {
+        ballY = 15;
         speedY = -speedY;  
+      }  
+      
+      if (ballX == 15 && (ballY - paddleTwo >= 0 && ballY - paddleTwo <= batsize ) ) {
+        speedX = -speedX;
+      }
+
+      if (ballX == 0 && (ballY - paddleTwo >= 0 && ballY - paddleTwo <= batsize ) ) {
+        speedX = -speedX;
       }
 
       return false;
