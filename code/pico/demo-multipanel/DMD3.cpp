@@ -423,8 +423,8 @@ void Bitmap::drawText(int x, int y, const char *str, int len)
     while (len-- > 0) {
         x += drawChar(x, y, *str++);
         if (len > 0) {
-            fill(x, y, 1, height, !_textColor);
-            ++x;
+            //fill(x, y, 1, height, !_textColor);
+            //++x;
         }
         if (x >= _width)
             break;
@@ -460,6 +460,66 @@ void Bitmap::drawText(int x, int y, const String &str, int start, int len)
     }
 }
 
+
+int Bitmap::drawCharVariable(int x, int y, char ch)
+{
+    uint8_t height = fontHeight(_font);
+    if (ch == ' ') {
+        // Font may not have space, or it is zero-width.  Calculate
+        // the real size and fill the space.
+        int spaceWidth = charWidth('n');
+        fill(x, y, spaceWidth, height, !_textColor);
+        return spaceWidth;
+    }
+    uint8_t first = fontFirstChar(_font);
+    uint8_t count = fontCharCount(_font);
+    uint8_t index = (uint8_t)ch;
+    if (index < first || index >= (first + count))
+        return 0;
+    index -= first;
+    uint8_t heightBytes = (height + 7) >> 3;;
+    uint8_t width;
+    const uint8_t *image;
+    if (fontIsFixed(_font)) {
+        // Fixed-width font.
+        width = fontWidth(_font);
+        image = ((const uint8_t *)_font) + 6 + index * heightBytes * width;
+    } else {
+        // Variable-width font.
+        width = pgm_read_byte(_font + 6 + index);
+        image = ((const uint8_t *)_font) + 6 + count;
+        for (uint8_t temp = 0; temp < index; ++temp) {
+            // Scan through all previous characters to find the starting
+            // location for this one.
+            image += pgm_read_byte(_font + 6 + temp) * heightBytes;
+        }
+    }
+    if ((x + width) <= 0 || (y + height) <= 0)
+        return width;   // Character is off the top or left of the screen.
+    Color invColor = !_textColor;
+    for (uint8_t cx = 0; cx < width; ++cx) {
+        for (uint8_t cy = 0; cy < heightBytes; ++cy) {
+            uint8_t value = pgm_read_byte(image + cy * width + cx);
+            int posn;
+            if (heightBytes > 1 && cy == (heightBytes - 1))
+                posn = height - 8;
+            else
+                posn = cy * 8;
+            for (uint8_t bit = 0; bit < 8; ++bit) {
+                if ((posn + bit) >= (cy * 8) && (posn + bit) <= height) {
+                    if (value & 0x01)
+                        setPixel(x + cx, y + posn + bit, !_textColor);
+                    else
+                        setPixel(x + cx, y + posn + bit, !invColor);
+                }
+                value >>= 1;
+            }
+        }
+    }
+    return width;
+}
+
+
 /**
  * \brief Draws a single character \a ch at (\a x, \a y).
  *
@@ -474,6 +534,10 @@ void Bitmap::drawText(int x, int y, const String &str, int start, int len)
  */
 int Bitmap::drawChar(int x, int y, char ch)
 {
+    if (!fontIsFixed(_font)) {
+      drawCharVariable(x, y, ch);
+    }
+  
     uint8_t height = fontHeight(_font);
 
     if (ch == ' ') {
@@ -509,6 +573,7 @@ int Bitmap::drawChar(int x, int y, char ch)
 
         
     } else {
+        heightBytes = (height + 7) >> 3;
         // Variable-width font.
         width = pgm_read_byte(_font + 6 + index);
         image = ((const uint8_t *)_font) + 6 + count;

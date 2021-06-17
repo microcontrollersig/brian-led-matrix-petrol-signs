@@ -2,6 +2,7 @@
 #include "dispatcher.h"
 #include "DMD3.h"
 #include "customglcdfonts.h"
+#include "fonts/Verdana16x16.h"
 
 #if defined(ARDUINO_ARCH_RP2040)
 /*
@@ -45,7 +46,8 @@ void setup() {
 
   display.begin(PIN_CLK, PIN_LATCH, PIN_NOE, PIN_DATA1, PIN_DATA2, PIN_DATA3, PIN_DATA4);
   display.setBrightness(0.05);
-  display.setFont(ArialFont16x16);
+  //display.setFont(ArialFont16x16);
+  display.setFont(VerdanaFont16x16);
   
   runner = new Dispatcher(&display);
   runner->dispatch('0');
