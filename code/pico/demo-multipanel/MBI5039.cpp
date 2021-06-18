@@ -6,7 +6,7 @@
 #define MAX_PWM_VALUE 255
 #endif
 
-#define CLOCK_PERIOD_USECS 500
+#define CLOCK_PERIOD_USECS 50
 #define HALF_CLOCK_PERIOD CLOCK_PERIOD_USECS/2
 
 void MBI5039::myAnalogWrite(pin_size_t pin, int val)

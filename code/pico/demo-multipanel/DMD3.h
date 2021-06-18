@@ -66,6 +66,7 @@ public:
     void drawText(int x, int y, const char *str, int len = -1);
     void drawText(int x, int y, const String &str, int start = 0, int len = -1);
 
+int drawCharVariable(int x, int y, char ch);
     int drawChar(int x, int y, char ch);
 
     int charWidth(char ch) const;

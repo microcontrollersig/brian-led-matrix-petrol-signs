@@ -1257,13 +1257,15 @@ void DMD3::update() {
   mbi->disable();
 
   for (int i=0; i < _heightPanels; i++) 
-  {
-    for (int j=0; j < _widthPanels; j++) 
+  {    
+    ptr = ptr + _stride * i * DMD3_NUM_ROWS;
+    
+  for (int j=0; j < _widthPanels; j++) 
     {
-      d1 = ptr + 1 + 7 * _stride + DMD3_NUM_ROWS * _stride * j + DMD3_NUM_COLUMNS * i; 
-      d2 = ptr + 1 + 15 * _stride + DMD3_NUM_ROWS * _stride * j + DMD3_NUM_COLUMNS * i;
-      d3 = ptr + 7 * _stride + DMD3_NUM_ROWS * _stride * j + DMD3_NUM_COLUMNS * i;
-      d4 = ptr + 15 * _stride + DMD3_NUM_ROWS * _stride * j + DMD3_NUM_COLUMNS * i; 
+      d1 = ptr + 1 + 7 * _stride + 2*j; 
+      d2 = ptr + 1 + 15 * _stride + 2*j;
+      d3 = ptr + 7 * _stride + 2*j ;
+      d4 = ptr + 15 * _stride + 2*j; 
 
       #ifdef DEBUG
         Serial.println("\n");
@@ -1283,8 +1285,8 @@ void DMD3::update() {
         d2 = d2 - _stride;
         d3 = d3 - _stride;
         d4 = d4 - _stride;    
-      }      
-    }
+    }      
+   }
   }
 
   /*

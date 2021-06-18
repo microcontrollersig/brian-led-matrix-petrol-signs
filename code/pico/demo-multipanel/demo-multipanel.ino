@@ -50,10 +50,10 @@ void setup() {
   display.setFont(VerdanaFont16x16);
   
   runner = new Dispatcher(&display);
-  runner->dispatch('0');
+  runner->dispatch('1');
 }
 
 void loop() {
   runner->handleSerialInput(Serial);
-  //delay(5000);
+  
 }
