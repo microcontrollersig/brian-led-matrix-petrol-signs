@@ -26,6 +26,7 @@ class Test8Command : public Command
         else {
           currentIndex++;  
         }
+        canvas->update();
         timeStart = millis();
       }      
     }

@@ -169,7 +169,7 @@ class Test6Command : public Command
   public:
     void execute(DMD3 *canvas)  override {
 
-      if ( millis() - timeStart > 1000) {
+      if ( millis() - timeStart > 300) {
         _canvas = canvas;
         clearSerialMonitor();
         canvas->clear();
@@ -185,12 +185,12 @@ class Test6Command : public Command
         int width = 16;
         int height = 16; 
         char buf[100];
-        
+        /*
         for (int z=0; z< height; z++) {
           canvas->debugPixelLine(z, buf);
           Serial.println(buf);    
         }
-
+        */
         if (hasGameEnded()) {
           gameEnded = true;
         }
@@ -198,7 +198,8 @@ class Test6Command : public Command
         if (hasSnakeEatenFruit()){
           randomFruitPosition();  
         }
-        
+
+        canvas->update();
         timeStart = millis();
       }     
     }

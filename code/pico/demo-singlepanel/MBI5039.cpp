@@ -6,7 +6,7 @@
 #define MAX_PWM_VALUE 255
 #endif
 
-#define CLOCK_PERIOD_USECS 500
+#define CLOCK_PERIOD_USECS 100
 #define HALF_CLOCK_PERIOD CLOCK_PERIOD_USECS/2
 
 void MBI5039::myAnalogWrite(pin_size_t pin, int val)
@@ -45,7 +45,7 @@ void MBI5039::latch()
   delayMicroseconds(250);
   digitalWrite(latch_pin, LOW);
   delayMicroseconds(250);
-}
+}        
 
 void MBI5039::sendDataMSB(uint8_t *data1, uint8_t *data2, uint8_t *data3, uint8_t *data4)
 {
@@ -77,9 +77,9 @@ void MBI5039::sendData(uint8_t *data1, uint8_t *data2, uint8_t *data3, uint8_t *
       mask = mask << 1;
 
     digitalWrite(clock_pin, LOW);
-    delayMicroseconds(HALF_CLOCK_PERIOD);
+    //delayMicroseconds(HALF_CLOCK_PERIOD);
     digitalWrite(clock_pin, HIGH);
-    delayMicroseconds(HALF_CLOCK_PERIOD);
+    //delayMicroseconds(HALF_CLOCK_PERIOD);
     digitalWrite(clock_pin, LOW);
   }
 

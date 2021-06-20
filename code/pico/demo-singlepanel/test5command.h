@@ -13,7 +13,7 @@ class Test5Command : public Command
   
   public:
     void execute(DMD3 *canvas)  override {
-      if ( millis() - timeStart > 200) {
+      if ( millis() - timeStart > 80) {
         clearSerialMonitor();
         canvas->clear();
 
@@ -28,10 +28,12 @@ class Test5Command : public Command
               canvas->setPixel(width - i - 1, j);
             else
               canvas->setPixel(i,j);
+            /*
             for (int z=0; z< height; z++) {
               canvas->debugPixelLine(z, buf);
               Serial.println(buf);    
             } 
+            */
             i = i + 1;
             if (i == 16) {
               i=0;
@@ -48,10 +50,12 @@ class Test5Command : public Command
               canvas->setPixel(i, height - j -1);
             else
               canvas->setPixel(i,j);
+            /*
             for (int z=0; z< height; z++) {
               canvas->debugPixelLine(z, buf);
               Serial.println(buf);    
             } 
+            */
             j = j + 1;
             if (j == 16) {
               j=0;
@@ -64,7 +68,7 @@ class Test5Command : public Command
             }
             break;         
       }
-  
+      canvas->update();
       timeStart = millis();
       }
     }    

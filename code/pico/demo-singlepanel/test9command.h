@@ -131,7 +131,7 @@ class Test9Command : public Command
   
   public:
     void execute(DMD3 *canvas)  override {
-       if ( millis() - timeStart > 1000) {
+       if ( millis() - timeStart > 400) {
           clearSerialMonitor();
           canvas->clear();
           uint16_t adc;
