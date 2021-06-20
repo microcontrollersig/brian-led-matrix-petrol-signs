@@ -24,20 +24,20 @@ They usually come in 6 panels wide, 2 panels height (effectively becomes a 96x32
 | 1   | ![Female Header](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/10pcs-lot-40P-female-header-1x40-Pin-2-54-Round-Female-Pin-Header-connector-1-40.jpg_Q90.jpg) | [Round Female Pin Header connector - snapable](https://www.aliexpress.com/item/32848204130.html)  | Aliexpress | Y | 
 
 
-#### EAGLE Schematic for PCB Board
-![schematic](https://raw.githubusercontent.com/microcontrollersig/brian-led-matrix-petrol-signs/main/eagle/Brians%20test%20board%2012-schematic.png)
+#### EAGLE Schematic and Board files for PCB Board
+![schematic](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/eagle/Brians%20test%20board%201.12a-schematic-mohan.png)
 
 #### EAGLE Board file for PCB Board
 
-![board](https://raw.githubusercontent.com/microcontrollersig/brian-led-matrix-petrol-signs/main/eagle/Brians%20test%20board%2012.png)
+![board](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/eagle/Brians%20test%20board%201.12a-board-mohan.png)
 
 ### PCB Top Layer
 
-![PCB Top Layer](https://raw.githubusercontent.com/microcontrollersig/brian-led-matrix-petrol-signs/main/eagle/jlcpcb-12-top.png)
+![PCB Top Layer](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/eagle/Brians%20test%20board%201.12a-topPCB-mohan.png)
 
 #### PCB Bottom Layer
 
-![PCB Bottom Layer](https://raw.githubusercontent.com/microcontrollersig/brian-led-matrix-petrol-signs/main/eagle/jlcpcb-12-bottom.png)
+![PCB Bottom Layer](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/eagle/Brians%20test%20board%201.12a-bottomPCB-mohan.png)
 
 #### Raspberry Pi Pico
 
@@ -75,6 +75,4 @@ The purpose of the D1 mini:
 
 * [How LED matrix was reverse engineered](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/blob/main/REVERSEENGINEER.md)
 
-* [Eagle file - schematic](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/eagle/Brians%20test%20board%2012.sch)
-
-* [Eagle file - board](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/eagle/Brians%20test%20board%2012.brd)
+* [Eagle files](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/tree/main/eagle)
