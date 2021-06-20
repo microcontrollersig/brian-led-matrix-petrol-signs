@@ -22,6 +22,7 @@ They usually come in 6 panels wide, 2 panels height (effectively becomes a 96x32
 | 1   | ![D1 mini](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/d1_mini_v3.1.0_1_16x16.jpg) | [ESP8266 Wemos D1 mini](https://www.wemos.cc/en/latest/d1/d1_mini.html)         | [Aliexpress - color: d1 mini](https://www.aliexpress.com/item/32651747570.html)  |    N     |
 | 1   | ![16 Pin IDC](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/PP1138-16-pin-idc-locking-vertical-headerImageMain-515.jpg) | [16 Pin IDC Locking Vertical Header](https://www.jaycar.com.au/16-pin-idc-locking-vertical-header/p/PP1138) | Jaycar CAT.NO:PP1138| N | 
 | 1   | ![Female Header](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/10pcs-lot-40P-female-header-1x40-Pin-2-54-Round-Female-Pin-Header-connector-1-40.jpg_Q90.jpg) | [Round Female Pin Header connector - snapable](https://www.aliexpress.com/item/32848204130.html)  | Aliexpress | Y | 
+| 1   | ![2N2222A](https://www.jaycar.com.au/2n2222a-npn-transistor/p/ZT2298) | Jaycar cat. no. ZT2298 | N |
 
 
 #### EAGLE Schematic for PCB Board
