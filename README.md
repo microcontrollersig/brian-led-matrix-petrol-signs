@@ -24,7 +24,7 @@ They usually come in 6 panels wide, 2 panels height (effectively becomes a 96x32
 | 1   | ![Female Header](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/10pcs-lot-40P-female-header-1x40-Pin-2-54-Round-Female-Pin-Header-connector-1-40.jpg_Q90.jpg) | [Round Female Pin Header connector - snapable](https://www.aliexpress.com/item/32848204130.html)  | Aliexpress | Y | 
 
 
-#### EAGLE Schematic and Board files for PCB Board
+#### EAGLE Schematic for PCB Board
 ![schematic](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/eagle/Brians%20test%20board%201.12a-schematic-mohan.png)
 
 #### EAGLE Board file for PCB Board
