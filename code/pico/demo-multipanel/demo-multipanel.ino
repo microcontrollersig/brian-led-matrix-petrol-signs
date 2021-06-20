@@ -42,7 +42,7 @@ Dispatcher *runner;
 
 void setup() {
   Serial.begin(115200);
-  delay(5000);
+  delay(1000);
 
   display.begin(PIN_CLK, PIN_LATCH, PIN_NOE, PIN_DATA1, PIN_DATA2, PIN_DATA3, PIN_DATA4);
   display.setBrightness(0.05);
