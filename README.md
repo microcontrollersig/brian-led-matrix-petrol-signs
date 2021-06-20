@@ -12,7 +12,7 @@ Not the usual HUB08/HUB12/HUB40/HUB75 style setup. Inner workings [here](https:/
 
 They usually come in 6 panels wide, 2 panels height (effectively becomes a 96x32 single-color LED matrix)
 
-# Create PCB Controller for LED matrix
+# PCB Controller for LED matrix
 
 #### Bill of Materials
 
