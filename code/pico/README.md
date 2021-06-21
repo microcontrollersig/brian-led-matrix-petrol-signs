@@ -1,3 +1,9 @@
+# Extras
+
+#### Fonts
+
+[1001freefonts](https://www.1001freefonts.com/lcd-fonts.php)
+
 # Troubleshooting a Raspberry Pico
 
 ### Unbricking a Pico
