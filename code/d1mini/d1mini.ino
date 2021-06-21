@@ -5,11 +5,20 @@
 #elif defined(ESP8266)
 #include <ESP8266WiFi.h>
 #include <ESPAsyncTCP.h>
+//#include <ESP8266mDNS.h>
 #endif
 #include "ESPAsyncWebServer.h"
 #include <LittleFS.h>
 #include <Ticker.h>
 #define WIFI_TIMEOUT 10000
+
+
+//#define DEBUG 0
+#define DEBUG 1 
+
+#define debug_print(val) do { if (DEBUG) Serial.print(val); } while(0)
+#define debug_println(val) do { if (DEBUG) Serial.println(val); } while(0)
+#define update_ledmatrix_text(val) do { Serial.print("{I`"); Serial.print(val);Serial.println("}"); } while(0)
 
 DNSServer dnsServer;
 AsyncWebServer server(80);
@@ -29,19 +38,20 @@ public:
       int params = request->params();
       AsyncWebParameter *ssid = request->getParam(0);
       AsyncWebParameter *wifipassword = request->getParam(1);
-      Serial.print("Number of params: ");
-      Serial.println(params);
-      Serial.print("SSID: ");
-      Serial.println(ssid->value().c_str());
-      Serial.print("Wifi password: ");
-      Serial.println(wifipassword->value().c_str());
-      File file = LittleFS.open("wifi.cfg", "w");
-      
+            
+      debug_print("Number of params: ");
+      debug_println(params);
+      debug_print("SSID: ");
+      debug_println(ssid->value().c_str());
+      debug_print("Wifi password: ");
+      debug_println(wifipassword->value().c_str());
+            
+      File file = LittleFS.open("wifi.cfg", "w+");      
       file.print(ssid->value().c_str());  
       file.print(',');
-      file.print(wifipassword->value().c_str());
-       
+      file.print(wifipassword->value().c_str());       
       file.close();
+      
       AsyncWebServerResponse* response = request->beginResponse(LittleFS, "/captiverestart.htm", "text/html");
       request->send(response);
       ticker.attach(5, restartESPCallback);
@@ -57,9 +67,6 @@ public:
 
   void handleRequest(AsyncWebServerRequest *request) {
     //AsyncResponseStream *response = request->beginResponseStream("text/html");
-
-    
-
     request->send(LittleFS,  "/captiveportal.htm", "text/html");
     // Captive portal is at: 192.168.4.1
     //request->send(response);
@@ -83,21 +90,21 @@ void startWebServer()
          AsyncWebParameter *c = request->getParam(0);
          char command[100];
          strcpy(command,  c->value().c_str());
-         Serial.print("{");
-         Serial.print(*command);
+                
+         debug_print("{");
+         debug_print(*command);
+ 
          for (int i=1; i<params; i++) {
-           Serial.print(";");
+           debug_print(";");
+           
            AsyncWebParameter *d = request->getParam(i);
-           Serial.print(d->value().c_str()); 
+           debug_print(d->value().c_str());
          }
-         Serial.print("}");
-         Serial.println();
-         /*
-         Serial.print("Command received. Number of arguments:");
-         Serial.println(params - 1);
-         Serial.print("Command:");
-         Serial.println(*command);
-         */
+     
+         debug_print("}");
+         debug_println();
+    
+
          request->send(204);        
    });
 
@@ -107,8 +114,13 @@ void startWebServer()
    });
 
 
+
    
    server.begin();
+
+    debug_println("Web server started");
+  
+
 }
 
 void parseWifiCfg(char *ssid, char *password)
@@ -132,30 +144,42 @@ void wificonfig()
   while (dir.next()) {
     if (dir.fileName() == "wifi.cfg"){
       if (dir.fileSize() == 0) {
-        Serial.println("Starting captive portal...");
+        debug_println("Starting captive portal...");
         startCaptiveWebServer();        
       }
 
       else {
         char ssid[100], password[100];
-        Serial.println("Attempting to parse wifi.cfg ...");
+        debug_println("Attempting to parse wifi.cfg ...");
         parseWifiCfg(ssid, password);
-        Serial.print("SSID retrieved from wifi.cfg:");
-        Serial.println(ssid);
-        Serial.print("password retrieved from wifi.cfg:");
-        Serial.println(password);
-        Serial.println("Attempting to connect to wifi...");
+        debug_print("SSID retrieved from wifi.cfg:");
+        debug_println(ssid);
+        debug_print("password retrieved from wifi.cfg:");
+        debug_println(password);
+        debug_println("Attempting to connect to wifi...");
         WiFi.begin(ssid,password);
         WiFi.waitForConnectResult(WIFI_TIMEOUT);
         if (WiFi.status() == WL_CONNECTED) {
-          Serial.println("Successfully connected to wifi.");
-          Serial.print("IP Address: ");
-          Serial.println(WiFi.localIP());
+          debug_println("Successfully connected to wifi.");
+          debug_print("IP Address: ");
+          debug_println(WiFi.localIP());
+          update_ledmatrix_text(WiFi.localIP());
           startWebServer();
+          /*
+          if (!MDNS.begin("brian")) {
+            debug_println("Error setting up MDNS responder!");
+            while(1) {
+              delay(1000);
+            }
+           }
+          debug_println("mDNS responder started");
+          // Add service to MDNS-SD
+          MDNS.addService("http", "tcp", 80);
+          */
         }
 
         else {
-          Serial.println("Couldn't connect to wifi. Starting Soft AP.");
+          debug_println("Couldn't connect to wifi. Starting Soft AP.");
           startCaptiveWebServer();
         } 
                
@@ -168,18 +192,22 @@ void wificonfig()
 void setup(){
   Serial.begin(115200);
   delay(5000);
-  Serial.println("begin wifi route...");
+  if (DEBUG)
+    Serial.println("Debugging ON."); 
+  else
+    Serial.println("Debugging OFF.");
+  debug_println("begin wifi route...");
   // Initialize SPIFFS
   if(!LittleFS.begin()){
     delay(5000);
-    Serial.println("An Error has occurred while mounting LittleFS. Did you forget to upload fs using ESP8266 LittleFS Data upload?");
+    debug_println("An Error has occurred while mounting LittleFS. Did you forget to upload fs using ESP8266 LittleFS Data upload?");
     return;
   }
 
   if (!LittleFS.exists("wifi.cfg"))
   {
-   delay(5000);
-   Serial.println("wifi.cfg doest not exist. Did you forget to upload fs using ESP8266 LittleFS Data upload?"); 
+    delay(5000);
+    debug_println("wifi.cfg doest not exist. Did you forget to upload fs using ESP8266 LittleFS Data upload?"); 
     return;
   }
 
