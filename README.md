@@ -24,7 +24,7 @@ They usually come in 6 panels wide, 2 panels height (effectively becomes a 96x32
 | 1 | ![Jumper shunts](https://www.jaycar.com.au/medias/sys_master/images/images/9523010535454/HM3240-jumper-shunts-links-pk-10ImageMain-515.jpg) | [Jumper shunt](https://www.jaycar.com.au/jumper-shunts-links-pk-10/p/HM3240) | Power Source selection jumper | Y |
 | 1 | ![2N2222A](https://www.jaycar.com.au/medias/sys_master/images/images/9525197864990/ZT2298-2n2222a-npn-transistorImageMain-515.jpg) | [2N2222A NPN transistor](https://www.jaycar.com.au/2n2222a-npn-transistor/p/ZT2298) |  Pico software-controlled reset switch  | N |
 | 1   | ![Female Header](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/10pcs-lot-40P-female-header-1x40-Pin-2-54-Round-Female-Pin-Header-connector-1-40.jpg_Q90.jpg) | [Round Female Pin Header connector - snapable](https://www.aliexpress.com/item/32848204130.html)  | Aliexpress | N |
-| 1 | ![Female header](https://www.jaycar.com.au/medias/sys_master/images/images/9523010535454/HM3240-jumper-shunts-links-pk-10ImageMain-515.jpg) | [Female header](https://www.jaycar.com.au/40-pin-female-header-strip/p/HM3230) | Female header for Pico | N |
+| 1 | ![Female header](https://www.jaycar.com.au/medias/sys_master/images/images/9525640790046/HM3230-40-pin-female-header-stripImageMain-515.jpg) | [Female header](https://www.jaycar.com.au/40-pin-female-header-strip/p/HM3230) | Female header for Pico | N |
 | 1 | ![IN5819](https://www.jaycar.com.au/medias/sys_master/images/images/9485212319774/ZR1020-1n5819-schottky-diode-40v-1a-do41ImageMain-515.jpg) | [1N5819 schottky diode](https://www.jaycar.com.au/1n5819-schottky-diode-40v-1a-do41/p/ZR1020) | Jaycar cat no. ZR1020  | N |
 
 
