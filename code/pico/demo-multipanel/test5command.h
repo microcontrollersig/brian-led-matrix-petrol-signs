@@ -40,7 +40,7 @@ class Test5Command : public Command
           
         }
        
-        //printCanvas(canvas);
+        printCanvas(canvas);
         canvas->update();      
         timeStart = millis();
       }

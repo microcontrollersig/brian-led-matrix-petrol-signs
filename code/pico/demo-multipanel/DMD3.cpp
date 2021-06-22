@@ -491,7 +491,7 @@ int Bitmap::drawCharVariable(int x, int y, char ch)
         for (uint8_t temp = 0; temp < index; ++temp) {
             // Scan through all previous characters to find the starting
             // location for this one.
-            image += pgm_read_byte(_font + 6 + temp) * heightBytes;
+            image += pgm_read_byte(_font + 6 + temp);
         }
     }
     if ((x + width) <= 0 || (y + height) <= 0)

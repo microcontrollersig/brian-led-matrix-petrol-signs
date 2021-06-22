@@ -6,7 +6,7 @@
 //#include "mbed.h"
 
 #include "pins_arduino.h"
-#include "pinDefinitions.h"
+//#include "pinDefinitions.h"
 
 #define debug.h
 

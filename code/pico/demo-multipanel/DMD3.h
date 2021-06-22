@@ -59,6 +59,7 @@ public:
     Font font() const { return _font; }
     //void setFont(Font font) { _font = font; }
     void setFont(Font font);
+    
 
     Color textColor() const { return _textColor; }
     //void setTextColor(Color color) { _textColor = color; }

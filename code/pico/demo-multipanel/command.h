@@ -3,6 +3,7 @@
 #include <Arduino.h>
 #include "DMD3.h"
 #include "debug.h"
+#include "customglcdfonts.h"
 
 class Command
 {

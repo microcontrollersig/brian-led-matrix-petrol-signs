@@ -11,12 +11,14 @@
 
 void MBI5039::myAnalogWrite(pin_size_t pin, int val)
 {
+  /*
     int write_resolution = 8;
     mbed::PwmOut* pwm = new mbed::PwmOut(digitalPinToPinName(pin));
     //pwm->period_ms(2); //500Hz
     pwm->period_us(100); //100kHz
     float percent = (float)val/(float)((1 << write_resolution)-1);
     pwm->write(percent);
+    */
 }
 
 void MBI5039::setBrightness(float b)

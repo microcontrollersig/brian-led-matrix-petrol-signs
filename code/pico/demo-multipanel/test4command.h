@@ -9,7 +9,7 @@ class Test4Command : public Command
   
   public:
     void execute(DMD3 *canvas)  override {
-      if ( millis() - timeStart > 10000) {        
+      if ( millis() - timeStart > 1000) {        
         clearSerialMonitor();
         canvas->clear();
         canvas->setPixel(0,0);

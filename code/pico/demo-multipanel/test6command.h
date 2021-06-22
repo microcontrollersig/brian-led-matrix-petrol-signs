@@ -4,11 +4,21 @@
 
 class Test6Command : public Command
 {  
+  private:
+    unsigned long timeStart = 0UL;
+  
   public:
     void execute(DMD3 *canvas)  override {
-      clearSerialMonitor();
-      canvas->clear();
-      printCanvas(canvas);
-      canvas->update();
+      if ( millis() - timeStart > 10000) {       
+        clearSerialMonitor();
+        canvas->clear();
+        Bitmap::Font defaultFont = canvas->font();
+        canvas->setFont(System5x7);
+        canvas->drawText(0,0, "192"); 
+        canvas->setFont(defaultFont);
+        printCanvas(canvas);
+        canvas->update();
+        timeStart = millis();
+      }
     }
 };
