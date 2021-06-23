@@ -95,7 +95,7 @@ void startWebServer()
          debug_print(*command);
  
          for (int i=1; i<params; i++) {
-           debug_print(";");
+           debug_print("`");
            
            AsyncWebParameter *d = request->getParam(i);
            debug_print(d->value().c_str());
