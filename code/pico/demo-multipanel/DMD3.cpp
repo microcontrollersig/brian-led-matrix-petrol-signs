@@ -413,7 +413,7 @@ void Bitmap::drawBitmap(int x, int y, Bitmap::ProgMem bitmap, Color color)
  *
  * \sa drawChar(), textColor(), font()
  */
-void Bitmap::drawText(int x, int y, const char *str, int len)
+void Bitmap::drawText(int x, int y, const char *str, bool rightPadding,int len)
 {
     if (!_font)
         return;
@@ -422,9 +422,9 @@ void Bitmap::drawText(int x, int y, const char *str, int len)
         len = strlen(str);
     while (len-- > 0) {
         x += drawChar(x, y, *str++);
-        if (len > 0) {
-            //fill(x, y, 1, height, !_textColor);
-            //++x;
+        if (len > 0 && rightPadding) {
+            fill(x, y, 1, height, Black);
+            ++x;
         }
         if (x >= _width)
             break;
@@ -508,9 +508,9 @@ int Bitmap::drawCharVariable(int x, int y, char ch)
             for (uint8_t bit = 0; bit < 8; ++bit) {
                 if ((posn + bit) >= (cy * 8) && (posn + bit) <= height) {
                     if (value & 0x01)
-                        setPixel(x + cx, y + posn + bit, !_textColor);
+                        setPixel(x + cx, y + posn + bit, _textColor);
                     else
-                        setPixel(x + cx, y + posn + bit, !invColor);
+                        setPixel(x + cx, y + posn + bit, invColor);
                 }
                 value >>= 1;
             }
@@ -532,14 +532,13 @@ int Bitmap::drawCharVariable(int x, int y, char ch)
  *
  * \sa drawText(), textColor(), font(), charWidth()
  */
+
 int Bitmap::drawChar(int x, int y, char ch)
 {
-    if (!fontIsFixed(_font)) {
-      drawCharVariable(x, y, ch);
-    }
-  
+    
     uint8_t height = fontHeight(_font);
 
+    
     if (ch == ' ') {
         // Font may not have space, or it is zero-width.  Calculate
         // the real size and fill the space.
@@ -547,33 +546,73 @@ int Bitmap::drawChar(int x, int y, char ch)
         fill(x, y, spaceWidth, height, !_textColor);
         return spaceWidth;
     }
+    
     uint8_t first = fontFirstChar(_font);
     uint8_t count = fontCharCount(_font);
     uint8_t index = (uint8_t)ch;
     
+    /*
+    Serial.print("first:");
+    Serial.print(first);
+    Serial.print(" count:");
+     Serial.print(count);
+    Serial.print(" index:");
+     Serial.print(index);
+    */
   
     if (index < first || index >= (first + count))
         return 0;
     index -= first;
-     // Serial.print(" new index:");
-     //Serial.println(index);
-    //uint8_t heightBytes = (height + 7) >> 3;;
-    uint8_t heightBytes = 2;
+    
+     //Serial.print(" new index:");
+     //Serial.print(index);
+    uint8_t heightBytes = (height + 7) >> 3;;
+    //uint8_t heightBytes = 2;
+   
     uint8_t width;
     const uint8_t *image;
-    uint8_t image2;
+
   
     if (fontIsFixed(_font)) {
         // Fixed-width font.
         width = fontWidth(_font);
-        image = ((const uint8_t *)_font) + 6 + (index -1) * width * 2 + 14;
+        //Serial.print("index:");
+        //Serial.println(index);
+        /*
+        Serial.print(" heightbytes:");
+        Serial.print(heightBytes);
+        Serial.print(" width:");
+        Serial.print(width);
+        Serial.print(" height:");
+        Serial.println(height);
+        */
+         
+        //image = ((const uint8_t *)_font) + 6 + index * heightBytes * width;
+        //image = ((const uint8_t *)_font) + 6 + (index -1) * width * 2 + 14;
+        int fontCharOffset = 6 + index*heightBytes*width;
+        image = ((const uint8_t *)_font) + fontCharOffset;
+        /*
+        Serial.print(" char:");
+        Serial.print(ch);
+        Serial.print(" font char offset:");
+        Serial.print(fontCharOffset);
+        */
+        //Serial.print(" column:");
+        //Serial.print("0x");
+        //Serial.print(pgm_read_byte((const uint8_t *)_font + fontCharOffset + 2) , HEX);
+        
       
-      
-        image2 = pgm_read_byte((const uint8_t *)_font + 6+32*10);
-
+   
+        //Serial.print("imagecount:");
+        //Serial.println(6 + (index -1) * width * 2 + 14);
+        //Serial.print("imagecount:");
+        //Serial.println( 6 + index  * width );
+        //Serial.print("image: 0x");
+        //Serial.println(*image, HEX);
+        //Serial.print("data: 0x");
+        //Serial.println(pgm_read_byte(image), HEX);
         
     } else {
-        heightBytes = (height + 7) >> 3;
         // Variable-width font.
         width = pgm_read_byte(_font + 6 + index);
         image = ((const uint8_t *)_font) + 6 + count;
@@ -587,54 +626,92 @@ int Bitmap::drawChar(int x, int y, char ch)
         return width;   // Character is off the top or left of the screen.
     Color invColor = !_textColor;
   
+    //Serial.println();
+
+    int i=0;
     
-  
-    for (uint8_t cx = 0; cx < width * 2; ++cx) {
-        //for (uint8_t cy = 0; cy < heightBytes; ++cy) {
-            uint8_t cy =1;
-            uint8_t value = pgm_read_byte(image + cy * width + cx);
-           
-            int posn;
-            if (heightBytes > 1 && cy == (heightBytes - 1))
-                posn = height - 8;
-            else
-                posn = cy * 8;
-            //Serial.print(" posn:");
-            //Serial.println(posn);
+    for (uint8_t j = 0; j < width * heightBytes; j++) { // Width
+      uint8_t data = pgm_read_byte(image + j);
             
-            uint8_t yoffset = 0; 
+      /*
+      Serial.print(" i:");
+      Serial.print(i);
+      Serial.print(" j:");
+      Serial.print(j);
+      Serial.print(" data:");
+      Serial.print("0x");
+      Serial.print(data, HEX);
+      Serial.println();
+      */
       
-            for (uint8_t bit = 0; bit < 8; ++bit) {
-                if ((posn + bit) >= (cy * 8) && (posn + bit) <= height) {
-                    /*
-                    if (value & 0x01)
-                        setPixel(x + cx, y + posn + bit, _textColor);
-                    else
-                        setPixel(x + cx, y + posn + bit, invColor);
-                    */
-              
-                  
-                  
-                   if (cx % 2 == 1) 
-                   {
-                     yoffset = 8; 
-                   }
-                     
- 
-                  
-                    if (value & 0x01) 
-                        setPixel(cx/2 - 1 + x, y + yoffset + bit, _textColor);
-                    else
-                        setPixel(cx/2 - 1 + x, y + yoffset + bit, invColor);  
-              
-              
-                }
-                value >>= 1;
-            }
-        //}
+      //if ((i == heightBytes - 1) && heightBytes > 1) {
+      //  offsetboo = height - 8;
+      //}
+      //Serial.print(" offset:");
+      //Serial.println(offsetboo);
+      
+      
+      
+      /*
+      for (uint8_t k = 0; k < 8; k++) {
+        if (data & (1 << k)) 
+          setPixel(x + j, y + offsetboo + k, White);
+        else
+          setPixel(x + j, y + offsetboo + k, Black);          
+      }
+      */
+      
+      
+      
+    //}
+      for (uint8_t k = 0; k < 8; k++) {
+        if (data & (1 << k)) 
+          setPixel(x + j/heightBytes , y + i*8 + k, White);
+        else
+          setPixel(x + j/heightBytes, y + i*8 + k, Black);          
+      }
+      
+      if (++i == heightBytes){
+        i=0;
+        
+      }
+      
+      
     }
+  
+ /*
+// last but not least, draw the character
+  for (uint8_t j = 0; j < width; j++) { // Width
+    for (uint8_t i = bytes - 1; i < 254; i--) { // Vertical Bytes
+      uint8_t data = pgm_read_byte(font + index + j + (i * width));
+      int offset = (i * 8);
+      if ((i == bytes - 1) && bytes > 1) {
+        offset = header.height - 8;
+      }
+      for (uint8_t k = 0; k < 8; k++) { // Vertical bits
+        if ((offset+k >= i*8) && (offset+k <= header.height)) {
+          if (data & (1 << k)) {
+              if(inverse) {
+                setPixel(x + j, y + offset + k, GRAPHICS_OFF);
+              } else {
+                setPixel(x + j, y + offset + k, GRAPHICS_ON);
+              }
+          } else {
+              if(inverse) {
+                  setPixel(x + j, y + offset + k, GRAPHICS_ON);
+              } else {
+                  setPixel(x + j, y + offset + k, GRAPHICS_OFF);
+              }
+          }
+        }
+      }
+    }
+  } 
+ */
+    
     return width;
 }
+
 
 /**
  * \brief Returns the width in pixels of \a ch in the current font().

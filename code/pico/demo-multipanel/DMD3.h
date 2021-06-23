@@ -64,7 +64,7 @@ public:
     Color textColor() const { return _textColor; }
     //void setTextColor(Color color) { _textColor = color; }
 
-    void drawText(int x, int y, const char *str, int len = -1);
+    void drawText(int x, int y, const char *str, bool rightPadding = false, int len = -1);
     void drawText(int x, int y, const String &str, int start = 0, int len = -1);
 
 int drawCharVariable(int x, int y, char ch);
