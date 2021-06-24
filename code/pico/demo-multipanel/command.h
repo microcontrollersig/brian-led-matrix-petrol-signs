@@ -4,6 +4,7 @@
 #include "DMD3.h"
 #include "debug.h"
 #include "customglcdfonts.h"
+#include <vector>
 
 class Command
 {
@@ -25,6 +26,7 @@ class Command
         }
       } 
     }
+    virtual void parseArgs(std::vector<std::string> args) {}
 };
 
 class NullCommand : public Command

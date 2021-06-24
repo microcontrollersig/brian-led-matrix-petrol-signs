@@ -2,6 +2,8 @@
 
 #include <Arduino.h>
 #include <vector>
+#include <iostream>
+#include <sstream>
 #include "command.h"
 #include "commandlist.h"
 #include "DMD3.h"
@@ -12,7 +14,8 @@ class Dispatcher
 
   private:
     std::vector<Command*> commands;
-    char receivedChars[Dispatcher::RECEIVED_SERIAL_SIZE];  
+    char receivedChars[Dispatcher::RECEIVED_SERIAL_SIZE]; 
+    int receivedCharsCount=0; 
     bool recvInProgress = false;
     uint8_t ndx = 0;
     char startMarker = '{';
@@ -20,6 +23,7 @@ class Dispatcher
     bool newData = false;
     DMD3 *canvas;
     int currentCommand = -1;
+    std::vector<std::string> split(const std::string &s, char delim);
 
   public:
     Dispatcher(DMD3 *dmd);
