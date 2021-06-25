@@ -61,7 +61,7 @@ class CommandList
       commands['I'] = testIPAddress;
 
       TestTwoRowTextCommand *testTwoRowText = new TestTwoRowTextCommand();
-      commands['T'] = testTwoRowText;      
+      commands['*'] = testTwoRowText;      
 
       return commands;
     }

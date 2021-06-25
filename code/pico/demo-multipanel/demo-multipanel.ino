@@ -41,6 +41,7 @@ Dispatcher *runner;
 
 void setup() {
   Serial.begin(115200);
+  Serial1.begin(115200);
   delay(1000);
 
   display.begin(PIN_CLK, PIN_LATCH, PIN_NOE, PIN_DATA1, PIN_DATA2, PIN_DATA3, PIN_DATA4);
@@ -54,5 +55,5 @@ void setup() {
 
 void loop() {
   runner->handleSerialInput(Serial);
-  
+  runner->handleSerialInput(Serial1);
 }

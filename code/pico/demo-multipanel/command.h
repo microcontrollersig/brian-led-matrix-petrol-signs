@@ -31,6 +31,14 @@ class Command
 
 class NullCommand : public Command
 {
+  private:
+    unsigned long timeStart = 0UL;
+  
   public:
-    void execute(DMD3 *canvas) override { Serial.println("Running null command..."); }
+    void execute(DMD3 *canvas) override {
+      if ( millis() - timeStart > 1000) {   
+        Serial.println("Running null command...");
+        timeStart = millis();
+      } 
+    }
 };
