@@ -46,7 +46,7 @@ public:
       debug_print("Wifi password: ");
       debug_println(wifipassword->value().c_str());
             
-      File file = LittleFS.open("wifi.cfg", "w+");      
+      File file = LittleFS.open("wifi.cfg", "w");      
       file.print(ssid->value().c_str());  
       file.print(',');
       file.print(wifipassword->value().c_str());       
@@ -80,7 +80,8 @@ void startCaptiveWebServer()
   WiFi.softAP("brianLEDPanels");
   dnsServer.start(53, "*", WiFi.softAPIP());
   server.addHandler(new CaptiveRequestHandler()).setFilter(ON_AP_FILTER);//only when requested from AP
-  server.begin();  
+  server.begin(); 
+  update_ledmatrix_text("192.168.4.1"); 
 }
 
 void startWebServer() 
@@ -126,15 +127,19 @@ void startWebServer()
 void parseWifiCfg(char *ssid, char *password)
 {
   File f = LittleFS.open("wifi.cfg", "r");
+  
   if (f.available() > 0) {
-     f.readBytesUntil(',', ssid, 100);
- 
+     size_t bytesRead = f.readBytesUntil(',', ssid, 100);
+     ssid[bytesRead] = '\0';
+     //debug_print("ssid byte count:");
+     //debug_println(bytesRead);
   }
+  
   int i;
   for (i=0; f.available() > 0 ; i++) {
     password[i] = f.read();
   }
-  password[i] = 0;
+  password[i] = '\0';
   f.close();
 }
 
@@ -163,7 +168,7 @@ void wificonfig()
           debug_println("Successfully connected to wifi.");
           debug_print("IP Address: ");
           debug_println(WiFi.localIP());
-          update_ledmatrix_text(WiFi.localIP());
+          update_ledmatrix_text(WiFi.localIP().toString());
           startWebServer();
           /*
           if (!MDNS.begin("brian")) {
@@ -180,6 +185,8 @@ void wificonfig()
 
         else {
           debug_println("Couldn't connect to wifi. Starting Soft AP.");
+          File file = LittleFS.open("wifi.cfg", "w");  
+          file.close();
           startCaptiveWebServer();
         } 
                
