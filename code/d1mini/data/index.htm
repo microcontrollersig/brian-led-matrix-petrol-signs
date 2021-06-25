@@ -153,6 +153,26 @@ body { margin: 0; padding: 0; }
     });
   });
 
+  document.querySelector("#currentDateTime a").addEventListener("click", event => {
+  	event.preventDefault();
+  	let currentDateTime = new Date();
+  	let timeComponents = currentDateTime.toTimeString().split(":")
+  	let hours = timeComponents[0];
+  	let minutes = timeComponents[1];
+
+    let day = currentDateTime.getDate();
+    let month = currentDateTime.getMonth();
+
+    let currentTime = hours + ":" + minutes;
+    let currentDate = day + "/" + month;
+
+    document.querySelectorAll("#twoargs input")[0].value = "*";
+    document.querySelectorAll("#twoargs input")[1].value = currentTime;
+    document.querySelectorAll("#twoargs input")[2].value = currentDate;
+    document.querySelector("#twoargs").submit();    
+
+  });
+
 });
 </script>
 <head>
@@ -196,7 +216,7 @@ body { margin: 0; padding: 0; }
     </a>
 </div>
 
-<div class="notchosen singleparam">
+<div class="notchosen">
     <a class="btn-ghost btn-white btn-align" >
      Static Text
     </a>    
@@ -207,6 +227,11 @@ body { margin: 0; padding: 0; }
 	<div><button data-command="*">SEND</button></div>
 </div>
 
+<div id="currentDateTime" class="notchosen">
+    <a class="btn-ghost btn-white btn-align" data-command="*">
+      Current time and Date
+    </a>	
+</div> 
 <!--
 <div class="notchosen singleparam">
   <a class="btn-ghost btn-white btn-align">
