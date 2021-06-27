@@ -10,6 +10,8 @@ They usually come in 6 panels wide, 2 panels height (effectively becomes a 96x32
 
 # PCB Controller for LED matrix
 
+![LED matrix controller](https://raw.githubusercontent.com/microcontrollersig/brian-led-matrix-petrol-signs/main/images/20210626_175617.jpg)
+
 #### Bill of Materials
 
 | Qty | |Code                                             | Where to Buy            | Required |
