@@ -1,5 +1,7 @@
 # Reverse Engineering Brian's Petrol Pump LED Matrix
 
+Here is the backside of one 16x16 panel up close and personal (Thanks to Brian D. for awesome shot).
+
 ![LED Panel](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/IMG_1820-redacted.jpg)
 
 ## Takeaways from Image
