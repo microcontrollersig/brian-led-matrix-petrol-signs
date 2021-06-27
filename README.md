@@ -4,8 +4,6 @@
 
 ![LED Panel Demo](https://raw.githubusercontent.com/microcontrollersig/brian-led-matrix-petrol-signs/main/images/20210626_175707.jpg)
 
-Important note: The 74HC245 operates at **3.3V**, and therefore any inputs connected to the 16-pin input connector has to operate at 3.3V.
-
 Not the usual HUB08/HUB12/HUB40/HUB75 style setup. Inner workings [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/blob/main/REVERSEENGINEER.md)
 
 They usually come in 6 panels wide, 2 panels height (effectively becomes a 96x32 single-color LED matrix)
