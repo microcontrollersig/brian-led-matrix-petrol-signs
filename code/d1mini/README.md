@@ -1,6 +1,6 @@
 # Uploading software to D1 mini
 
-### Prerequisities for PC
+### Prerequisite for Windows PC
 1. Install Windows driver for D1 mini from [here](https://www.wemos.cc/en/latest/ch340_driver.html) 
 
 ### Use ESPHome Flasher (easiest method)
