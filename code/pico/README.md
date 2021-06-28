@@ -2,7 +2,7 @@
 
 #### Method 1 Using the UF2 binary file (easiest)
 
-1. Download the UF2 binary file from [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/code/pico/demo-singlepanel/demo-singlepanel.uf2)
+1. Download the UF2 binary file from [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/code/pico/demo-multipanel/demo-multipanel.uf2)
 
 2. Press and hold the **BOOTSEL** button on the Raspberry Pico while connecting the USB cable to the PC. Once USB is connected to PC, release button.
 
