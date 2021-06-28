@@ -17,7 +17,7 @@
 
 
 #### Method 2 Using the Arduino IDE (harder)
-TODO
+You can pick out the important steps from [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/blob/main/code/pico/BUILDING.md)
 
 # Extras
 
