@@ -20,9 +20,8 @@ There are two modes of operation to connect:
   
   When you first use the D1 mini for the first time with the uploaded software provided, you will enter captive portal mode.
   
-  Connect to a Wifi SSID created by the D1 mini
-  
-  Go to http://192.168.4.1 (depending on yout default browser, this may open automatically)
+  1. Connect to a Wifi SSID created by the D1 mini
+  2. Go to http://192.168.4.1 (depending on yout default browser, this may open automatically)
 
 
   Enter the username/password of your local wifi network, then click **Save and Connect**
