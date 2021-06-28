@@ -8,7 +8,7 @@
 
 ### Use Arduino IDE (hard method)
 
-TODO
+See [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/blob/main/code/d1mini/BUILDING.md)
 
 # Usage
 
