@@ -20,3 +20,4 @@ Use the latest Arduino IDE (1.8.15 at the time of writing).
    make
    ./elf2uf2 -v <name_of_binary.elf> <name_of_binary.uf2>
    ```
+5. You can upload to Pico as normal in Arduino IDE if you don't need the UF2 file.
