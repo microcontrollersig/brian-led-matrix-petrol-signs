@@ -12,7 +12,7 @@ See [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/b
 
 # Usage
 
-### Connecting to D1 mini webpage
+### Connecting to D1 mini webpage to control LED sign
 
 There are two modes of operation to connect:
 
