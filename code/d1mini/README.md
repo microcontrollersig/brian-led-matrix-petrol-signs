@@ -32,6 +32,6 @@ There are two modes of operation to connect:
 * **Normal mode** 
   
   If you have done the captival portal mode and saved your wifi password, subsequent reboots of the D1 mini will
-  attempt to connect to your wifi network. The IP address should show up on the LED sign.  If it can't connect, you will fall back to captive portal mode.
+  attempt to connect to your local wifi network. The IP address should show up on the LED sign.  If it can't connect, you will fall back to captive portal mode.
   
   Enter the IP address in a web browser(Firefox/Chrome/Edge) and you should be able to control the LED sign.
