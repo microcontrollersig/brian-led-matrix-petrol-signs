@@ -10,6 +10,8 @@
 #include "ESPAsyncWebServer.h"
 #include <LittleFS.h>
 #include <Ticker.h>
+#include <AsyncJson.h>
+#include <ArduinoJson.h>
 #define WIFI_TIMEOUT 10000
 
 
@@ -109,6 +111,19 @@ void startWebServer()
          request->send(204);        
    });
 
+   AsyncCallbackJsonWebHandler* handler = new AsyncCallbackJsonWebHandler("/homeassistant", [](AsyncWebServerRequest *request, JsonVariant &json) {
+     { //scope JsonDocument so it releases its buffer
+      JsonObject jsonObj = json.as<JsonObject>();  
+      const char *command = jsonObj["command"];
+      Serial.print("{");
+      Serial.print(command);
+      Serial.print("}");
+      Serial.println();
+      request->send(200);
+     } 
+   });
+   server.addHandler(handler);
+   
   
    server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
          request->send(LittleFS,  "/index.htm", "text/html");
