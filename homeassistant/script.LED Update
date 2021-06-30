@@ -1,0 +1,10 @@
+sequence:
+  - service: rest_command.ledpanel
+    data_template:
+      command: '*'
+      argumentCount: '2'
+      arguments:
+        - '{{ states.input_text.row_1.state }}'
+        - '{{ states.input_text.row_2.state }}'
+mode: single
+alias: LED Update
