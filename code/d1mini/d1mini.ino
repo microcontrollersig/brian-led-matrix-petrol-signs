@@ -115,8 +115,15 @@ void startWebServer()
      { //scope JsonDocument so it releases its buffer
       JsonObject jsonObj = json.as<JsonObject>();  
       const char *command = jsonObj["command"];
+      int argumentCount = jsonObj["argumentCount"];
+      
       Serial.print("{");
       Serial.print(command);
+      for (int i=0; i < argumentCount; i++) {
+        const char *argument = jsonObj["arguments"][i];
+        Serial.print("`");
+        Serial.print(argument);
+      }
       Serial.print("}");
       Serial.println();
       request->send(200);
