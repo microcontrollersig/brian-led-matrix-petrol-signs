@@ -1,0 +1,14 @@
+sequence:
+  - service: rest_command.ledpanel
+    data_template:
+      command: |
+        {{ command }}
+      argumentCount: |
+        {{ argumentCount }}
+      arguments: []
+mode: restart
+alias: LEDPanels
+fields:
+  command:
+    description: Command to execute
+    example: '0'
