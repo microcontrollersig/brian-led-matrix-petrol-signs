@@ -1,0 +1,93 @@
+views:
+  - title: Demos
+    badges: []
+    cards:
+      - type: grid
+        cards:
+          - type: button
+            tap_action:
+              action: call-service
+              service: script.ledpanels
+              service_data:
+                command: '@'
+                argumentCount: '0'
+              target: {}
+            name: CLEAR LEDS
+            hold_action:
+              action: none
+            icon: mdi:solar-panel-large
+          - type: button
+            tap_action:
+              action: call-service
+              service: script.ledpanels
+              service_data:
+                command: '0'
+                argumentCount: '0'
+              target: {}
+            name: Test pattern 0
+            hold_action:
+              action: none
+            icon: mdi:solar-panel-large
+          - type: button
+            tap_action:
+              action: call-service
+              service: script.ledpanels
+              service_data:
+                command: '1'
+                argumentCount: '0'
+              target: {}
+            name: Test Pattern 1
+            hold_action:
+              action: none
+            icon: mdi:solar-panel-large
+          - type: button
+            tap_action:
+              action: call-service
+              service: script.ledpanels
+              service_data:
+                command: '2'
+                argumentCount: '0'
+              target: {}
+            name: Test Pattern 2
+            hold_action:
+              action: none
+            icon: mdi:solar-panel-large
+          - type: button
+            tap_action:
+              action: call-service
+              service: script.ledpanels
+              service_data:
+                command: '3'
+                argumentCount: '0'
+              target: {}
+            name: Test Pattern 3
+            hold_action:
+              action: none
+            icon: mdi:solar-panel-large
+          - type: button
+            tap_action:
+              action: call-service
+              service: script.ledpanels
+              service_data:
+                command: '4'
+                argumentCount: '0'
+              target: {}
+            name: Test Pattern 4
+            hold_action:
+              action: none
+            icon: mdi:solar-panel-large
+  - title: STATIC TEXT
+    path: static-text
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - entity: input_text.row_1
+          - entity: input_text.row_2
+          - entity: script.ledmatrixtext
+        title: Static Text
+  - title: SCROLLING TEXT
+    path: scrolling-text
+    badges: []
+    cards: []
+title: LED Panels
