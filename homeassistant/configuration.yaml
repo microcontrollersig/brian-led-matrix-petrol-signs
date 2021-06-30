@@ -1,0 +1,10 @@
+# This is only a fragment of configuration.yaml pertaining to Brian LED Matrix 
+# Replace 192.168.20.31 with D1 mini IP address
+
+rest_command:
+  ledpanel:
+    url: http://192.168.20.31/homeassistant
+    method: post
+    payload: '{"command": "{{ command }}", "argumentCount": {{ argumentCount }}, "arguments": {{ arguments }} }'
+    content_type:  'application/json; charset=utf-8'
+
