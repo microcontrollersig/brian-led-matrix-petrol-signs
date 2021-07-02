@@ -818,7 +818,7 @@ void Bitmap::copy(int x, int y, int width, int height, Bitmap *dest, int destX, 
         // Copying to a different bitmap.
         while (height > 0) {
             for (int tempx = 0; tempx < width; ++tempx)
-                dest->setPixel(destX + tempx, destY, pixel(x + tempx, y));
+                dest->setPixel(destX + tempx, destY, !pixel(x + tempx, y));
             ++y;
             ++destY;
             --height;
