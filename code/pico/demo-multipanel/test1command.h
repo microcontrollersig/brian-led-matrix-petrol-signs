@@ -9,7 +9,7 @@ class Test1Command : public Command
   
   public:
     void execute(DMD3 *canvas)  override {
-      if ( millis() - timeStart > 10000) {  
+      if ( millis() - timeStart > TIMEOUT) {  
         clearSerialMonitor();
         canvas->clear();
         for (int i=0; i<6; i++) {

@@ -9,7 +9,7 @@ class Test2Command : public Command
   
   public:
     void execute(DMD3 *canvas)  override {
-      if ( millis() - timeStart > 10000) {        
+      if ( millis() - timeStart > TIMEOUT) {        
         clearSerialMonitor();
         canvas->clear();
         canvas->setPixel(0,0);

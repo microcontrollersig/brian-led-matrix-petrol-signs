@@ -16,7 +16,7 @@ class Test4Command : public Command
       scrollingCanvas->setFont(VerdanaFont16x16);
       scrollingCanvas->clear();
       scrollingCanvas->drawText(0,0,"THREE LETTER ACRONYM");      
-      scrollTextSize = 16 * sizeof("THREE LETTER ACRONYM") + 32;
+      scrollTextSize = 16 * sizeof("THREE LETTER ACRONYM") + 16;
       
     }
 
@@ -41,7 +41,7 @@ class Test4Command : public Command
     }
   
     void execute(DMD3 *canvas)  override {
-      if ( millis() - timeStart > 500) {        
+      if ( millis() - timeStart > TIMEOUT) {        
         clearSerialMonitor();
         canvas->clear();        
         canvas->drawText(0,0," TLA");

@@ -14,6 +14,9 @@
 #include "testidle.h"
 #include "testIPAddress.h"
 #include "testTwoRowText.h"
+#include "testSimpleScroll.h"
+#include "testDebug.h"
+#include "testTimeout.h"
 
 class CommandList
 {
@@ -61,7 +64,16 @@ class CommandList
       commands['I'] = testIPAddress;
 
       TestTwoRowTextCommand *testTwoRowText = new TestTwoRowTextCommand();
-      commands['*'] = testTwoRowText;      
+      commands['*'] = testTwoRowText;     
+
+      TestSimpleScrollCommand *testSimpleScrollCommand = new TestSimpleScrollCommand();
+      commands['S'] = testSimpleScrollCommand;        
+
+      TestDebugCommand *testDebugCommand = new TestDebugCommand();
+      commands['D'] = testDebugCommand;  
+
+      TestTimeoutCommand *testTimeoutCommand = new TestTimeoutCommand();
+      commands['O'] = testTimeoutCommand; 
 
       return commands;
     }

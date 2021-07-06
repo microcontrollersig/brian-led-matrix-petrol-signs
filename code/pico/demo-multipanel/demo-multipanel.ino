@@ -2,6 +2,8 @@
 #include "dispatcher.h"
 #include "DMD3.h"
 #include "customglcdfonts.h"
+#include "debug.h"
+#include "timeout.h"
 
 #if defined(ARDUINO_ARCH_RP2040)
 /*
@@ -36,13 +38,19 @@
 #define PANELS_HEIGHT 2
 
 DMD3 display(PANELS_WIDTH, PANELS_HEIGHT);
-
 Dispatcher *runner;
+
 
 void setup() {
   Serial.begin(115200);
-  Serial1.begin(115200);
+  Serial1.begin(115200); //Rx
   delay(1000);
+
+  //Enable debugging project-wide
+  DEBUG = true;
+
+  // Enable UPDATE LOOP time period for each command system-wide
+  TIMEOUT = 2000;
 
   display.begin(PIN_CLK, PIN_LATCH, PIN_NOE, PIN_DATA1, PIN_DATA2, PIN_DATA3, PIN_DATA4);
   //display.setBrightness(0.05);

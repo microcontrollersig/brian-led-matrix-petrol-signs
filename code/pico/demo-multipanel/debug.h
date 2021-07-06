@@ -1,8 +1,8 @@
 #pragma once
 
-#define DEBUG 1
+//#define DEBUG 1
 //#define DEBUG 0
-
+inline bool DEBUG;
 
 
 #define debug_print(val) do { if (DEBUG) Serial.print(val); } while(0)

@@ -16,7 +16,7 @@ class Test5Command : public Command
   
   public:
     void execute(DMD3 *canvas)  override {
-      if ( millis() - timeStart > 1000) {
+      if ( millis() - timeStart > 3000) {
         clearSerialMonitor();
         canvas->clear();
 

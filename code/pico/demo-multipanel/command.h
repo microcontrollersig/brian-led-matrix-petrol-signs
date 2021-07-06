@@ -4,6 +4,7 @@
 #include "DMD3.h"
 #include "debug.h"
 #include "customglcdfonts.h"
+#include "timeout.h"
 #include <vector>
 
 class Command
@@ -27,6 +28,7 @@ class Command
       } 
     }
     virtual void parseArgs(std::vector<std::string> args) {}
+    virtual bool noExecute() { return false; }
 };
 
 class NullCommand : public Command
