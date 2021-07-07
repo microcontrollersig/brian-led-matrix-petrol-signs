@@ -17,6 +17,8 @@
 #include "testSimpleScroll.h"
 #include "testDebug.h"
 #include "testTimeout.h"
+#include "testSingleTextWithFont.h"
+#include "testTwoTextWithFont.h"
 
 class CommandList
 {
@@ -74,6 +76,12 @@ class CommandList
 
       TestTimeoutCommand *testTimeoutCommand = new TestTimeoutCommand();
       commands['O'] = testTimeoutCommand; 
+
+      TestSingleTextWithFontCommand *testSingleTextWithFontCommand = new TestSingleTextWithFontCommand();
+      commands['G'] = testSingleTextWithFontCommand; 
+
+      TestTwoTextWithFontCommand *testTwoTextWithFontCommand = new TestTwoTextWithFontCommand();
+      commands['H'] = testTwoTextWithFontCommand; 
 
       return commands;
     }

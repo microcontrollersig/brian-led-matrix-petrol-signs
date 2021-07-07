@@ -6,6 +6,7 @@
 #include "customglcdfonts.h"
 #include "timeout.h"
 #include <vector>
+#include <sstream>
 
 class Command
 {
