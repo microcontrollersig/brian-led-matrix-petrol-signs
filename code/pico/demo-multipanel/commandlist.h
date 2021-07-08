@@ -19,6 +19,8 @@
 #include "testTimeout.h"
 #include "testSingleTextWithFont.h"
 #include "testTwoTextWithFont.h"
+#include "testSingleGenericText.h"
+#include "testTwoGenericText.h"
 
 class CommandList
 {
@@ -82,6 +84,12 @@ class CommandList
 
       TestTwoTextWithFontCommand *testTwoTextWithFontCommand = new TestTwoTextWithFontCommand();
       commands['H'] = testTwoTextWithFontCommand; 
+
+      TestSingleGenericTextCommand *testSingleGenericTextCommand = new TestSingleGenericTextCommand();
+      commands['Z'] = testSingleGenericTextCommand; 
+
+      TestTwoGenericTextCommand *testTwoGenericTextCommand = new TestTwoGenericTextCommand();
+      commands['T'] = testTwoGenericTextCommand; 
 
       return commands;
     }

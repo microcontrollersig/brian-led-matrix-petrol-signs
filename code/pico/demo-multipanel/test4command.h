@@ -41,7 +41,7 @@ class Test4Command : public Command
     }
   
     void execute(DMD3 *canvas)  override {
-      if ( millis() - timeStart > TIMEOUT) {        
+      if ( millis() - timeStart > 100) {        
         clearSerialMonitor();
         canvas->clear();        
         canvas->drawText(0,0," TLA");
