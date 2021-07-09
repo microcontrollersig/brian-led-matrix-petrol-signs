@@ -12,11 +12,11 @@ class Test4Command : public Command
   
   public:
     Test4Command() {
-      scrollingCanvas = new DMD3(30,1);
+      scrollingCanvas = new DMD3(40,1);
       scrollingCanvas->setFont(VerdanaFont16x16);
       scrollingCanvas->clear();
-      scrollingCanvas->drawText(0,0,"THREE LETTER ACRONYM");      
-      scrollTextSize = 16 * sizeof("THREE LETTER ACRONYM") + 16;
+      scrollingCanvas->drawText(96,0,"too late didn't read");      
+      scrollTextSize = 16 * sizeof("too late didn't read") + 106;
       
     }
 
@@ -44,7 +44,7 @@ class Test4Command : public Command
       if ( millis() - timeStart > 100) {        
         clearSerialMonitor();
         canvas->clear();        
-        canvas->drawText(0,0," TLA");
+        canvas->drawText(8,0,"TL;DR");
         scrollingCanvas->copy(currentScrollX,0,96,16,canvas,0,16);
         printCanvas(canvas);
         canvas->update();

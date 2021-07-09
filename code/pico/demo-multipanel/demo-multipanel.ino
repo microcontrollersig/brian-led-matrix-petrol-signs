@@ -47,7 +47,8 @@ void setup() {
   delay(1000);
 
   //Enable debugging project-wide
-  DEBUG = true;
+  //DEBUG = true;
+  DEBUG = false;
 
   // Enable UPDATE LOOP time period for each command system-wide
   TIMEOUT = 2000;
