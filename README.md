@@ -30,11 +30,11 @@ They usually come in 6 panels wide, 2 panels height (effectively becomes a 96x32
 
 
 #### EAGLE Schematic for PCB Board
-![schematic](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/eagle/Brians%20test%20board%201.12a-schematic-mohan.png)
+![schematic](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/eagle/Brians%20test%20board%2016-schematic.png)
 
 #### EAGLE Board file for PCB Board
 
-![board](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/eagle/Brians%20test%20board%201.12a-board-mohan.png)
+![board](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/eagle/Brians%20test%20board%2016-board.png)
 
 ### PCB Top Layer
 
