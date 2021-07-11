@@ -30,19 +30,19 @@ They usually come in 6 panels wide, 2 panels height (effectively becomes a 96x32
 
 
 #### EAGLE Schematic for PCB Board
-![schematic](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/eagle/Brians%20test%20board%2016-schematic.png)
+![schematic](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/eagle/Brians%20test%20board%2017-schematic.png)
 
 #### EAGLE Board file for PCB Board
 
-![board](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/eagle/Brians%20test%20board%2016-board.png)
+![board](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/eagle/Brians%20test%20board%2017-board.png)
 
 ### PCB Top Layer
 
-![PCB Top Layer](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/eagle/Brians%20test%20board%2016-top.png)
+![PCB Top Layer](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/eagle/brianPCB-top.png)
 
 #### PCB Bottom Layer
 
-![PCB Bottom Layer](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/eagle/Brians%20test%20board%2016-bottom.png)
+![PCB Bottom Layer](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/eagle/brianPCB-bottom.png)
 
 #### Raspberry Pi Pico
 
