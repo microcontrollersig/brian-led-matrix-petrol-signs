@@ -1,15 +1,6 @@
 # Eagle Files
 
-![Schematic](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/eagle/Brians%20test%20board%2012-schematic.png)
-
-![Board](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/eagle/Brians%20test%20board%2012.png)
-
-![JLCPCB Top](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/eagle/jlcpcb-12-top.png)
-![JLCPCB Bottom](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/eagle/jlcpcb-12-bottom.png)
-
-![PCB1](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/eagle/Brians%20LED%20Brd6..jpg)
-
-![PCBTop](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/blob/main/eagle/Brians%20LED%20Brd6Top..jpg)
+Latest version is v1.17
 
 # JLCPCB
 [JLCPCB gerber viewer at checkout](https://cart.jlcpcb.com/quote?orderType=1&stencilWidth=100&stencilLength=100&stencilCounts=5&stencilLayer=2&stencilPly=1.6&steelmeshSellingPriceRecordNum=A8256537-5522-491C-965C-646F5842AEC9&purchaseNumber=)
