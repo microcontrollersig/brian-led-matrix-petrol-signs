@@ -21,6 +21,7 @@
 #include "testTwoTextWithFont.h"
 #include "testSingleGenericText.h"
 #include "testTwoGenericText.h"
+#include "testBrightness.h"
 
 class CommandList
 {
@@ -90,6 +91,9 @@ class CommandList
 
       TestTwoGenericTextCommand *testTwoGenericTextCommand = new TestTwoGenericTextCommand();
       commands['T'] = testTwoGenericTextCommand; 
+
+      TestBrightnessCommand *testBrightnessCommand = new TestBrightnessCommand();
+      commands['B'] = testBrightnessCommand; 
 
       return commands;
     }

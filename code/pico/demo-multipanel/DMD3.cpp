@@ -1242,9 +1242,14 @@ static const uint8_t flipBits[256] PROGMEM = {
     0x3F, 0xBF, 0x7F, 0xFF
 };
 
-void DMD3::setBrightness(float b)
+void DMD3::setBrightness(uint8_t b)
 {
   mbi->setBrightness(b);
+}
+
+uint8_t DMD3::getBrightness()
+{
+  return mbi->getBrightness();
 }
 
 void DMD3::debugPixelLine(unsigned int y, char *buf) {

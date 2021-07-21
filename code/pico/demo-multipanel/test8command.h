@@ -15,6 +15,8 @@ class Test8Command : public Command
       Serial.print(DEBUG);
       Serial.print(" TIMEOUT:");
       Serial.print(TIMEOUT);
+      Serial.print(" BRIGHTNESS:");
+      Serial.print(canvas->getBrightness());      
       Serial.println();
       //canvas->clear();
       //printCanvas(canvas);

@@ -80,7 +80,7 @@ void Dispatcher::parseSerialInput()
 
 void Dispatcher::dispatch(uint8_t command)
 {
-  if (commands[command]->noExecute()) 
+  if (commands[command]->noExecute(canvas)) 
     return;
     
   currentCommand = (int)command;

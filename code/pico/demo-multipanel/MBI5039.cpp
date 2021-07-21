@@ -21,9 +21,14 @@ void MBI5039::myAnalogWrite(pin_size_t pin, int val)
     */
 }
 
-void MBI5039::setBrightness(float b)
+void MBI5039::setBrightness(uint8_t b)
 {
-  brightness = (int) ((1.0 - b) * MAX_PWM_VALUE);
+  brightness = b;
+}
+
+uint8_t MBI5039::getBrightness()
+{
+  return brightness;
 }
 
 void MBI5039::disable()
@@ -33,11 +38,9 @@ void MBI5039::disable()
 
 void MBI5039::enable()
 {
-  analogWrite(noe_pin, 254);
-  //myAnalogWrite(noe_pin, 251);
-  //myAnalogWrite(noe_pin, brightness);
-  //analogWrite(noe_pin, brightness);
-  //analogWrite(noe_pin, 900);
+  //analogWrite(noe_pin, 254);
+  analogWrite(noe_pin, brightness);  
+
 }
 
 void MBI5039::latch()

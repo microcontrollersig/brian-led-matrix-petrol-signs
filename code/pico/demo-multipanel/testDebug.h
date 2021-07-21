@@ -9,7 +9,7 @@ class TestDebugCommand : public Command
       char c = args.at(0)[0];
       DEBUG = c - '0';
     }
-    bool noExecute() override { return true; }
+    bool noExecute(DMD3 *canvas) override { return true; }
     void execute(DMD3 *canvas)  override {
     }
 };

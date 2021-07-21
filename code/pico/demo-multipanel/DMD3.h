@@ -115,7 +115,8 @@ public:
     void swapBuffersAndCopy();
 
     void setMBI5039(MBI5039 *m);
-    void setBrightness(float brightness);
+    void setBrightness(uint8_t brightness);
+    uint8_t getBrightness();
     void begin(uint8_t clock_pin, uint8_t latch_pin, uint8_t noe_pin, uint8_t data1_pin, uint8_t data2_pin, uint8_t data3_pin, uint8_t data4_pin);
 
     void loop();

@@ -14,7 +14,7 @@ class TestTimeoutCommand : public Command
       //Serial.println(TIMEOUT);
       //Serial.println(ss.str().c_str());
     }
-    bool noExecute() override { return true; }
+    bool noExecute(DMD3 *canvas) override { return true; }
     void execute(DMD3 *canvas)  override {
     }
 };

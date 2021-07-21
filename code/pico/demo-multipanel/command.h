@@ -29,7 +29,7 @@ class Command
       } 
     }
     virtual void parseArgs(std::vector<std::string> args) {}
-    virtual bool noExecute() { return false; }
+    virtual bool noExecute(DMD3 *canvas = NULL) { return false; }
 };
 
 class NullCommand : public Command

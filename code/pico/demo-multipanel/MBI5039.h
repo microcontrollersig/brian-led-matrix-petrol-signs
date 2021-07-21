@@ -23,7 +23,8 @@ class MBI5039
     void disable();
     void latch();
     void myAnalogWrite(pin_size_t pin, int val);
-    void setBrightness(float brightness);
+    void setBrightness(uint8_t brightness);
+    uint8_t getBrightness();
     void sendData(uint8_t *data1, uint8_t *data2, uint8_t *data3, uint8_t *data4, bool bitOrder);
     void sendData(uint16_t data1, uint16_t data2, uint16_t data3, uint16_t data4, bool bitOrder);
     void sendDataMSB(uint8_t *data1, uint8_t *data2, uint8_t *data3, uint8_t *data4);
@@ -40,7 +41,7 @@ class MBI5039
             data4_pin;
      volatile uint8_t clockCount;
      volatile bool fallingClockEdge;
-     int brightness;
+     uint8_t brightness = 254;
      //void myAnalogWrite(pin_size_t pin, int val);
 };
 
