@@ -47,8 +47,8 @@ void setup() {
   delay(1000);
 
   //Enable debugging project-wide
-  //DEBUG = true;
-  DEBUG = false;
+  DEBUG = true;
+  //DEBUG = false;
 
   // Enable UPDATE LOOP time period for each command system-wide
   TIMEOUT = 2000;
@@ -56,6 +56,7 @@ void setup() {
   display.begin(PIN_CLK, PIN_LATCH, PIN_NOE, PIN_DATA1, PIN_DATA2, PIN_DATA3, PIN_DATA4);
   //display.setBrightness(0.05);
   //display.setFont(ArialFont16x16);
+  //display.setFont(SpaceInvadersFont16x16);
   display.setFont(VerdanaFont16x16);
   
   runner = new Dispatcher(&display);
