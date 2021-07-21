@@ -11,6 +11,7 @@
 #include "test7command.h"
 #include "test8command.h"
 #include "test9command.h"
+#include "test10command.h"
 #include "testidle.h"
 #include "testIPAddress.h"
 #include "testTwoRowText.h"
@@ -61,6 +62,9 @@ class CommandList
 
       Test9Command *test9 = new Test9Command();
       commands['8'] = test9;               
+
+      Test10Command *test10 = new Test10Command();
+      commands['9'] = test10;  
 
       TestIdleCommand *testidle = new TestIdleCommand();
       commands['@'] = testidle;    
