@@ -15,9 +15,8 @@ class Test4Command : public Command
       scrollingCanvas = new DMD3(40,1);
       scrollingCanvas->setFont(VerdanaFont16x16);
       scrollingCanvas->clear();
-      scrollingCanvas->drawText(96,0,"too late didn't read");      
-      scrollTextSize = 16 * sizeof("too late didn't read") + 106;
-      
+      scrollingCanvas->drawText(96,0,"too late did not read");      
+      scrollTextSize = 16 * sizeof("too late did not read") + 106;      
     }
 
     void print(uint8_t *data) 
@@ -41,7 +40,7 @@ class Test4Command : public Command
     }
   
     void execute(DMD3 *canvas)  override {
-      if ( millis() - timeStart > 100) {        
+      if ( millis() - timeStart > 60) {        
         clearSerialMonitor();
         canvas->clear();        
         canvas->drawText(8,0,"TL;DR");
