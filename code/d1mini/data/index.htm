@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" class="">
 <head>
-<meta charset='utf-8'>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
 <title>
 Brian's LED Panel Main Page</title>
@@ -100,6 +100,8 @@ body { margin: 0; padding: 0; }
   border: 2px solid #fff;
 }
 
+legend { font-size: 18px;  color:red; }
+
 @media screen and (max-width: 420px) { /* iPhone Landscape */
   .btn-ghost {
     width: 290px; width: 29.0rem;
@@ -108,6 +110,43 @@ body { margin: 0; padding: 0; }
     line-height: 50px; line-height: 5.0rem;
   }
 }
+
+.brightness span {
+  background: orange;
+  border-radius: 4px;
+  padding: 8px 5px 8px 5px;
+  border: 1px solid #ddd;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  color: purple;
+  font-size: 26px;
+  font-weight: bold;
+  cursor:pointer; 
+}
+
+.brightness {
+  margin: 50px;
+  -webkit-user-select: none; /* Chrome all / Safari all */
+  -moz-user-select: none; /* Firefox all */
+  -ms-user-select: none; /* IE 10+ */
+
+}
+
+.brightness input {
+  height: 34px;
+  width: 100px;
+  text-align: center;
+  font-size: 26px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  display: inline-block;
+  vertical-align: middle;
+  color: green;
+
+}
+
+
 
 
 
@@ -173,18 +212,54 @@ body { margin: 0; padding: 0; }
 
   });
 
+  document.querySelector('.minus').addEventListener("click", event =>  {
+        var newBrightness = parseInt(document.querySelector(".brightness input").value) - 1;
+        if (newBrightness < 0 ) newBrightness = 0;
+        document.querySelector(".brightness input").value = newBrightness; 
+
+        document.querySelectorAll("#oneargs input")[0].value = "B";
+        document.querySelectorAll("#oneargs input")[1].value = newBrightness;
+        document.querySelector("#oneargs").submit();  
+        return false;
+        
+      });
+  
+  document.querySelector('.plus').addEventListener("click", event =>  {            
+        var newBrightness = parseInt(document.querySelector(".brightness input").value) + 1;
+        if (newBrightness > 255 ) newBrightness = 255;
+        document.querySelector(".brightness input").value = newBrightness;
+
+        document.querySelectorAll("#oneargs input")[0].value = "B";
+        document.querySelectorAll("#oneargs input")[1].value = newBrightness;
+        document.querySelector("#oneargs").submit();          
+        return false;
+        
+      });
+
 });
 </script>
 <head>
 <body>
 
-<h2>Brian's LED Panel Main Page</h2>
+<h2 style="font-size: 36px;">Brian's LED Panel Main Page</h2>
 
 <div class="chosen commandonly">
     <a class="btn-ghost btn-white btn-align" data-command="@">
       CLEAR
     </a>
 </div>
+
+<!--
+<div class="notchosen">
+    <a class="btn-ghost btn-white btn-align" >
+     Static Text
+    </a>    
+</div>
+-->
+
+
+
+
 
 <div class="notchosen commandonly">
     <a class="btn-ghost btn-white btn-align" data-command="0">
@@ -216,15 +291,35 @@ body { margin: 0; padding: 0; }
     </a>
 </div>
 
-<div class="notchosen">
-    <a class="btn-ghost btn-white btn-align" >
-     Static Text
-    </a>    
+<div class="notchosen commandonly">
+    <a class="btn-ghost btn-white btn-align" data-command="5">
+      Test Pattern 6
+    </a>
 </div>
+
+<div class="notchosen commandonly">
+    <a class="btn-ghost btn-white btn-align" data-command="6">
+      Test Pattern 7
+    </a>
+</div>
+
+<div class="notchosen commandonly">
+    <a class="btn-ghost btn-white btn-align" data-command="7">
+      Test Pattern 8
+    </a>
+</div>
+
+<div class="notchosen commandonly">
+    <a class="btn-ghost btn-white btn-align" data-command="8">
+      Test Pattern 9
+    </a>
+</div>
+
+<h1> Two Rows of Text </h1>
 <div id="statictext" class="textparam" >
-	<div><label for="statictext">TEXT</label><input type="text" name="statictext1" maxlength="6"/>
-	<div><label for="statictext">TEXT</label><input type="text" name="statictext2" maxlength="6"/>	
-	<div><button data-command="*">SEND</button></div>
+  <div><label for="statictext">Top Row &nbsp;&nbsp;&nbsp;&nbsp;</label><input type="text" name="statictext1" maxlength="6"/>
+  <div><label for="statictext">Bottom Row</label><input type="text" name="statictext2" maxlength="6"/>  
+  <div><button data-command="*">SEND</button></div>
 </div>
 
 <div id="currentDateTime" class="notchosen">
@@ -232,6 +327,14 @@ body { margin: 0; padding: 0; }
       Current time and Date
     </a>	
 </div> 
+
+<h1>Brightness</h1>
+<div  class="brightness">
+  <span class="minus">-</span>
+  <input type="text" value="1" min="0" max="255"/>
+  <span class="plus">+</span>
+</div>
+
 <!--
 <div class="notchosen singleparam">
   <a class="btn-ghost btn-white btn-align">
