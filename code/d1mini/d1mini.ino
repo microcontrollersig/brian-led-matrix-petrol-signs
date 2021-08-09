@@ -58,6 +58,33 @@ public:
       request->send(response);
       ticker.attach(5, restartESPCallback);
     });
+
+   server.on("/main", HTTP_GET, [](AsyncWebServerRequest *request){
+         request->send(LittleFS,  "/index.htm", "text/html");
+   });
+
+   server.on("/command", HTTP_POST, [](AsyncWebServerRequest *request){
+         int params = request->params();
+         AsyncWebParameter *c = request->getParam(0);
+         char command[100];
+         strcpy(command,  c->value().c_str());
+                
+         debug_print("{");
+         debug_print(*command);
+ 
+         for (int i=1; i<params; i++) {
+           debug_print("`");
+           
+           AsyncWebParameter *d = request->getParam(i);
+           debug_print(d->value().c_str());
+         }
+     
+         debug_print("}");
+         debug_println();
+    
+
+         request->send(204);        
+   });
       
   }
   virtual ~CaptiveRequestHandler() {}
@@ -236,7 +263,7 @@ void setup(){
   if (!LittleFS.exists("wifi.cfg"))
   {
     delay(5000);
-    debug_println("wifi.cfg doest not exist. Did you forget to upload fs using ESP8266 LittleFS Data upload?"); 
+    debug_println("wifi.cfg does not exist. Did you forget to upload fs using ESP8266 LittleFS Data upload?"); 
     return;
   }
 
