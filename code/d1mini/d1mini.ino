@@ -164,15 +164,35 @@ void startWebServer()
    });
 
    server.on("/savedsettings", HTTP_GET, [](AsyncWebServerRequest *request) {
+     File settingsFile = LittleFS.open("/settings.json", "r");
+     request->send(settingsFile, "application/json", settingsFile.size());
+     /*settingsFile.close();*/
+     /*
+  
+     std::unique_ptr<char[]> buf(new char[settingsFileSize]);
+     settingsFile.readBytes(buf.get(), settingsFileSize);
+     settingsFile.close();
+     request->send(200, "application/json", buf.get());
+     */
+
+     /*
+     StaticJsonDocument<512> doc;
+     deserializeJson(doc, settingsFile);
+     settingsFile.close();
+     */
+     /*JsonObject root = doc.as<JsonObject>();*/
+     
+     /*
      AsyncJsonResponse * response = new AsyncJsonResponse();
      response->addHeader("Server","ESP Async Web Server");
      JsonVariant& jsonObj = response->getRoot();
 
-     jsonObj["brightness"] = "1";
-     jsonObj["bootcommand"] = "T";
+     jsonObj["brightness"] = root["brightness"];
+     jsonObj["bootcommand"] = root["bootcommand"];
 
      response->setLength();
      request->send(response);
+     */
    });
   
    server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
