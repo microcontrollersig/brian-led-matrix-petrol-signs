@@ -158,9 +158,25 @@ void startWebServer()
    });
    server.addHandler(handler);
    
+
+   server.on("/settings", HTTP_GET, [](AsyncWebServerRequest *request) {
+     request->send(LittleFS,  "/settings.htm", "text/html");   
+   });
+
+   server.on("/savedsettings", HTTP_GET, [](AsyncWebServerRequest *request) {
+     AsyncJsonResponse * response = new AsyncJsonResponse();
+     response->addHeader("Server","ESP Async Web Server");
+     JsonVariant& jsonObj = response->getRoot();
+
+     jsonObj["brightness"] = "1";
+     jsonObj["bootcommand"] = "T";
+
+     response->setLength();
+     request->send(response);
+   });
   
    server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
-         request->send(LittleFS,  "/index.htm", "text/html");
+     request->send(LittleFS,  "/index.htm", "text/html");
    });
 
 
