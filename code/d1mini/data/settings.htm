@@ -153,7 +153,18 @@ legend { font-size: 18px;  color:red; }
 </style>
 <script>
   document.addEventListener("DOMContentLoaded", function() {    
-    fetch("/savedsettings").then(function (response) { 
+    fetch("/savedsettings", {
+        method: "GET",
+        cache: 'no-cache',
+        keepalive: true,
+        headers: {
+            "Content-Type": "application/json",
+            "Cache-Control": "no-cache",
+            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36",
+            "Accept": "application/json",
+            "Accept-Encoding": "gzip, deflate"
+        }
+    }).then(function (response) { 
         return response.json();
     }).then(function(data) {
        document.querySelector("#brightness").value = data.brightness;
