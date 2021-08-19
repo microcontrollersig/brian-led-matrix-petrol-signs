@@ -170,6 +170,28 @@ legend { font-size: 18px;  color:red; }
        document.querySelector("#brightness").value = data.brightness;
        document.querySelector("#bootcommand").value = data.bootcommand;
     });
+    document.querySelector("#submit").addEventListener("click", function(event) {
+        var formData = new FormData(document.querySelector("#newsettings"));
+        var obj = {};
+        formData.forEach(function(value, key){
+          obj[key] = value;
+        });
+        
+          fetch("/settings", { 
+            method: "POST" ,
+            cache: 'no-cache',
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "Cache-Control": "no-cache",
+                "User-Agent": "Mozilla/5.0"
+            },
+            body: JSON.stringify(obj)
+        }).then(function(response) {
+            window.location.replace('/');
+        });
+
+    });
   });
 </script>
 <head>
@@ -177,7 +199,7 @@ legend { font-size: 18px;  color:red; }
 
 <h2 style="font-size: 36px;">Brian's LED Panel Settings Page</h2>
 
-<form method="POST" action="/settings">
+<form id="newsettings">
   <div>
     <label for="brightness">Brightness</label>
     <input name="brightness" id="brightness" />
@@ -187,17 +209,9 @@ legend { font-size: 18px;  color:red; }
     <input name="bootcommand" id="bootcommand" />
   </div>
   <div>
-    <input type="submit" value="Save Settings"/>
+    <button type="button" id="submit">Save Settings</button>
   </div>
-</form> 
-
-
-
-
-
-
-
-
+</div> 
 
 </body>
 </html>
