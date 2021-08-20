@@ -20,7 +20,10 @@
 
 #define debug_print(val) do { if (DEBUG) Serial.print(val); } while(0)
 #define debug_println(val) do { if (DEBUG) Serial.println(val); } while(0)
-#define update_ledmatrix_text(val) do { Serial.print("{I`"); Serial.print(val);Serial.println("}"); } while(0)
+#define update_ledmatrix_ipaddress(val) do { Serial.print("{I`"); Serial.print(val);Serial.println("}"); } while(0)
+#define update_ledmatrix_command(val) do { Serial.print("{"); Serial.print(val);Serial.println("}"); } while(0)
+#define update_ledmatrix_command_with_arg(command, arg1) do {Serial.print("{"); Serial.print(command);Serial.print("`");Serial.print(arg1);Serial.println("}"); } while(0)
+
 
 DNSServer dnsServer;
 AsyncWebServer server(80);
@@ -110,7 +113,7 @@ void startCaptiveWebServer()
   dnsServer.start(53, "*", WiFi.softAPIP());
   server.addHandler(new CaptiveRequestHandler()).setFilter(ON_AP_FILTER);//only when requested from AP
   server.begin(); 
-  update_ledmatrix_text("192.168.4.1"); 
+  update_ledmatrix_ipaddress("192.168.4.1"); 
 }
 
 void startWebServer() 
@@ -274,6 +277,24 @@ void parseWifiCfg(char *ssid, char *password)
   f.close();
 }
 
+void send_bootcommand(const String& ipaddress) {
+  File settingsFile = LittleFS.open("/settings.json", "r");
+  DynamicJsonDocument doc(1024);
+  deserializeJson(doc, settingsFile);
+  JsonObject root = doc.as<JsonObject>();
+  String bootcommand = root["bootcommand"];
+  String brightness = root["brightness"];
+  if (bootcommand == "") {
+    update_ledmatrix_ipaddress(ipaddress);
+  }
+
+  else {
+    update_ledmatrix_command(bootcommand);
+  }
+  update_ledmatrix_command_with_arg("B", brightness);
+  settingsFile.close();
+}
+
 void wificonfig() 
 {
   Dir dir = LittleFS.openDir ("");
@@ -299,7 +320,8 @@ void wificonfig()
           debug_println("Successfully connected to wifi.");
           debug_print("IP Address: ");
           debug_println(WiFi.localIP());
-          update_ledmatrix_text(WiFi.localIP().toString());
+          send_bootcommand(WiFi.localIP().toString());
+          //update_ledmatrix_text(WiFi.localIP().toString());
           startWebServer();
           /*
           if (!MDNS.begin("brian")) {
