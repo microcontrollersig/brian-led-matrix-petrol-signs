@@ -12,6 +12,7 @@
 #include "test8command.h"
 #include "test9command.h"
 #include "test10command.h"
+#include "test11command.h"
 #include "testidle.h"
 #include "testIPAddress.h"
 #include "testTwoRowText.h"
@@ -23,6 +24,8 @@
 #include "testSingleGenericText.h"
 #include "testTwoGenericText.h"
 #include "testBrightness.h"
+#include "testSetPixel.h"
+
 
 class CommandList
 {
@@ -66,6 +69,9 @@ class CommandList
       Test10Command *test10 = new Test10Command();
       commands['9'] = test10;  
 
+      Test11Command *test11 = new Test11Command();
+      commands['a'] = test11;  
+
       TestIdleCommand *testidle = new TestIdleCommand();
       commands['@'] = testidle;    
 
@@ -99,6 +105,9 @@ class CommandList
       TestBrightnessCommand *testBrightnessCommand = new TestBrightnessCommand();
       commands['B'] = testBrightnessCommand; 
 
+      TestSetPixelCommand *testSetPixelCommand = new TestSetPixelCommand();
+      commands['P'] = testSetPixelCommand; 
+ 
       return commands;
     }
 
