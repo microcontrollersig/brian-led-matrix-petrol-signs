@@ -9,6 +9,8 @@ class Test11Command : public Command
     DMD3 *scrollingCanvas;
     int currentScrollX = 0;
     int scrollTextSize = 0;
+    int counter = 0;
+    bool scrollingMode = false;
   
   public:
     Test11Command() {
@@ -40,12 +42,30 @@ class Test11Command : public Command
     }
   
     void execute(DMD3 *canvas)  override {
-      if ( millis() - timeStart > 60) {        
+      if ( millis() - timeStart > 100) {        
         clearSerialMonitor();
-        canvas->clear();        
-        canvas->drawText(8,0,"MERRY");
-        canvas->drawText(9,16, "XMAS!");
-        //scrollingCanvas->copy(currentScrollX,0,96,16,canvas,0,16);
+        canvas->clear();       
+
+        switch(scrollingMode) {
+          case false:
+            canvas->drawText(8,0,"MERRY");
+            canvas->drawText(9,16, "XMAS!");
+            if (counter++ > 50) {
+              counter = 0;
+              scrollingMode = true;             
+            }
+            break;
+          case true:
+            scrollingCanvas->copy(currentScrollX,0,96,16,canvas,0,16);
+            canvas->drawText(0,0, " | | |");
+            if (counter++ > 350) {
+             counter = 0;
+             currentScrollX = 0;
+             scrollingMode = false;  
+            }
+            break;
+        }
+         
         printCanvas(canvas);
         canvas->update();
         if (currentScrollX++ > scrollTextSize) {
