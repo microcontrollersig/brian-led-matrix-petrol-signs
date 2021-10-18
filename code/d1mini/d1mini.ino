@@ -38,6 +38,9 @@ void restartESPCallback()
 class CaptiveRequestHandler : public AsyncWebHandler {
 public:
   CaptiveRequestHandler() {
+
+   server.serveStatic("/css/", LittleFS, "/css/");
+   server.serveStatic("/js/", LittleFS, "/js/");
     
     server.on("/wificredentials", HTTP_POST, [](AsyncWebServerRequest *request){
       int params = request->params();
@@ -118,6 +121,9 @@ void startCaptiveWebServer()
 
 void startWebServer() 
 {
+   server.serveStatic("/css/", LittleFS, "/css/");
+   server.serveStatic("/js/", LittleFS, "/js/");
+  
    server.on("/command", HTTP_POST, [](AsyncWebServerRequest *request){
          int params = request->params();
          AsyncWebParameter *c = request->getParam(0);
