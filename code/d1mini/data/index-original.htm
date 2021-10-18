@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+<title>
+Brian's LED Panel Main Page</title>
+<style>
+body {
+  font-family: Verdana, sans-serif;
+  text-align: center;
+  background: #222;
+  color: #fff;
+  line-height: 200%;
+  margin: 0;
+}
+hr {
+  border-color: #666;
+}
+button {
+  background: #333;
+  color: #fff;
+  font-family: Verdana, sans-serif;
+  border: 0.3ch solid #333;
+  display: inline-block;
+  font-size: 20px;
+  margin: 8px;
+  margin-top: 12px;
+}
+.helpB {
+  text-align: left;
+  position: absolute;
+  width: 60px;
+}
+
+label {
+	font-size: 1.6rem;
+	padding-right: 10px;
+	font-weight: bold;
+}
+
+input {
+  color: #000;
+  font-family: Verdana, sans-serif;
+  border: 0.5ch solid purple;
+  line-height: 10vh
+}
+input[type="number"] {
+  width: 4em;
+}
+select {
+  background: #333;
+  color: #fff;
+  font-family: Verdana, sans-serif;
+  border: 0.5ch solid #333;
+}
+td {
+  padding: 2px;
+}
+.d5 {
+  width: 4.5em !important;
+}
+
+
+.chosen { background-color: #06c; height: 30vh; padding-bottom: 8vh;}
+.notchosen { background-color: grey; height: 30vh; padding-bottom: 8vh;}
+
+*, *:after, *:before {
+  box-sizing: border-box;
+}
+
+html { font-size: 62.5%; }
+body { margin: 0; padding: 0; }
+
+/* buttons */
+
+.btn-align { position: relative; top: 45%; }
+.btn-ghost {
+  display: block;
+  width: 340px; width: 34rem;
+  height: 66px; height: 6.6rem;
+  font: 700 20px/66px "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; font: 2.0rem/6.6rem;
+  letter-spacing: 0.01rem;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all .16s ease;
+  margin: 0 auto;
+}
+.btn-blue  { color: #06c; border: 2px solid #06c; }
+.btn-blue:hover, .btn-blue:active, .btn-blue:focus  {
+  color: #fff;
+  background-color: #06c;
+  border: 2px solid #06c;
+}
+.btn-white { color: #fff; border: 2px solid #fff; }
+.btn-white:hover, .btn-white:active, .btn-white:focus  {
+  color: #06c;
+  background-color: #fff;
+  border: 2px solid #fff;
+}
+
+legend { font-size: 18px;  color:red; }
+
+@media screen and (max-width: 420px) { /* iPhone Landscape */
+  .btn-ghost {
+    width: 290px; width: 29.0rem;
+    height: 50px; height: 5.0rem;
+    font-size: 16px; font-size: 1.6rem;
+    line-height: 50px; line-height: 5.0rem;
+  }
+}
+
+.brightness span {
+  background: orange;
+  border-radius: 4px;
+  padding: 8px 5px 8px 5px;
+  border: 1px solid #ddd;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  color: purple;
+  font-size: 26px;
+  font-weight: bold;
+  cursor:pointer; 
+}
+
+.brightness {
+  margin: 50px;
+  -webkit-user-select: none; /* Chrome all / Safari all */
+  -moz-user-select: none; /* Firefox all */
+  -ms-user-select: none; /* IE 10+ */
+
+}
+
+.brightness input {
+  height: 34px;
+  width: 100px;
+  text-align: center;
+  font-size: 26px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  display: inline-block;
+  vertical-align: middle;
+  color: green;
+
+}
+
+
+
+
+
+</style>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    document.querySelectorAll(".commandonly a").forEach(item => {
+      item.addEventListener("click", event => {
+        event.preventDefault();
+        let chosenOne = document.getElementsByClassName("chosen")[0]
+        chosenOne.classList.remove('notchosen', 'chosen');
+        chosenOne.classList.add('notchosen');
+        event.target.parentElement.classList.remove('notchosen');  
+        event.target.parentElement.classList.add('chosen');   
+
+        let command = event.target.getAttribute('data-command'); 
+        document.querySelector("#noargs input").value = command;
+        document.querySelector("#noargs").submit();
+      });    
+  });
+
+  document.querySelectorAll(".textparam button").forEach(item => {
+    item.addEventListener("click", event => {
+    	event.preventDefault();
+    	let parent = document.getElementById("statictext");
+    	let command =event.target.getAttribute("data-command");
+    	let textarg1 = parent.querySelectorAll("input")[0].value;
+    	let textarg2 = parent.querySelectorAll("input")[1].value;
+        document.querySelectorAll("#twoargs input")[0].value = command;
+        document.querySelectorAll("#twoargs input")[1].value = textarg1;
+        document.querySelectorAll("#twoargs input")[2].value = textarg2;
+        document.querySelector("#twoargs").submit();
+
+        let chosenOne = document.getElementsByClassName("chosen")[0]
+        chosenOne.classList.remove('notchosen', 'chosen');
+        chosenOne.classList.add('notchosen');
+
+        let newChosen = parent.previousElementSibling;
+        newChosen.classList.remove('notchosen');
+        newChosen.classList.add('chosen');
+
+    });
+  });
+
+  document.querySelector("#currentDateTime a").addEventListener("click", event => {
+  	event.preventDefault();
+  	let currentDateTime = new Date();
+  	let timeComponents = currentDateTime.toTimeString().split(":")
+  	let hours = timeComponents[0];
+  	let minutes = timeComponents[1];
+
+    let day = currentDateTime.getDate();
+    let month = currentDateTime.getMonth();
+
+    let currentTime = hours + ":" + minutes;
+    let currentDate = day + "/" + month;
+
+    document.querySelectorAll("#twoargs input")[0].value = "*";
+    document.querySelectorAll("#twoargs input")[1].value = currentTime;
+    document.querySelectorAll("#twoargs input")[2].value = currentDate;
+    document.querySelector("#twoargs").submit();    
+
+  });
+
+  document.querySelector('.minus').addEventListener("click", event =>  {
+        var newBrightness = parseInt(document.querySelector(".brightness input").value) - 1;
+        if (newBrightness < 0 ) newBrightness = 0;
+        document.querySelector(".brightness input").value = newBrightness; 
+
+        document.querySelectorAll("#oneargs input")[0].value = "B";
+        document.querySelectorAll("#oneargs input")[1].value = newBrightness;
+        document.querySelector("#oneargs").submit();  
+        return false;
+        
+      });
+  
+  document.querySelector('.plus').addEventListener("click", event =>  {            
+        var newBrightness = parseInt(document.querySelector(".brightness input").value) + 1;
+        if (newBrightness > 255 ) newBrightness = 255;
+        document.querySelector(".brightness input").value = newBrightness;
+
+        document.querySelectorAll("#oneargs input")[0].value = "B";
+        document.querySelectorAll("#oneargs input")[1].value = newBrightness;
+        document.querySelector("#oneargs").submit();          
+        return false;
+        
+      });
+
+});
+</script>
+<head>
+<body>
+
+<h2 style="font-size: 36px;">Brian's LED Panel Main Page</h2>
+
+<div class="chosen commandonly">
+    <a class="btn-ghost btn-white btn-align" data-command="@">
+      CLEAR
+    </a>
+</div>
+
+<!--
+<div class="notchosen">
+    <a class="btn-ghost btn-white btn-align" >
+     Static Text
+    </a>    
+</div>
+-->
+
+
+
+
+
+<div class="notchosen commandonly">
+    <a class="btn-ghost btn-white btn-align" data-command="0">
+      Test Pattern 1
+    </a>
+</div>
+
+<div class="notchosen commandonly">
+  <a class="btn-ghost btn-white btn-align" data-command="1">
+   Test Pattern 2
+  </a>
+</div>
+
+<div class="notchosen commandonly">
+    <a class="btn-ghost btn-white btn-align" data-command="2">
+      Test Pattern 3
+    </a>
+</div>
+
+<div class="notchosen commandonly">
+  <a class="btn-ghost btn-white btn-align" data-command="3">
+   Test Pattern 4
+  </a>
+</div>
+
+<div class="notchosen commandonly">
+    <a class="btn-ghost btn-white btn-align" data-command="4">
+      Test Pattern 5
+    </a>
+</div>
+
+<div class="notchosen commandonly">
+    <a class="btn-ghost btn-white btn-align" data-command="5">
+      Test Pattern 6
+    </a>
+</div>
+
+<div class="notchosen commandonly">
+    <a class="btn-ghost btn-white btn-align" data-command="6">
+      Test Pattern 7
+    </a>
+</div>
+
+<div class="notchosen commandonly">
+    <a class="btn-ghost btn-white btn-align" data-command="7">
+      Test Pattern 8
+    </a>
+</div>
+
+<div class="notchosen commandonly">
+    <a class="btn-ghost btn-white btn-align" data-command="8">
+      Test Pattern 9
+    </a>
+</div>
+
+<h1> Two Rows of Text </h1>
+<div id="statictext" class="textparam" >
+  <div><label for="statictext">Top Row &nbsp;&nbsp;&nbsp;&nbsp;</label><input type="text" name="statictext1" maxlength="6"/>
+  <div><label for="statictext">Bottom Row</label><input type="text" name="statictext2" maxlength="6"/>  
+  <div><button data-command="*">SEND</button></div>
+</div>
+
+<div id="currentDateTime" class="notchosen">
+    <a class="btn-ghost btn-white btn-align" data-command="*">
+      Current time and Date
+    </a>	
+</div> 
+
+<h1>Brightness</h1>
+<div  class="brightness">
+  <span class="minus">-</span>
+  <input type="text" value="1" min="0" max="255"/>
+  <span class="plus">+</span>
+</div>
+
+<!--
+<div class="notchosen singleparam">
+  <a class="btn-ghost btn-white btn-align">
+    Scrolling Text
+  </a>
+</div>
+<div class="textparam" >
+	<label for="statictext">TEXT</label><input type="text" name="scrollingtext"  maxlength="16" data-command="7"/><button>SEND</button>
+</div>
+-->
+
+<form method="post" action="/command" name="noargs" id="noargs">
+  <input type="hidden" name="command"/>
+</form>
+
+<form method="post" action="/command" name="oneargs" id="oneargs">
+  <input type="hidden" name="command"/>
+  <input type="hidden" name="arg1">
+</form>
+
+<form method="post" action="/command" name="twoargs" id="twoargs">
+  <input type="hidden" name="command"/>
+  <input type="hidden" name="arg1">
+  <input type="hidden" name="arg2">
+</form>
+
+</body>
+</html>
