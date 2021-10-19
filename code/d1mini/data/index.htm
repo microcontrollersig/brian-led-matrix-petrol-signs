@@ -5,6 +5,23 @@
   <title>Brian's LED Matrix Panel</title>
   <meta charset="UTF-8" />
   <link rel="stylesheet" href="/css/XP.css" />
+  <style type="text/css">
+    input[type="text"] {
+      border: 1px solid #7f9db9;      
+    }
+    .labelnotfirst {
+      padding-left: 20px;
+    } 
+    
+    #scrollingtext .labelfirst {
+      width: 100px;
+    }
+
+    #text .labelfirst {
+      width: 70px;
+    }
+
+  </style>
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       document.querySelectorAll("input[name='demo']").forEach(function(input) {
@@ -37,6 +54,7 @@
     <menu role="tablist">
       <button aria-selected="true" aria-controls="demos">Demos</button>
       <button aria-controls="text">Text</button>
+      <button aria-controls="scrollingtext">Scrolling Text</button>
       <button aria-controls="settings">Settings</button>
     </menu>
     <article role="tabpanel" id="demos">
@@ -77,7 +95,7 @@
           </div>
           <div class="field-row">
             <input id="demo9" type="radio" name="demo" data-command="9">
-            <label for="demo9">Demo 9 - Custom Font</label>
+            <label for="demo9">Demo 9 - Small Font</label>
           </div>
           <div class="field-row">
             <input id="demo10" type="radio" name="demo" data-command="a">
@@ -91,18 +109,91 @@
       </article>
 
     <article role="tabpanel" hidden id="text">
-      Boo
+          <div class="field-row">&nbsp;</div>
+          <div class="field-row">
+            <label class="labelfirst">Lines of Text</label>
+            <select>
+              <option>1</option>
+              <option selected>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+              <option>6</option>
+            </select>          
+          </div>
+          
+          
+          <div class="field-row">
+            <label class="labelfirst">Text Font</label>
+            <select>
+              <option value="0">Default - 16x16 </option>
+              <option value="1">Small   - 5x7 </option>
+            </select>
+          </div>
+
+
+          <div id="line1" class="field-row linesoftext">
+                <label class="labelfirst" for="line1text">Line 1 Text</label>
+                <input id="line1text" type="text" maxlength="30" size="30" /> 
+                <label for="line1x" class="labelnotfirst">X</label>
+                <input id="line1x" type="text" maxlength="2" size="2" value="0" />  
+                <label for="line1y" class="labelnotfirst">Y</label>
+                <input id="text1y" type="text" maxlength="2" size="2" value="0" />        
+          </div>          
+        
+          <div id="line2" class="field-row linesoftext">
+                <label for="line2text" class="labelfirst">Line 2 Text</label>
+                <input id="line2text" type="text" maxlength="30" size="30" /> 
+                <label for="line2x" class="labelnotfirst">X</label>
+                <input id="line2x" type="text" maxlength="2" size="2" value="0" />  
+                <label for="line2y" class="labelnotfirst">Y</label>
+                <input id="text2y" type="text" maxlength="2" size="2" value="0" />                 
+          </div> 
+      
+    </article>
+
+    <article role="tabpanel" hidden id="scrollingtext">
+       <div class="field-row">
+        <label class="labelfirst">Mode</label>
+        <select>
+          <option value="0">Two lines, first line static text, second line scrolling text</option>
+        </select>
+       </div>
+       <div class="field-row">
+        <label class="labelfirst">Text Font</label>
+        <select>
+          <option value="0">Default</option>
+        </select>
+       </div>
+       <div class="field-row">
+          <label  class="labelfirst" for="scrollingtexttext">Line 1 Text</label>
+            <input id="scrollingtexttext" type="text" maxlength="30" size="30" /> 
+            <label for="scrollingtextx" class="labelnotfirst">X</label>
+            <input id="scrollingtextx" type="text" maxlength="2" size="2" value="0" />  
+            <label for="scrollingtexty" class="labelnotfirst">Y</label>
+            <input id="scrollingtexty" type="text" maxlength="2" size="2" value="0" />  
+       </div>
+       <div class="field-row">
+            <label  class="labelfirst" for="scrollingtexttextline2">Line 2 Scrolling Text</label>
+            <input id="scrollingtexttextline2" type="text" maxlength="100" size="100" /> 
+       </div>
     </article>
 
     <article role="tabpanel" hidden id="settings">
-      <p>
-        You create the content for each tab by using an <code>article</code> tag.
-      </p>
+      <section class="field-row" style="justify-content: flex-start">
+      <button style="justify-content: flex-start;">Set Current Command As Bootup Command</button>
+      <button style="justify-content: flex-start;">Reset Bootup Command</button>
+      </section>
     </article>
-    <section class="field-row" style="justify-content: flex-end">
-      <button>OK</button>
-      <button>Cancel</button>
-    </section>
+
+    <section class="field-row">&nbsp;</section>
+
+    <div class="status-bar">
+      <p class="status-bar-field">Current Command: None</p>
+      <p class="status-bar-field">Command at Bootup time: Default </p>
+      <p class="status-bar-field">Connected to Local Network</p>
+    </div>
+
   </div>
   </div>
   
