@@ -10,7 +10,7 @@
 
 class Dispatcher
 {
-  static const byte RECEIVED_SERIAL_SIZE = 32;
+  static const byte RECEIVED_SERIAL_SIZE = 200;
 
   private:
     std::vector<Command*> commands;

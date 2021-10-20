@@ -42,7 +42,7 @@ class Test11Command : public Command
     }
   
     void execute(DMD3 *canvas)  override {
-      if ( millis() - timeStart > 100) {        
+      if ( millis() - timeStart > 70) {        
         clearSerialMonitor();
         canvas->clear();       
 
