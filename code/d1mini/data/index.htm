@@ -21,6 +21,10 @@
       width: 70px;
     }
 
+    .hidden {
+      display: none;
+    }
+
   </style>
   <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -35,7 +39,38 @@
           document.querySelector("#noargs input").value = "@";
           document.querySelector("#noargs").submit();
       };
+      document.getElementById("sendtextbutton").onclick = function(event) {
+        const line1x = document.getElementById("line1x");
+        const line1y = document.getElementById("line1y");
+        const line1text = document.getElementById("line1text");
+        const fontIndex = document.getElementById("statictextfont").selectedIndex;
+        
+        document.querySelector("#fourargs input").value="Z";
+        document.querySelector("#fourargs input[name='arg1']").value = line1x.value;
+        document.querySelector("#fourargs input[name='arg2']").value = line1y.value;
+        document.querySelector("#fourargs input[name='arg3']").value = line1text.value;
+        document.querySelector("#fourargs input[name='arg4']").value = fontIndex;
 
+        document.querySelector("#fourargs").submit();
+      }
+      
+      document.getElementById("scrollingtextbutton").onclick = function(event) {
+          document.querySelector("#fiveargs input").value = "T";
+          const line1x = document.getElementById("scrollingline1x");
+          const line1y = document.getElementById("scrollingline1y");
+          const line1text = document.getElementById("scrollingline1text");
+          const line2text = document.getElementById("scrollingtexttext");          
+          const fontIndex = document.getElementById("scrollingtextfont").selectedIndex;
+
+          document.querySelector("#fiveargs input").value="Z";
+          document.querySelector("#fiveargs input[name='arg1']").value = line1x.value;
+          document.querySelector("#fiveargs input[name='arg2']").value = line1y.value;
+          document.querySelector("#fiveargs input[name='arg3']").value = line1text.value;
+          document.querySelector("#fiveargs input[name='arg4']").value = line2text.value;
+          document.querySelector("#fiveargs input[name='arg5']").value = fontIndex;
+
+          document.querySelector("#fiveargs").submit();
+      }
     });
   </script>
 </head>
@@ -114,18 +149,14 @@
             <label class="labelfirst">Lines of Text</label>
             <select>
               <option>1</option>
-              <option selected>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-              <option>6</option>
+              <option>2</option>
             </select>          
           </div>
           
           
           <div class="field-row">
             <label class="labelfirst">Text Font</label>
-            <select>
+            <select id="statictextfont">
               <option value="0">Default - 16x16 </option>
               <option value="1">Small   - 5x7 </option>
             </select>
@@ -138,10 +169,10 @@
                 <label for="line1x" class="labelnotfirst">X</label>
                 <input id="line1x" type="text" maxlength="2" size="2" value="0" />  
                 <label for="line1y" class="labelnotfirst">Y</label>
-                <input id="text1y" type="text" maxlength="2" size="2" value="0" />        
+                <input id="line1y" type="text" maxlength="2" size="2" value="0" />        
           </div>          
         
-          <div id="line2" class="field-row linesoftext">
+          <div id="line2" class="field-row linesoftext hidden">
                 <label for="line2text" class="labelfirst">Line 2 Text</label>
                 <input id="line2text" type="text" maxlength="30" size="30" /> 
                 <label for="line2x" class="labelnotfirst">X</label>
@@ -149,6 +180,9 @@
                 <label for="line2y" class="labelnotfirst">Y</label>
                 <input id="text2y" type="text" maxlength="2" size="2" value="0" />                 
           </div> 
+          <div class="field-row">&nbsp;</div>
+          <div class="field-row">&nbsp;</div>
+          <button id="sendtextbutton">Send</button>
       
     </article>
 
@@ -161,33 +195,44 @@
        </div>
        <div class="field-row">
         <label class="labelfirst">Text Font</label>
-        <select>
+        <select id="scrollingtextfont">
           <option value="0">Default</option>
         </select>
        </div>
        <div class="field-row">
-          <label  class="labelfirst" for="scrollingtexttext">Line 1 Text</label>
-            <input id="scrollingtexttext" type="text" maxlength="30" size="30" /> 
-            <label for="scrollingtextx" class="labelnotfirst">X</label>
-            <input id="scrollingtextx" type="text" maxlength="2" size="2" value="0" />  
-            <label for="scrollingtexty" class="labelnotfirst">Y</label>
-            <input id="scrollingtexty" type="text" maxlength="2" size="2" value="0" />  
+          <label  class="labelfirst" for="scrollingline1text">Line 1 Text</label>
+            <input id="scrollingline1text" type="text" maxlength="30" size="30" /> 
+            <label for="scrollingline1x" class="labelnotfirst">X</label>
+            <input id="scrollingline1x" type="text" maxlength="2" size="2" value="0" />  
+            <label for="scrollingline1y" class="labelnotfirst">Y</label>
+            <input id="scrollingline1y" type="text" maxlength="2" size="2" value="0" />  
        </div>
        <div class="field-row">
-            <label  class="labelfirst" for="scrollingtexttextline2">Line 2 Scrolling Text</label>
-            <input id="scrollingtexttextline2" type="text" maxlength="100" size="100" /> 
+            <label  class="labelfirst" for="scrollingtexttext">Line 2 Scrolling Text</label>
+            <input id="scrollingtexttext" type="text" maxlength="32" size="32" /> 
        </div>
+        <div class="field-row">&nbsp;</div>
+        <div class="field-row">&nbsp;</div>
+        <button id="scrollingtextbutton">Send</button>
     </article>
 
     <article role="tabpanel" hidden id="settings">
+      <div class="field-row" style="width: 300px">
+        <label>Brightness</label>
+        <span>&nbsp;&nbsp;</span>
+        <label for="brightness">Low</label>
+        <input id="brightness" type="range" min="1" max="255" value="1" />
+        <label>High</label>
+      </div>
+      <div class="field-row">&nbsp;</div>  
       <section class="field-row" style="justify-content: flex-start">
       <button style="justify-content: flex-start;">Set Current Command As Bootup Command</button>
       <button style="justify-content: flex-start;">Reset Bootup Command</button>
       </section>
     </article>
 
-    <section class="field-row">&nbsp;</section>
-
+    <div class="field-row">&nbsp;</div>
+        
     <div class="status-bar">
       <p class="status-bar-field">Current Command: None</p>
       <p class="status-bar-field">Command at Bootup time: Default </p>
@@ -213,6 +258,35 @@
   <input type="hidden" name="arg1">
   <input type="hidden" name="arg2">
 </form>
+
+<form method="post" action="/command" name="fourargs" id="fourargs">
+  <input type="hidden" name="command"/>
+  <input type="hidden" name="arg1">
+  <input type="hidden" name="arg2">
+  <input type="hidden" name="arg3">
+  <input type="hidden" name="arg4">
+</form>
+
+<form method="post" action="/command" name="fiveargs" id="fiveargs">
+  <input type="hidden" name="command"/>
+  <input type="hidden" name="arg1">
+  <input type="hidden" name="arg2">
+  <input type="hidden" name="arg3">
+  <input type="hidden" name="arg4">
+  <input type="hidden" name="arg5">
+</form>
+
+<form method="post" action="/command" name="sevenargs" id="sevenargs">
+  <input type="hidden" name="command"/>
+  <input type="hidden" name="arg1">
+  <input type="hidden" name="arg2">
+  <input type="hidden" name="arg3">
+  <input type="hidden" name="arg4">
+  <input type="hidden" name="arg5">
+  <input type="hidden" name="arg6">
+  <input type="hidden" name="arg7"> 
+</form>
+
 </body>
 
 </html>
