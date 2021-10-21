@@ -21,12 +21,29 @@
       width: 70px;
     }
 
+    #settings .labelfirst {
+      width: 170px;
+    }
+
     .hidden {
       display: none;
     }
 
+    .window {
+      margin-bottom: 30px;
+    }
+
   </style>
   <script>
+    /*
+     settingsData_schema_example = {
+       bootcommand: ""
+       bootcommanddescription: ""
+       brightness: "1"
+     }
+    */
+    var settingsData;
+
     document.addEventListener("DOMContentLoaded", function() {
       document.querySelectorAll("input[name='demo']").forEach(function(input) {
         input.addEventListener("change", function(event) {
@@ -55,7 +72,6 @@
       }
       
       document.getElementById("scrollingtextbutton").onclick = function(event) {
-          document.querySelector("#fiveargs input").value = "T";
           const line1x = document.getElementById("scrollingline1x");
           const line1y = document.getElementById("scrollingline1y");
           const line1text = document.getElementById("scrollingline1text");
@@ -71,12 +87,33 @@
 
           document.querySelector("#fiveargs").submit();
       }
+
+      hydrateSettings();
+
     });
+
+
+    function hydrateSettings() {
+      fetch('/settings').then(function(response) {
+        return response.json();
+      }).then(function(data) {
+        //console.log(data);
+        settingsData = data;
+        if (settingsData.bootcommand !== "") {
+          document.getElementById("currentRunningCommand").innerHTML = settingsData.bootcommand;
+          document.getElementById("currentBootCommand").innerHTML = settingsData.bootcommanddescription;
+
+          document.getElementById("settingsRunningCommand").innerHTML = settingsData.bootcommand;
+          document.getElementById("settingsBootCommand").innerHTML = settingsData.bootcommanddescription;          
+        }        
+      });
+    }
+
   </script>
 </head>
 
 <body>
-    <div class="window" style="margin-left: 32px; width: 800px;">
+  <div class="window" style="margin-left: 32px; width: 800px;">
   <div class="title-bar">
     <div class="title-bar-text">Brian's LED Matrix Panel</div>
     <div class="title-bar-controls">
@@ -90,7 +127,6 @@
       <button aria-selected="true" aria-controls="demos">Demos</button>
       <button aria-controls="text">Text</button>
       <button aria-controls="scrollingtext">Scrolling Text</button>
-      <button aria-controls="settings">Settings</button>
     </menu>
     <article role="tabpanel" id="demos">
         <p>Choose one of the demos below to test drive LED matrix</p>
@@ -216,31 +252,70 @@
         <button id="scrollingtextbutton">Send</button>
     </article>
 
-    <article role="tabpanel" hidden id="settings">
-      <div class="field-row" style="width: 300px">
-        <label>Brightness</label>
-        <span>&nbsp;&nbsp;</span>
-        <label for="brightness">Low</label>
-        <input id="brightness" type="range" min="1" max="255" value="1" />
-        <label>High</label>
-      </div>
-      <div class="field-row">&nbsp;</div>  
-      <section class="field-row" style="justify-content: flex-start">
-      <button style="justify-content: flex-start;">Set Current Command As Bootup Command</button>
-      <button style="justify-content: flex-start;">Reset Bootup Command</button>
-      </section>
-    </article>
-
+    
     <div class="field-row">&nbsp;</div>
         
     <div class="status-bar">
-      <p class="status-bar-field">Current Command: None</p>
-      <p class="status-bar-field">Command at Bootup time: Default </p>
+      <p class="status-bar-field">Current Command: <span id="currentRunningCommand">None</span></p>
+      <p class="status-bar-field">Command at Bootup time: <span id="currentBootCommand">Default</span> </p>
       <p class="status-bar-field">Connected to Local Network</p>
     </div>
 
   </div>
   </div>
+
+
+  <div id="windows-separator">&nbsp;</div>
+
+
+  <div class="window" style="margin-left: 32px; width: 800px;">
+  <div class="title-bar">
+    <div class="title-bar-text">Extras</div>
+    <div class="title-bar-controls">
+      <button aria-label="Minimize"></button>
+      <button aria-label="Maximize"></button>
+      <button aria-label="Close"></button>
+    </div>
+  </div>
+    <div class="window-body">
+    <menu role="tablist">
+      <button aria-selected="true" aria-controls="games">Games</button>
+      <button aria-controls="playlists">Playlists</button>
+      <button aria-controls="settings">Settings</button>
+    </menu>
+
+    <article role="tabpanel" id="games">
+      GAMES TODO
+    </article>
+
+    <article role="tabpanel" hidden id="playlists">
+      PLAYLISTS TODO
+    </article>
+
+    <article role="tabpanel" hidden id="settings">
+      <div class="field-row" style="width: 300px">
+        <span style="padding-right: 120px;">Brightness</span>
+        <label for="brightness">Low</label>
+        <input id="brightness" type="range" min="1" max="255" value="1" />
+        <label>High</label>
+      </div>
+      <div class="field-row">
+        <label class="labelfirst">Current Running Command:</label>
+        <span id="settingsCurrentCommand">None</span>
+      </div>
+      <div class="field-row">
+        <label class="labelfirst">Current Boot Command:</label>
+        <span id="settingsBootCommand">Default</span>
+      </div>      
+      <section class="field-row" style="justify-content: flex-start">
+      <button style="justify-content: flex-start;">Set Current Command As Bootup Command</button>
+      <button style="justify-content: flex-start;">Reset Bootup Command</button>
+      </section>
+    </article>
+    </div>
+  </div>
+
+
   
      <script src="/js/script.js" ></script>
 

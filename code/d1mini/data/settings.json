@@ -1,4 +1,5 @@
 {
 	"brightness" : "1",
-	"bootcommand" : ""
+	"bootcommand" : "",
+	"bootcommanddescription": ""
 }
