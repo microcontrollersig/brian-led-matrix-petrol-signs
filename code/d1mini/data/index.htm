@@ -43,6 +43,7 @@
      }
     */
     var settingsData;
+    var currentcommand;
 
     document.addEventListener("DOMContentLoaded", function() {
       document.querySelectorAll("input[name='demo']").forEach(function(input) {
@@ -50,6 +51,11 @@
           const command = event.target.dataset.command;
           document.querySelector("#noargs input").value = command;
           document.querySelector("#noargs").submit();
+          const description = event.target.nextElementSibling.innerHTML;
+          //console.log(description);
+          document.getElementById("currentRunningCommand").innerHTML = description;
+          document.getElementById("settingsCurrentCommand").innerHTML = description;
+          currentcommand = command;
         });
       });
       document.getElementById("clearleds").onclick = function(event) {
@@ -88,9 +94,24 @@
           document.querySelector("#fiveargs").submit();
       }
 
+      document.getElementById("brightness").addEventListener("input",  function(event) {
+        //console.log(event.target.value);
+        settingsData.brightness = event.target.value;
+        fetch('/settingsSubmit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(settingsData)
+        }).then(function(response) {
+          console.log(response);
+        });
+      });
+
       hydrateSettings();
 
     });
+
 
 
     function hydrateSettings() {
@@ -99,13 +120,27 @@
       }).then(function(data) {
         //console.log(data);
         settingsData = data;
+        currentcommand = settingsData.bootcommand;
+
         if (settingsData.bootcommand !== "") {
           document.getElementById("currentRunningCommand").innerHTML = settingsData.bootcommand;
           document.getElementById("currentBootCommand").innerHTML = settingsData.bootcommanddescription;
 
-          document.getElementById("settingsRunningCommand").innerHTML = settingsData.bootcommand;
+          document.getElementById("settingsCurrentCommand").innerHTML = settingsData.bootcommand;
           document.getElementById("settingsBootCommand").innerHTML = settingsData.bootcommanddescription;          
         }        
+
+        else {
+          document.getElementById("currentRunningCommand").innerHTML = "None";
+          document.getElementById("currentBootCommand").innerHTML = "None";
+
+          document.getElementById("settingsCurrentCommand").innerHTML = "None";
+          document.getElementById("settingsBootCommand").innerHTML = "None";           
+        }
+
+        document.getElementById("brightness").value = settingsData.brightness;
+
+
       });
     }
 
