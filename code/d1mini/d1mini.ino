@@ -166,15 +166,34 @@ void startWebServer()
      } 
    });
    server.addHandler(handler);
-   
-   
+     
+AsyncCallbackJsonWebHandler* settingsSubmitHandler = new AsyncCallbackJsonWebHandler("/settingsSubmit", [](AsyncWebServerRequest *request, JsonVariant &json) {
+  
+  
+  if (request->method() == HTTP_POST) {
+       DynamicJsonDocument doc(2048);
+       doc["brightness"] = json["brightness"];
+       doc["bootcommand"] = json["bootcommand"];
+       doc["bootcommanddescription"] = json["bootcommanddescription"];
+      
+       File settingsFile = LittleFS.open("/settings.json", "w");
+       serializeJson(json, settingsFile);
+       request->send(200);  
+       settingsFile.close();     
+  }
+
+  
+  
+});
+server.addHandler(settingsSubmitHandler);
+
    server.on("/settings", HTTP_GET, [](AsyncWebServerRequest *request) {
      File settingsFile = LittleFS.open("/settings.json", "r");
      request->send(200, "application/json", settingsFile.readString());
      settingsFile.close();
    });
 
-   
+   /*
    server.on("/settings", HTTP_POST, [](AsyncWebServerRequest *request) { 
       request->send(200);
    }, NULL, [](AsyncWebServerRequest *request, uint8_t *data, size_t len, size_t index, size_t total) {        
@@ -201,7 +220,7 @@ void startWebServer()
           Serial.println("It gets here");
         }
   });
- 
+ */
    /*
    AsyncCallbackJsonWebHandler* settingsHandler = new AsyncCallbackJsonWebHandler("/settings", [](AsyncWebServerRequest *request, JsonVariant &json) {
      debug_println("We got here!");
