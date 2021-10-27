@@ -33,6 +33,27 @@
       margin-bottom: 30px;
     }
 
+
+    .cmd {
+      margin-top: 40px;
+    }
+        
+    @font-face {
+        font-family:"Sierra AGI Font";
+        src: url("/fonts/sierra-agi-font.ttf") format("truetype");
+    }
+
+    
+    .lsl {
+        font-family: "Sierra AGI Font";
+        font-size: 2rem;
+background-color: #fdfff5; box-shadow: inset -4px 0 0 #aa0000, inset 0 -2px 0 #aa0000, inset 4px 0 0 #aa0000, inset 0 2px 0 #aa0000;padding-left: 20px;padding-top: 5px; box-sizing:border-box;        
+    }
+    
+    article  {
+      background-color: #55fbfb !important;
+    }
+
   </style>
   <script>
     /*
@@ -44,6 +65,21 @@
     */
     var settingsData;
     var currentcommand;
+    var currentcommanddescription;
+    var currentPlaylistNumber;    
+    var playlistsrunning = false;
+
+    function update() {
+        fetch('/settingsSubmit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(settingsData)
+        }).then(function(response) {
+          //console.log(response);
+        });
+    }
 
     document.addEventListener("DOMContentLoaded", function() {
       document.querySelectorAll("input[name='demo']").forEach(function(input) {
@@ -62,6 +98,16 @@
           document.querySelector("#noargs input").value = "@";
           document.querySelector("#noargs").submit();
       };
+      document.getElementById("setbootupcommand").addEventListener("click", function(event) {
+          const description = document.getElementById("currentRunningCommand").innerHTML;
+          settingsData.bootcommand = currentcommand;
+          settingsData.bootcommanddescription = description;
+          //console.log(description);
+          update();
+      });
+      document.getElementById("resetbootupcommand").addEventListener("click", function(event) {
+          update();
+      });      
       document.getElementById("sendtextbutton").onclick = function(event) {
         const line1x = document.getElementById("line1x");
         const line1y = document.getElementById("line1y");
@@ -97,16 +143,51 @@
       document.getElementById("brightness").addEventListener("input",  function(event) {
         //console.log(event.target.value);
         settingsData.brightness = event.target.value;
-        fetch('/settingsSubmit', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(settingsData)
-        }).then(function(response) {
-          console.log(response);
-        });
+        update();
       });
+ 
+      document.getElementById("playalldemos").addEventListener("click", function(event) {
+        currentPlaylistNumber = 0;
+        const demoNumber = 1;
+        const demoid = "demo" + demoNumber;
+
+        document.getElementById("cmd").removeAttribute("hidden");
+        document.querySelector("#playlists").querySelectorAll("span").forEach(function(element) {
+           element.style.display = "none";
+        });
+        const command = document.getElementById(demoid).dataset.command;
+        document.querySelector("#noargs input").value = command;
+        document.querySelector("#noargs").submit();
+        document.querySelector("#playlists").querySelectorAll("span")[currentPlaylistNumber].style.display = "block";
+        document.getElementById(demoid).checked = true;
+        setInterval(function() {
+          let demoNumber;
+          let demoid;
+
+          currentPlaylistNumber = currentPlaylistNumber + 1
+          if (currentPlaylistNumber === document.querySelector("#playlists").querySelectorAll("span").length ) {
+            currentPlaylistNumber = 0;
+            demoNumber = 0;
+          }
+
+          demoNumber = currentPlaylistNumber + 1
+          demoid = "demo" + demoNumber;
+          
+
+
+
+          document.querySelector("#playlists").querySelectorAll("span").forEach(function(element) {
+            element.style.display = "none";
+          });          
+          document.querySelector("#playlists").querySelectorAll("span")[currentPlaylistNumber].style.display = "block";
+          document.getElementById(demoid).checked = true;
+          const command = document.getElementById(demoid).dataset.command;
+          document.querySelector("#noargs input").value = command;
+          document.querySelector("#noargs").submit();
+        },  10000);
+
+      });
+
 
       hydrateSettings();
 
@@ -317,6 +398,7 @@
       <button aria-selected="true" aria-controls="games">Games</button>
       <button aria-controls="playlists">Playlists</button>
       <button aria-controls="settings">Settings</button>
+      <button aria-controls="credits" id="creditsButton">Credits</button>
     </menu>
 
     <article role="tabpanel" id="games">
@@ -324,7 +406,35 @@
     </article>
 
     <article role="tabpanel" hidden id="playlists">
-      PLAYLISTS TODO
+      <button id="playalldemos">Play All Demos</button>
+
+      <div id="cmd" class="window cmd" hidden>
+      <div class="title-bar">
+      <div class="title-bar-text">Command Prompt</div>
+      <div class="title-bar-controls">
+      <button aria-label="Minimize"></button>
+      <button aria-label="Maximize"></button>
+      <button aria-label="Close"></button>
+      </div>
+      </div>
+      <div class="window-body">
+      <pre>Microsoft&#10094;R&#10095; Windows DOS 
+      &#10094;C&#10095; Copyright Microsoft Corp 1990-2001. 
+      <br>C:&#92;WINDOWS&#92;SYSTEM32> run.exe <br>
+      <span>Playing Demo 1 - Diamonds are forever ... </span>
+      <span>Playing Demo 2 - Four Corners ... </span>
+      <span>Playing Demo 3 - Humpty Dumpty ... </span>
+      <span>Playing Demo 4 - Scrolling Text ... </span>
+      <span>Playing Demo 5 - LED Matrix Pixel Tester ... </span>
+      <span>Playing Demo 6 - Roses are Red ... </span>
+      <span>Playing Demo 7 - Snake Game ... </span>
+      <span>Playing Demo 8 - Pong Game ... </span>
+      <span>Playing Demo 9 - Small Font ... </span>
+      <span>Playing Demo 10 - Merry Christmas ... </span>
+      </pre>
+      </div>
+      </div>
+
     </article>
 
     <article role="tabpanel" hidden id="settings">
@@ -343,12 +453,36 @@
         <span id="settingsBootCommand">Default</span>
       </div>      
       <section class="field-row" style="justify-content: flex-start">
-      <button style="justify-content: flex-start;">Set Current Command As Bootup Command</button>
-      <button style="justify-content: flex-start;">Reset Bootup Command</button>
+      <button id="setbootupcommand" style="justify-content: flex-start;">Set Current Command As Bootup Command</button>
+      <button id="resetbootupcommand" style="justify-content: flex-start;">Reset Bootup Command</button>
       </section>
     </article>
+
+    <article role="tabpanel" hidden id="credits">
+
+      <div style="margin:0; padding:0; border-left: 5px solid #fdfff5; border-right: 5px solid #fdfff5; border-top: 2px solid #fdfff5; border-bottom: 2px solid #fdfff5;">
+      <div class="lsl">
+       <div style="height: 30px;">&nbsp;</div>
+        Credits: 
+       <div style="height: 30px;">&nbsp;</div>
+       <div>
+          Mohan Gupta<br> 
+          John Shirt<br> 
+          Brian Davis<br> 
+          Sean Clarke<br>
+          John Macey<br>
+        </div>
+        <div style="height: 30px;">&nbsp;</div>
+       </div>
+    </div>
+        <div style="height: 10px;">&nbsp;</div>
+        <h3>More Info</h3>
+        <h4><a href="https://github.com/microcontrollersig/brian-led-matrix-petrol-signs">Project Home Page</a></h4>
+    </article>
+
     </div>
   </div>
+
 
 
   
