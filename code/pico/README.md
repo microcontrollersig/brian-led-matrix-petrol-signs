@@ -2,7 +2,7 @@
 
 #### Method 1 Using the UF2 binary file (easiest)
 
-1. Download d1mini.bin from [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/releases/latest)
+1. Download **d1mini.bin** from [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/releases/latest)
 
 2. Press and hold the **BOOTSEL** button on the Raspberry Pico while connecting the USB cable to the PC. Once USB is connected to PC, release button.
 
