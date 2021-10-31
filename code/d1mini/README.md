@@ -8,8 +8,12 @@
 1. Download ESPHome Flasher [here](https://github.com/esphome/esphome-flasher/releases)
 ![ESPHome Flasher](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/images/esphomeflasher.jpg)
 
-3. Download **d1mini.bin** binary file from [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/releases/latest)
-4. Flash.
+3. Download **d1mini.bin** file from [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/releases/latest)
+4. Open ESPHOME Flasher
+    - Select Serial port
+    - Browse to **d1mini.bin** file
+    - Press **Flash ESP** button
+     
 
 ### Use Arduino IDE (hard method)
 
