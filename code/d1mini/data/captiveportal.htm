@@ -54,6 +54,10 @@ td {
 .d5 {
   width: 4.5em !important;
 }
+
+.spacing {
+  padding-top: 12px;
+}
 </style>
 <head>
 <body>
@@ -62,11 +66,18 @@ td {
     <h2>WiFi setup for Brian's LED Panels</h2>
 
 
-
-    <h3>Connect to existing network</h3>
-    Network name (SSID, empty to not connect): <br><input name="CS" maxlength="32"><br>
+    
+    <h3>WIFI network Primary Connection</h3>
+    Network name (SSID): <br><input name="CS" maxlength="32"><br>
     Network password: <br> <input name="CP" maxlength="63"><br>
-    <hr>
+    
+    <div class="spacing">&nbsp;</div>
+
+    <h3>WIFI network Secondary Connection</h3>
+    Network name (SSID): <br><input name="CS2" maxlength="32"><br>
+    Network password: <br> <input name="CP2" maxlength="63"><br>
+
+
     <button type="submit">Save & Connect</button>
   </form>
 
