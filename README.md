@@ -54,24 +54,24 @@ They usually come in 6 panels wide, 2 panels height (effectively becomes a 96x32
 
 # Software
 
-## Uploading code to Raspberry Pico
+Firmware needs to be uploaded to Pico and d1mini.
 
-The purpose of the Raspberry Pico:
+## Uploading firmware to Raspberry Pico
 
+[Click here for details](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/tree/main/code/pico).
+
+## Uploading firmware to D1 mini
+
+[Click here for details](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/tree/main/code/d1mini)
+
+
+# Roles of Microprocessors
+
+## Pico
 * update LED matrix 
 * receive commands from the D1 mini via serial(RX).
 
-You can either upload code using the Arduino IDE or simply use the binary file with extension **uf2**
-
-Procedure for either method [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/tree/main/code/pico).
-
-## Uploading code to D1 mini
-
-You can either upload code using the Arduino IDE or using an ESP8266 flashing tool such as ESPHome Flasher and the binary file that ends with extension **bin**
-
-Procedure for either method [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/tree/main/code/d1mini)
-
-The purpose of the D1 mini:
+## ESP8266 D1mini
 
 * Present user with web interface for controlling LED matrix. 
 * Send commands for the Pico to execute on the LED matrix via Serial(TX).
