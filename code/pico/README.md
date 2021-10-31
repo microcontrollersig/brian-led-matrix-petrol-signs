@@ -2,7 +2,7 @@
 
 #### Method 1 Using the UF2 binary file (easiest)
 
-1. Download **d1mini.bin** from [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/releases/latest)
+1. Download **pico.uf2** from [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/releases/latest)
 
 2. Press and hold the **BOOTSEL** button on the Raspberry Pico while connecting the USB cable to the PC. Once USB is connected to PC, release button.
 
@@ -12,7 +12,7 @@
 
 <img src="https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/images/rpi-rp2.png" width="500" />
 
-4. Copy the UF2 binary file to the USB drive. After copying, the USB drive will disappear. The program has been
+4. Copy **pico.uf2** to the USB drive marked **RPI-RP2**. After copying, the USB drive will disappear. The program has been
    successfully uploaded!
 
 
