@@ -3,7 +3,8 @@
 #include <WiFi.h>
 #include <AsyncTCP.h>
 #elif defined(ESP8266)
-#include <ESP8266WiFi.h>
+//#include <ESP8266WiFi.h>
+#include <ESP8266WiFiMulti.h>
 #include <ESPAsyncTCP.h>
 //#include <ESP8266mDNS.h>
 #endif
@@ -12,7 +13,7 @@
 #include <Ticker.h>
 #include <AsyncJson.h>
 #include <ArduinoJson.h>
-#define WIFI_TIMEOUT 10000
+#define WIFI_TIMEOUT 15000
 
 
 //#define DEBUG 0
@@ -29,6 +30,7 @@ DNSServer dnsServer;
 AsyncWebServer server(80);
 bool restartESP = false;
 Ticker ticker;
+ESP8266WiFiMulti wifiMulti;
 
 void restartESPCallback() 
 {
@@ -47,6 +49,8 @@ public:
       int params = request->params();
       AsyncWebParameter *ssid = request->getParam(0);
       AsyncWebParameter *wifipassword = request->getParam(1);
+      AsyncWebParameter *ssid2 = request->getParam(2);
+      AsyncWebParameter *wifipassword2 = request->getParam(3);
             
       debug_print("Number of params: ");
       debug_println(params);
@@ -54,12 +58,27 @@ public:
       debug_println(ssid->value().c_str());
       debug_print("Wifi password: ");
       debug_println(wifipassword->value().c_str());
+      debug_print("SSID2: ");
+      debug_println(ssid2->value().c_str());
+      debug_print("Wifi password2: ");
+      debug_println(wifipassword2->value().c_str());      
             
-      File file = LittleFS.open("wifi.cfg", "w");      
+      File file = LittleFS.open("wifi.cfg", "w");
+      file.print(ssid->value().c_str());
+      file.print('\n');
+      file.print(wifipassword->value().c_str());
+      file.print('\n');  
+      file.print(ssid2->value().c_str());
+      file.print('\n');
+      file.print(wifipassword2->value().c_str());
+      file.print('\n');  
+      file.close();        
+      /*
       file.print(ssid->value().c_str());  
       file.print(',');
       file.print(wifipassword->value().c_str());       
       file.close();
+      */
       
       AsyncWebServerResponse* response = request->beginResponse(LittleFS, "/captiverestart.htm", "text/html");
       request->send(response);
@@ -177,6 +196,9 @@ AsyncCallbackJsonWebHandler* settingsSubmitHandler = new AsyncCallbackJsonWebHan
        doc["brightness"] = json["brightness"];
        doc["bootcommand"] = json["bootcommand"];
        doc["bootcommanddescription"] = json["bootcommanddescription"];
+
+       String brightness = json["brightness"];
+       update_ledmatrix_command_with_arg('B', brightness);
       
        File settingsFile = LittleFS.open("/settings.json", "w");
        serializeJson(json, settingsFile);
@@ -287,23 +309,62 @@ server.addHandler(settingsSubmitHandler);
 
 }
 
-void parseWifiCfg(char *ssid, char *password)
+bool attemptWifiConnection()
 {
   File f = LittleFS.open("wifi.cfg", "r");
   
   if (f.available() > 0) {
-     size_t bytesRead = f.readBytesUntil(',', ssid, 100);
-     ssid[bytesRead] = '\0';
-     //debug_print("ssid byte count:");
-     //debug_println(bytesRead);
+     String ssid = f.readStringUntil('\n');
+     String password = f.readStringUntil('\n');
+     String ssid2 = f.readStringUntil('\n');
+     String password2 = f.readStringUntil('\n');
+     wifiMulti.addAP(ssid.c_str(), password.c_str());
+     wifiMulti.addAP(ssid2.c_str(), password2.c_str());
+     if (wifiMulti.run(WIFI_TIMEOUT) == WL_CONNECTED) {
+    Serial.print("WiFi connected: ");
+    Serial.print(WiFi.SSID());
+    Serial.print(" ");
+    Serial.println(WiFi.localIP());
+    f.close();
+    return true;
+  } else {
+    Serial.println("WiFi not connected!");
+    f.close();
+    return false;
+  }     
+    /*
+     debug_println("Attempting to connect to wifi with the following credentials...");
+     debug_print("SSID:");
+     debug_println(ssid);
+     debug_print("password:");
+     debug_println(password);     
+     WiFi.begin(ssid.c_str(),password.c_str());
+     WiFi.waitForConnectResult(WIFI_TIMEOUT);
+     if (WiFi.status() == WL_CONNECTED) {
+       f.close();
+       return true; 
+     }
+
+     String ssid2 = f.readStringUntil('\n');
+     String password2 = f.readStringUntil('\n');
+    
+     debug_println("Attempting to connect to wifi with the following credentials...");
+     debug_print("SSID:");
+     debug_println(ssid2.c_str());
+     debug_print("password:");
+     debug_println(password2.c_str());     
+     WiFi.begin(ssid2.c_str(),password2.c_str());
+     WiFi.waitForConnectResult(WIFI_TIMEOUT);
+     f.close();
+     if (WiFi.status() == WL_CONNECTED) {
+       return true; 
+     }     
+
+     
+     return false;
+     */
   }
   
-  int i;
-  for (i=0; f.available() > 0 ; i++) {
-    password[i] = f.read();
-  }
-  password[i] = '\0';
-  f.close();
 }
 
 void send_bootcommand(const String& ipaddress) {
@@ -326,57 +387,22 @@ void send_bootcommand(const String& ipaddress) {
 
 void wificonfig() 
 {
-  Dir dir = LittleFS.openDir ("");
-  while (dir.next()) {
-    if (dir.fileName() == "wifi.cfg"){
-      if (dir.fileSize() == 0) {
-        debug_println("Starting captive portal...");
-        startCaptiveWebServer();        
-      }
-
-      else {
-        char ssid[100], password[100];
-        debug_println("Attempting to parse wifi.cfg ...");
-        parseWifiCfg(ssid, password);
-        debug_print("SSID retrieved from wifi.cfg:");
-        debug_println(ssid);
-        debug_print("password retrieved from wifi.cfg:");
-        debug_println(password);
-        debug_println("Attempting to connect to wifi...");
-        WiFi.begin(ssid,password);
-        WiFi.waitForConnectResult(WIFI_TIMEOUT);
-        if (WiFi.status() == WL_CONNECTED) {
-          debug_println("Successfully connected to wifi.");
-          debug_print("IP Address: ");
-          debug_println(WiFi.localIP());
-          send_bootcommand(WiFi.localIP().toString());
-          //update_ledmatrix_text(WiFi.localIP().toString());
-          startWebServer();
-          /*
-          if (!MDNS.begin("brian")) {
-            debug_println("Error setting up MDNS responder!");
-            while(1) {
-              delay(1000);
-            }
-           }
-          debug_println("mDNS responder started");
-          // Add service to MDNS-SD
-          MDNS.addService("http", "tcp", 80);
-          */
-        }
-
-        else {
-          debug_println("Couldn't connect to wifi. Starting Soft AP.");
-          File file = LittleFS.open("wifi.cfg", "w");  
-          file.close();
-          startCaptiveWebServer();
-        } 
-               
-      }
-    }
+  bool successfulWifiConnection = attemptWifiConnection();
+  
+  if (successfulWifiConnection) {
+    debug_println("Successfully connected to wifi.");
+    debug_print("IP Address: ");
+    debug_println(WiFi.localIP());
+    send_bootcommand(WiFi.localIP().toString());
+    startWebServer();
   }
-}
 
+  else {
+    debug_println("Starting captive portal...");
+    startCaptiveWebServer();           
+  }
+
+}
 
 void setup(){
   Serial.begin(115200);
@@ -386,7 +412,7 @@ void setup(){
   else
     Serial.println("Debugging OFF.");
   debug_println("begin wifi route...");
-  // Initialize SPIFFS
+  
   if(!LittleFS.begin()){
     delay(5000);
     debug_println("An Error has occurred while mounting LittleFS. Did you forget to upload fs using ESP8266 LittleFS Data upload?");
@@ -399,6 +425,9 @@ void setup(){
     debug_println("wifi.cfg does not exist. Did you forget to upload fs using ESP8266 LittleFS Data upload?"); 
     return;
   }
+
+  WiFi.persistent(false);
+  WiFi.mode(WIFI_STA);
 
   wificonfig();
 }
