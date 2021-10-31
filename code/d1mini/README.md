@@ -8,7 +8,7 @@
 1. Download ESPHome Flasher [here](https://github.com/esphome/esphome-flasher/releases)
 ![ESPHome Flasher](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/images/esphomeflasher.jpg)
 
-3. Download **d1mini.bin** binary file from [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/code/d1mini/d1mini.bin)
+3. Download **d1mini.bin** binary file from [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/releases/latest)
 4. Flash.
 
 ### Use Arduino IDE (hard method)
