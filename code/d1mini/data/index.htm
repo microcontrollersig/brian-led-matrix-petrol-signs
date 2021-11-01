@@ -118,13 +118,39 @@ background-color: #fdfff5; box-shadow: inset -4px 0 0 #aa0000, inset 0 -2px 0 #a
         const line1text = document.getElementById("line1text");
         const fontIndex = document.getElementById("statictextfont").selectedIndex;
         
-        document.querySelector("#fourargs input").value="Z";
-        document.querySelector("#fourargs input[name='arg1']").value = line1x.value;
-        document.querySelector("#fourargs input[name='arg2']").value = line1y.value;
-        document.querySelector("#fourargs input[name='arg3']").value = line1text.value;
-        document.querySelector("#fourargs input[name='arg4']").value = fontIndex;
+        const linesoftext = document.getElementById("linecount").selectedOptions[0];
 
-        document.querySelector("#fourargs").submit();
+        if (linesoftext.value == 1) {
+          document.querySelector("#fourargs input").value="Z";
+          document.querySelector("#fourargs input[name='arg1']").value = line1x.value;
+          document.querySelector("#fourargs input[name='arg2']").value = line1y.value;
+          document.querySelector("#fourargs input[name='arg3']").value = line1text.value;
+          document.querySelector("#fourargs input[name='arg4']").value = fontIndex;
+
+          document.querySelector("#fourargs").submit();          
+        }
+
+        if (linesoftext.value == 2) {
+          const line2x = document.getElementById("line2x");
+          const line2y = document.getElementById("line2y");
+          const line2text = document.getElementById("line2text");
+    
+          document.querySelector("#sevenargs input").value="T";
+          document.querySelector("#sevenargs input[name='arg1']").value = line1x.value;
+          document.querySelector("#sevenargs input[name='arg2']").value = line1y.value;
+          document.querySelector("#sevenargs input[name='arg3']").value = line1text.value;
+
+
+          document.querySelector("#sevenargs input[name='arg4']").value = line2x.value;
+          document.querySelector("#sevenargs input[name='arg5']").value = line2y.value;
+          document.querySelector("#sevenargs input[name='arg6']").value = line2text.value;
+          document.querySelector("#sevenargs input[name='arg7']").value = fontIndex;
+
+          document.querySelector("#sevenargs").submit();  
+        }
+
+
+
       }
       
       document.getElementById("scrollingtextbutton").onclick = function(event) {
@@ -150,6 +176,17 @@ background-color: #fdfff5; box-shadow: inset -4px 0 0 #aa0000, inset 0 -2px 0 #a
         update();
       });
  
+      document.getElementById("linecount").addEventListener("change", function(event) {
+         const selectedindex = event.target.selectedIndex;
+         if (selectedindex === 0) {
+           document.getElementById("line2").classList.add("hidden");
+         }
+
+         if (selectedindex === 1) {
+            document.getElementById("line2").classList.remove("hidden");
+         }
+      })
+
       document.getElementById("playalldemos").addEventListener("click", function(event) {
         currentPlaylistNumber = 0;
         const demoNumber = 1;
@@ -303,9 +340,9 @@ background-color: #fdfff5; box-shadow: inset -4px 0 0 #aa0000, inset 0 -2px 0 #a
           <div class="field-row">&nbsp;</div>
           <div class="field-row">
             <label class="labelfirst">Lines of Text</label>
-            <select>
-              <option>1</option>
-              <option>2</option>
+            <select id="linecount">
+              <option value="1">1</option>
+              <option value="2">2</option>
             </select>          
           </div>
           
@@ -334,7 +371,7 @@ background-color: #fdfff5; box-shadow: inset -4px 0 0 #aa0000, inset 0 -2px 0 #a
                 <label for="line2x" class="labelnotfirst">X</label>
                 <input id="line2x" type="text" maxlength="2" size="2" value="0" />  
                 <label for="line2y" class="labelnotfirst">Y</label>
-                <input id="text2y" type="text" maxlength="2" size="2" value="0" />                 
+                <input id="line2y" type="text" maxlength="2" size="2" value="0" />                 
           </div> 
           <div class="field-row">&nbsp;</div>
           <div class="field-row">&nbsp;</div>

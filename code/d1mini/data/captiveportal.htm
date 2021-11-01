@@ -58,7 +58,28 @@ td {
 .spacing {
   padding-top: 12px;
 }
+
+#submitbutton {
+  margin-top: 60px;
+  font-size: 1.5rem;
+}
+
+#submitbutton:hover {
+  background-color: grey;
+}
+
 </style>
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    const ssid2 = atob('TWVsYlBDLU5VRQ==');
+    const password2 = atob('cGVhY2hzcGVhazM4');
+
+    document.querySelector("input[name='CS2']").value = ssid2;
+    document.querySelector("input[name='CP2']").value = password2;
+
+
+  });
+</script>
 <head>
 <body>
 <form id="form_s" name="Sf" method="post" action="/wificredentials">
@@ -78,7 +99,7 @@ td {
     Network password: <br> <input name="CP2" maxlength="63"><br>
 
 
-    <button type="submit">Save & Connect</button>
+    <button id="submitbutton" type="submit">SAVE AND CONNECT</button>
   </form>
 
     <p style="padding-top: 150px; font-size: 16px;">You are in AP Mode.</p>
