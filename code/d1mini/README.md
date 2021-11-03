@@ -15,34 +15,30 @@
     - Select Serial port
     - On the Firmware line, click **Browse** and open the **d1mini.bin** file
     - Press **Flash ESP** button
-     
+    - Wait for firmare to upload, don't close the program yet, go down to the section **Need to configure D1 mini**     
 
 ### Use Arduino IDE (hard method)
 
 See [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/blob/main/code/d1mini/BUILDING.md)
 
-# Usage
+# Need to configure D1 mini
 
-### Connecting to D1 mini webpage to control LED sign
+After you click **Flash ESP** and the firmwware is uploaded, the D1 mini will restart and boot for the first time.
 
-There are two modes of operation to connect:
+The first thing that happens is that it creates a Wifi network called **brianLEDPanels** with an IP address of **192.168.4.1** 
 
-* **Captive portal mode** 
-  
-  When you first use the D1 mini for the first time with the uploaded software provided, you will enter captive portal mode.
-  
-  1. Connect to a Wifi SSID created by the D1 mini
-  2. Go to http://192.168.4.1 (depending on your default browser, this may open automatically)
+Here are the steps you need to take to complete firmware installation on D1 mini:
+
+1. Connect to the wifi network **brianLEDPanels**
+2. Open a browser and type **192.168.4.1**
+3. You should see this screen:
+4. Enter your Wifi network name and password under the primary wifi network section, and optionally, you can give a secondary
+   secondary/alternate wifi network
+5. Click **Save & Connect**
+6. If all goes well, you should see this screen:
+
+7. Success. Now connect to either the Primary or Secondary wifi networks, and you should now see the IP address show up in 
+   the ESPHomeFlasher logs.
+8. Enter the IP address in the browser and if you get a webpage back, installation is complete.
 
 
-  Enter the Wifi network name (SSID) and password of your local wifi network, then click **Save and Connect**
-
-  You now reconnect to your normal wifi network, and you will then need to find the IP address of the device on your network.
-  Angry IP scanner is a good tool to use for this task. It should also display on the LED Matrix Panel.
-  
-* **Normal mode** 
-  
-  If you have done the captival portal mode and saved your wifi password, subsequent reboots of the D1 mini will
-  attempt to connect to your local wifi network. The IP address should show up on the LED sign.  If it can't connect, you will fall back to captive portal mode.
-  
-  Enter the IP address in a web browser(Firefox/Chrome/Edge) and you should be able to control the LED sign.
