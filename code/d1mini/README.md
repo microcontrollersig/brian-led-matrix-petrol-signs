@@ -32,10 +32,15 @@ Here are the steps you need to take to complete firmware installation on D1 mini
 1. Connect to the wifi network **brianLEDPanels**
 2. Open a browser and type **192.168.4.1**
 3. You should see this screen:
-4. Enter your Wifi network name and password under the primary wifi network section, and optionally, you can give a secondary
+   
+   ![Captive Portal](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/images/captive.jpg)
+   
+5. Enter your Wifi network name and password under the primary wifi network section, and optionally, you can give a secondary
    secondary/alternate wifi network
 5. Click **Save & Connect**
 6. If all goes well, you should see this screen:
+
+   ![Captive Wifi success](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/images/captivewifisaved.jpg)
 
 7. Success. Now connect to either the Primary or Secondary wifi networks, and you should now see the IP address show up in 
    the ESPHomeFlasher logs.
