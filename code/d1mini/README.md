@@ -1,7 +1,9 @@
 # Uploading software to D1 mini
 
 ### Prerequisite for Windows PC
-1. Install Windows driver for D1 mini from [here](https://www.wemos.cc/en/latest/ch340_driver.html) 
+1. Download Windows driver for D1 mini from [here](https://www.wemos.cc/en/latest/ch340_driver.html) 
+2. Unzip CH341SER_WIN_3.5.ZIP .
+3. Open the CH341SER_WIN_3.5 folder and run SETUP.EXE
 
 ### Use ESPHome Flasher (easiest method)
 
@@ -11,7 +13,7 @@
 3. Download **d1mini.bin** file from [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/releases/latest)
 4. Open ESPHOME Flasher
     - Select Serial port
-    - Browse to **d1mini.bin** file
+    - On the Firmware line, click **Browse** and open the **d1mini.bin** file
     - Press **Flash ESP** button
      
 
