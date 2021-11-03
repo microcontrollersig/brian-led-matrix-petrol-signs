@@ -36,7 +36,7 @@ Here are the steps you need to take to complete firmware installation on D1 mini
    ![Captive Portal](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/images/captive.jpg)
    
 5. Enter your Wifi network name and password under the primary wifi network section, and optionally, you can give a secondary
-   secondary/alternate wifi network
+   /alternate wifi network
 5. Click **Save & Connect**
 6. If all goes well, you should see this screen:
 
