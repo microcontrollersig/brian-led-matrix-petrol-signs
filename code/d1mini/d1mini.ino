@@ -44,6 +44,7 @@ public:
    server.serveStatic("/css/", LittleFS, "/css/");
    server.serveStatic("/js/", LittleFS, "/js/");
    server.serveStatic("/fonts/", LittleFS, "/fonts/");
+   server.serveStatic("/favicon.ico", LittleFS, "/favicon.ico");
     
     server.on("/wificredentials", HTTP_POST, [](AsyncWebServerRequest *request){
       int params = request->params();
@@ -144,6 +145,7 @@ void startWebServer()
    server.serveStatic("/css/", LittleFS, "/css/");
    server.serveStatic("/js/", LittleFS, "/js/");
    server.serveStatic("/fonts/", LittleFS, "/fonts/");
+   server.serveStatic("/favicon.ico", LittleFS, "/favicon.ico");
   
    server.on("/command", HTTP_POST, [](AsyncWebServerRequest *request){
          int params = request->params();
@@ -209,7 +211,8 @@ AsyncCallbackJsonWebHandler* settingsSubmitHandler = new AsyncCallbackJsonWebHan
   
   
 });
-server.addHandler(settingsSubmitHandler);
+   
+   server.addHandler(settingsSubmitHandler);
 
    server.on("/settings", HTTP_GET, [](AsyncWebServerRequest *request) {
      File settingsFile = LittleFS.open("/settings.json", "r");
@@ -217,82 +220,28 @@ server.addHandler(settingsSubmitHandler);
      settingsFile.close();
    });
 
-   /*
-   server.on("/settings", HTTP_POST, [](AsyncWebServerRequest *request) { 
-      request->send(200);
-   }, NULL, [](AsyncWebServerRequest *request, uint8_t *data, size_t len, size_t index, size_t total) {        
-        if (index == 0) {
-          request->_tempObject = new char[len + 1];
-          char* tempObject = (char *)request->_tempObject;
-          
-          for (int i=0; i<len; i++) {
-            tempObject[i] = (char)data[i];
-          }
-
-          tempObject[len] = '\0';
-          
-          //Serial.println(tempObject);
-          DynamicJsonDocument doc(1024);
-          deserializeJson(doc, tempObject);
-          File settingsFile = LittleFS.open("/settings.json", "w");
-          serializeJson(doc, settingsFile);
-          settingsFile.close();
-          
-        }
-
-        else {
-          Serial.println("It gets here");
-        }
-  });
- */
-   /*
-   AsyncCallbackJsonWebHandler* settingsHandler = new AsyncCallbackJsonWebHandler("/settings", [](AsyncWebServerRequest *request, JsonVariant &json) {
-     debug_println("We got here!");
-     if (request->method() == HTTP_GET) {
-       request->send(LittleFS,  "/settings.htm", "text/html"); 
-     }
-
-     else if (request->method() == HTTP_POST) {
-       File settingsFile = LittleFS.open("/settings.json", "w");
-       serializeJson(json, settingsFile);
-       settingsFile.close();
-       request->send(200);     
-     }
-   });
-   server.setMethod(HTTP_ANY);
-   server.addHandler(settingsHandler);
-   */
-
    server.on("/savedsettings", HTTP_GET, [](AsyncWebServerRequest *request) {
      File settingsFile = LittleFS.open("/settings.json", "r");
      request->send(settingsFile, "application/json", settingsFile.size());
-     /*settingsFile.close();*/
-     /*
-  
-     std::unique_ptr<char[]> buf(new char[settingsFileSize]);
-     settingsFile.readBytes(buf.get(), settingsFileSize);
      settingsFile.close();
-     request->send(200, "application/json", buf.get());
-     */
+   });
 
-     /*
-     StaticJsonDocument<512> doc;
-     deserializeJson(doc, settingsFile);
-     settingsFile.close();
-     */
-     /*JsonObject root = doc.as<JsonObject>();*/
+   server.on("/wifisettings", HTTP_GET, [](AsyncWebServerRequest *request) {
+     File wifiFile = LittleFS.open("/wifi.cfg", "r"); 
+     String ssid1 = wifiFile.readStringUntil('\n');
+     String password1 = wifiFile.readStringUntil('\n');
+     String ssid2 = wifiFile.readStringUntil('\n');
+     String password2 = wifiFile.readStringUntil('\n');
+     wifiFile.close();
      
-     /*
      AsyncJsonResponse * response = new AsyncJsonResponse();
-     response->addHeader("Server","ESP Async Web Server");
-     JsonVariant& jsonObj = response->getRoot();
-
-     jsonObj["brightness"] = root["brightness"];
-     jsonObj["bootcommand"] = root["bootcommand"];
-
+     JsonVariant& root = response->getRoot();
+     root["ssid1"] = ssid1.c_str();
+     root["password1"] = password1.c_str();
+     root["ssid2"] = ssid2.c_str();
+     root["password2"] = password2.c_str();
      response->setLength();
      request->send(response);
-     */
    });
   
    server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
@@ -321,48 +270,17 @@ bool attemptWifiConnection()
      wifiMulti.addAP(ssid.c_str(), password.c_str());
      wifiMulti.addAP(ssid2.c_str(), password2.c_str());
      if (wifiMulti.run(WIFI_TIMEOUT) == WL_CONNECTED) {
-    Serial.print("WiFi connected: ");
-    Serial.print(WiFi.SSID());
-    Serial.print(" ");
-    Serial.println(WiFi.localIP());
-    f.close();
-    return true;
-  } else {
-    Serial.println("WiFi not connected!");
-    f.close();
-    return false;
-  }     
-    /*
-     debug_println("Attempting to connect to wifi with the following credentials...");
-     debug_print("SSID:");
-     debug_println(ssid);
-     debug_print("password:");
-     debug_println(password);     
-     WiFi.begin(ssid.c_str(),password.c_str());
-     WiFi.waitForConnectResult(WIFI_TIMEOUT);
-     if (WiFi.status() == WL_CONNECTED) {
+       Serial.print("WiFi connected: ");
+       Serial.print(WiFi.SSID());
+       Serial.print(" ");
+       Serial.println(WiFi.localIP());
        f.close();
-       return true; 
-     }
-
-     String ssid2 = f.readStringUntil('\n');
-     String password2 = f.readStringUntil('\n');
-    
-     debug_println("Attempting to connect to wifi with the following credentials...");
-     debug_print("SSID:");
-     debug_println(ssid2.c_str());
-     debug_print("password:");
-     debug_println(password2.c_str());     
-     WiFi.begin(ssid2.c_str(),password2.c_str());
-     WiFi.waitForConnectResult(WIFI_TIMEOUT);
-     f.close();
-     if (WiFi.status() == WL_CONNECTED) {
-       return true; 
-     }     
-
-     
-     return false;
-     */
+       return true;
+     } else {
+       Serial.println("WiFi not connected!");
+       f.close();
+       return false;
+     }         
   }
   
 }
