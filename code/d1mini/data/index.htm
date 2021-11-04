@@ -7,8 +7,16 @@
   <link rel="stylesheet" href="/css/XP.css" />
   <style type="text/css">
     input[type="text"] {
-      border: 1px solid #7f9db9;      
+      border: 1px solid #7f9db9; 
+      font-family: Arial;
+    font-size: 13px;     
     }
+
+    #demos input,  #demos label {
+      font-size: 14px;
+      font-family: "Arial";
+    }
+
     .labelnotfirst {
       padding-left: 20px;
     } 
@@ -229,8 +237,17 @@ background-color: #fdfff5; box-shadow: inset -4px 0 0 #aa0000, inset 0 -2px 0 #a
 
       });
 
+      document.querySelector("#wifisave").addEventListener("click", function(event) {
+        const ssid1 = document.getElementById("wifiprimaryssid").value;
+        const password1 = document.getElementById("wifiprimarypassword").value;
+        const ssid2 = document.getElementById("wifisecondaryssid").value;
+        const password2 = document.getElementById("wifisecondarypassword").value;
+
+
+      });
 
       hydrateSettings();
+      
 
     });
 
@@ -264,6 +281,18 @@ background-color: #fdfff5; box-shadow: inset -4px 0 0 #aa0000, inset 0 -2px 0 #a
 
 
       });
+
+
+      fetch('/wifisettings').then(function(response) {
+        return response.json()
+      }).then(function(data){
+        console.log(data);
+        document.getElementById("wifiprimaryssid").value = data["ssid1"];
+        document.getElementById("wifiprimarypassword").value = data["password1"];
+        document.getElementById("wifisecondaryssid").value = data["ssid2"];
+        document.getElementById("wifisecondarypassword").value = data["password2"];        
+      });
+
     }
 
   </script>
@@ -439,6 +468,7 @@ background-color: #fdfff5; box-shadow: inset -4px 0 0 #aa0000, inset 0 -2px 0 #a
       <button aria-selected="true" aria-controls="games">Games</button>
       <button aria-controls="playlists">Playlists</button>
       <button aria-controls="settings">Settings</button>
+      <button aria-controls="wifi">Wifi</button>
       <button aria-controls="credits" id="creditsButton">Credits</button>
     </menu>
 
@@ -499,6 +529,31 @@ background-color: #fdfff5; box-shadow: inset -4px 0 0 #aa0000, inset 0 -2px 0 #a
       </section>
     </article>
 
+    <article role="tabpanel" hidden id="wifi">
+     <h4>Wifi Primary Connection Details</h4>
+     <div class="field-row-stacked" style="width: 200px">
+        <label for="wifiprimaryssid">Network Name/SSID</label>
+        <input id="wifiprimaryssid" type="text" />
+     </div>
+     <div class="field-row-stacked" style="width: 200px">
+        <label for="wifiprimarypassword">Password</label>
+        <input id="wifiprimarypassword" type="text" />
+     </div>
+
+     <h4>Wifi Secondary Connection Details</h4>
+     <div class="field-row-stacked" style="width: 200px">
+        <label for="wifisecondaryssid">Network Name/SSID</label>
+        <input id="wifisecondaryssid" type="text" />
+     </div>
+     <div class="field-row-stacked" style="width: 200px">
+        <label for="wifisecondarypassword">Password</label>
+        <input id="wifisecondarypassword" type="text" />
+     </div>    
+     
+     <div style="margin-top: 30px;" id="wifisave"><button>Save</button></div>
+
+    </article>
+
     <article role="tabpanel" hidden id="credits">
 
       <div style="margin:0; padding:0; border-left: 5px solid #fdfff5; border-right: 5px solid #fdfff5; border-top: 2px solid #fdfff5; border-bottom: 2px solid #fdfff5;">
@@ -507,11 +562,12 @@ background-color: #fdfff5; box-shadow: inset -4px 0 0 #aa0000, inset 0 -2px 0 #a
         Credits: 
        <div style="height: 30px;">&nbsp;</div>
        <div>
-          Mohan Gupta<br> 
-          John Shirt<br> 
-          Brian Davis<br> 
-          Sean Clarke<br>
-          John Macey<br>
+          Mohan Gupta<br><br> 
+          John Shirt<br><br> 
+          Brian Davis<br><br> 
+          Sean Clarke<br><br>
+          Bernd Wachs<br><br>
+          John Macey<br><br>
         </div>
         <div style="height: 30px;">&nbsp;</div>
        </div>
@@ -527,7 +583,7 @@ background-color: #fdfff5; box-shadow: inset -4px 0 0 #aa0000, inset 0 -2px 0 #a
 
 
   
-     <script src="/js/script.js" ></script>
+    
 
 <form method="post" action="/command" name="noargs" id="noargs">
   <input type="hidden" name="command"/>
@@ -572,6 +628,7 @@ background-color: #fdfff5; box-shadow: inset -4px 0 0 #aa0000, inset 0 -2px 0 #a
   <input type="hidden" name="arg7"> 
 </form>
 
+ <script src="/js/script.js" ></script>
 </body>
 
 </html>
