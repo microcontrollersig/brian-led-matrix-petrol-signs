@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html>
+  
+<head>
+  <title>Brian's LED Matrix Panel</title>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="/css/XP.css" />
+  <style type="text/css">
+    input[type="text"] {
+      border: 1px solid #7f9db9; 
+      font-family: Arial;
+    font-size: 13px;     
+    }
+
+    #demos input,  #demos label {
+      font-size: 14px;
+      font-family: "Arial";
+    }
+
+    .labelnotfirst {
+      padding-left: 20px;
+    } 
+    
+    #scrollingtext .labelfirst {
+      width: 100px;
+    }
+
+    #text .labelfirst {
+      width: 70px;
+    }
+
+    #settings .labelfirst {
+      width: 170px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .window {
+      margin-bottom: 30px;
+    }
+
+
+    .cmd {
+      margin-top: 40px;
+    }
+        
+    @font-face {
+        font-family:"Sierra AGI Font";
+        src: url("/fonts/sierra-agi-font.ttf") format("truetype");
+    }
+
+    
+    .lsl {
+        font-family: "Sierra AGI Font";
+        font-size: 2rem;
+background-color: #fdfff5; box-shadow: inset -4px 0 0 #aa0000, inset 0 -2px 0 #aa0000, inset 4px 0 0 #aa0000, inset 0 2px 0 #aa0000;padding-left: 20px;padding-top: 5px; box-sizing:border-box;        
+    }
+    
+    article  {
+      background-color: #55fbfb !important;
+    }
+
+    #credits {
+      background: rgb(85, 251, 251);
+    }
+
+  </style>
+  <script>
+    /*
+     settingsData_schema_example = {
+       bootcommand: ""
+       bootcommanddescription: ""
+       brightness: "1"
+     }
+    */
+    var settingsData;
+    var currentcommand;
+    var currentcommanddescription;
+    var currentPlaylistNumber;    
+    var playlistsrunning = false;
+
+    function update() {
+        fetch('/settingsSubmit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(settingsData)
+        }).then(function(response) {
+          //console.log(response);
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      document.querySelectorAll("input[name='demo']").forEach(function(input) {
+        input.addEventListener("change", function(event) {
+          const command = event.target.dataset.command;
+          document.querySelector("#noargs input").value = command;
+          document.querySelector("#noargs").submit();
+          const description = event.target.nextElementSibling.innerHTML;
+          //console.log(description);
+          document.getElementById("currentRunningCommand").innerHTML = description;
+          document.getElementById("settingsCurrentCommand").innerHTML = description;
+          currentcommand = command;
+        });
+      });
+      document.getElementById("clearleds").onclick = function(event) {
+          document.querySelector("#noargs input").value = "@";
+          document.querySelector("#noargs").submit();
+      };
+      document.getElementById("setbootupcommand").addEventListener("click", function(event) {
+          const description = document.getElementById("currentRunningCommand").innerHTML;
+          settingsData.bootcommand = currentcommand;
+          settingsData.bootcommanddescription = description;
+          //console.log(description);
+          update();
+      });
+      document.getElementById("resetbootupcommand").addEventListener("click", function(event) {
+          update();
+      });      
+      document.getElementById("sendtextbutton").onclick = function(event) {
+        const line1x = document.getElementById("line1x");
+        const line1y = document.getElementById("line1y");
+        const line1text = document.getElementById("line1text");
+        const fontIndex = document.getElementById("statictextfont").selectedIndex;
+        
+        const linesoftext = document.getElementById("linecount").selectedOptions[0];
+
+        if (linesoftext.value == 1) {
+          document.querySelector("#fourargs input").value="Z";
+          document.querySelector("#fourargs input[name='arg1']").value = line1x.value;
+          document.querySelector("#fourargs input[name='arg2']").value = line1y.value;
+          document.querySelector("#fourargs input[name='arg3']").value = line1text.value;
+          document.querySelector("#fourargs input[name='arg4']").value = fontIndex;
+
+          document.querySelector("#fourargs").submit();          
+        }
+
+        if (linesoftext.value == 2) {
+          const line2x = document.getElementById("line2x");
+          const line2y = document.getElementById("line2y");
+          const line2text = document.getElementById("line2text");
+    
+          document.querySelector("#sevenargs input").value="T";
+          document.querySelector("#sevenargs input[name='arg1']").value = line1x.value;
+          document.querySelector("#sevenargs input[name='arg2']").value = line1y.value;
+          document.querySelector("#sevenargs input[name='arg3']").value = line1text.value;
+
+
+          document.querySelector("#sevenargs input[name='arg4']").value = line2x.value;
+          document.querySelector("#sevenargs input[name='arg5']").value = line2y.value;
+          document.querySelector("#sevenargs input[name='arg6']").value = line2text.value;
+          document.querySelector("#sevenargs input[name='arg7']").value = fontIndex;
+
+          document.querySelector("#sevenargs").submit();  
+        }
+
+
+
+      }
+      
+      document.getElementById("scrollingtextbutton").onclick = function(event) {
+          const line1x = document.getElementById("scrollingline1x");
+          const line1y = document.getElementById("scrollingline1y");
+          const line1text = document.getElementById("scrollingline1text");
+          const line2text = document.getElementById("scrollingtexttext");          
+          const fontIndex = document.getElementById("scrollingtextfont").selectedIndex;
+
+          document.querySelector("#fiveargs input").value="Z";
+          document.querySelector("#fiveargs input[name='arg1']").value = line1x.value;
+          document.querySelector("#fiveargs input[name='arg2']").value = line1y.value;
+          document.querySelector("#fiveargs input[name='arg3']").value = line1text.value;
+          document.querySelector("#fiveargs input[name='arg4']").value = line2text.value;
+          document.querySelector("#fiveargs input[name='arg5']").value = fontIndex;
+
+          document.querySelector("#fiveargs").submit();
+      }
+
+      document.getElementById("brightness").addEventListener("input",  function(event) {
+        //console.log(event.target.value);
+        settingsData.brightness = event.target.value;
+        update();
+      });
+ 
+      document.getElementById("linecount").addEventListener("change", function(event) {
+         const selectedindex = event.target.selectedIndex;
+         if (selectedindex === 0) {
+           document.getElementById("line2").classList.add("hidden");
+         }
+
+         if (selectedindex === 1) {
+            document.getElementById("line2").classList.remove("hidden");
+         }
+      })
+
+      document.getElementById("playalldemos").addEventListener("click", function(event) {
+        currentPlaylistNumber = 0;
+        const demoNumber = 1;
+        const demoid = "demo" + demoNumber;
+
+        document.getElementById("cmd").removeAttribute("hidden");
+        document.querySelector("#playlists").querySelectorAll("span").forEach(function(element) {
+           element.style.display = "none";
+        });
+        const command = document.getElementById(demoid).dataset.command;
+        document.querySelector("#noargs input").value = command;
+        document.querySelector("#noargs").submit();
+        document.querySelector("#playlists").querySelectorAll("span")[currentPlaylistNumber].style.display = "block";
+        document.getElementById(demoid).checked = true;
+        setInterval(function() {
+          let demoNumber;
+          let demoid;
+
+          currentPlaylistNumber = currentPlaylistNumber + 1
+          if (currentPlaylistNumber === document.querySelector("#playlists").querySelectorAll("span").length ) {
+            currentPlaylistNumber = 0;
+            demoNumber = 0;
+          }
+
+          demoNumber = currentPlaylistNumber + 1
+          demoid = "demo" + demoNumber;
+          
+
+
+
+          document.querySelector("#playlists").querySelectorAll("span").forEach(function(element) {
+            element.style.display = "none";
+          });          
+          document.querySelector("#playlists").querySelectorAll("span")[currentPlaylistNumber].style.display = "block";
+          document.getElementById(demoid).checked = true;
+          const command = document.getElementById(demoid).dataset.command;
+          document.querySelector("#noargs input").value = command;
+          document.querySelector("#noargs").submit();
+        },  10000);
+
+      });
+
+      document.querySelector("#wifisave").addEventListener("click", function(event) {
+        const ssid1 = document.getElementById("wifiprimaryssid").value;
+        const password1 = document.getElementById("wifiprimarypassword").value;
+        const ssid2 = document.getElementById("wifisecondaryssid").value;
+        const password2 = document.getElementById("wifisecondarypassword").value;
+
+
+      });
+
+      hydrateSettings();
+      
+
+    });
+
+
+
+    function hydrateSettings() {
+      fetch('/settings').then(function(response) {
+        return response.json();
+      }).then(function(data) {
+        //console.log(data);
+        settingsData = data;
+        currentcommand = settingsData.bootcommand;
+
+        if (settingsData.bootcommand !== "") {
+          document.getElementById("currentRunningCommand").innerHTML = settingsData.bootcommand;
+          document.getElementById("currentBootCommand").innerHTML = settingsData.bootcommanddescription;
+
+          document.getElementById("settingsCurrentCommand").innerHTML = settingsData.bootcommand;
+          document.getElementById("settingsBootCommand").innerHTML = settingsData.bootcommanddescription;          
+        }        
+
+        else {
+          document.getElementById("currentRunningCommand").innerHTML = "None";
+          document.getElementById("currentBootCommand").innerHTML = "None";
+
+          document.getElementById("settingsCurrentCommand").innerHTML = "None";
+          document.getElementById("settingsBootCommand").innerHTML = "None";           
+        }
+
+        document.getElementById("brightness").value = settingsData.brightness;
+
+
+      });
+
+
+      fetch('/wifisettings').then(function(response) {
+        return response.json()
+      }).then(function(data){
+        console.log(data);
+        document.getElementById("wifiprimaryssid").value = data["ssid1"];
+        document.getElementById("wifiprimarypassword").value = data["password1"];
+        document.getElementById("wifisecondaryssid").value = data["ssid2"];
+        document.getElementById("wifisecondarypassword").value = data["password2"];        
+      });
+
+    }
+
+  </script>
+</head>
+
+<body>
+  <div class="window" style="margin-left: 32px; width: 800px;">
+  <div class="title-bar">
+    <div class="title-bar-text">Brian's LED Matrix Panel</div>
+    <div class="title-bar-controls">
+      <button aria-label="Minimize"></button>
+      <button aria-label="Maximize"></button>
+      <button aria-label="Close"></button>
+    </div>
+  </div>
+  <div class="window-body">
+    <menu role="tablist">
+      <button aria-selected="true" aria-controls="demos">Demos</button>
+      <button aria-controls="text">Text</button>
+      <button aria-controls="scrollingtext">Scrolling Text</button>
+    </menu>
+    <article role="tabpanel" id="demos">
+        <p>Choose one of the demos below to test drive LED matrix</p>
+        <fieldset>
+          <legend>Demos</legend>   
+          <div class="field-row">
+            <input id="demo1" type="radio" name="demo" data-command="0">
+            <label for="demo1">Demo 1 - Diamonds Are Forever</label>
+          </div>          
+          <div class="field-row">
+            <input id="demo2" type="radio" name="demo" data-command="1">
+            <label for="demo2">Demo 2 - Four Corners Dots</label>
+          </div>
+          <div class="field-row">
+            <input id="demo3" type="radio" name="demo" data-command="2">
+            <label for="demo3">Demo 3 - Humpty Dumpty</label>
+          </div>
+          <div class="field-row">
+            <input id="demo4" type="radio" name="demo" data-command="3">
+            <label for="demo4">Demo 4 - Scrolling Text</label>
+          </div>
+          <div class="field-row">
+            <input id="demo5" type="radio" name="demo" data-command="4">
+            <label for="demo5">Demo 5 - LED Matrix Pixel Tester</label>
+          </div>
+          <div class="field-row">
+            <input id="demo6" type="radio" name="demo" data-command="5">
+            <label for="demo6">Demo 6 - Roses are red</label>
+          </div>          
+          <div class="field-row">
+            <input id="demo7" type="radio" name="demo" data-command="6">
+            <label for="demo7">Demo 7 - Snake game</label>
+          </div>
+          <div class="field-row">
+            <input id="demo8" type="radio" name="demo" data-command="8">
+            <label for="demo8">Demo 8 - Pong game</label>
+          </div>
+          <div class="field-row">
+            <input id="demo9" type="radio" name="demo" data-command="9">
+            <label for="demo9">Demo 9 - Small Font</label>
+          </div>
+          <div class="field-row">
+            <input id="demo10" type="radio" name="demo" data-command="a">
+            <label for="demo10">Demo 10 - Merry Christmas</label>
+          </div>          
+        </fieldset>
+        <section class="field-row">
+          <button id="clearleds">Clear LED Matrix</button>
+          <label></label>
+        </section>
+      </article>
+
+    <article role="tabpanel" hidden id="text">
+          <div class="field-row">&nbsp;</div>
+          <div class="field-row">
+            <label class="labelfirst">Lines of Text</label>
+            <select id="linecount">
+              <option value="1">1</option>
+              <option value="2">2</option>
+            </select>          
+          </div>
+          
+          
+          <div class="field-row">
+            <label class="labelfirst">Text Font</label>
+            <select id="statictextfont">
+              <option value="0">Default - 16x16 </option>
+              <option value="1">Small   - 5x7 </option>
+            </select>
+          </div>
+
+
+          <div id="line1" class="field-row linesoftext">
+                <label class="labelfirst" for="line1text">Line 1 Text</label>
+                <input id="line1text" type="text" maxlength="30" size="30" /> 
+                <label for="line1x" class="labelnotfirst">X</label>
+                <input id="line1x" type="text" maxlength="2" size="2" value="0" />  
+                <label for="line1y" class="labelnotfirst">Y</label>
+                <input id="line1y" type="text" maxlength="2" size="2" value="0" />        
+          </div>          
+        
+          <div id="line2" class="field-row linesoftext hidden">
+                <label for="line2text" class="labelfirst">Line 2 Text</label>
+                <input id="line2text" type="text" maxlength="30" size="30" /> 
+                <label for="line2x" class="labelnotfirst">X</label>
+                <input id="line2x" type="text" maxlength="2" size="2" value="0" />  
+                <label for="line2y" class="labelnotfirst">Y</label>
+                <input id="line2y" type="text" maxlength="2" size="2" value="0" />                 
+          </div> 
+          <div class="field-row">&nbsp;</div>
+          <div class="field-row">&nbsp;</div>
+          <button id="sendtextbutton">Send</button>
+      
+    </article>
+
+    <article role="tabpanel" hidden id="scrollingtext">
+       <div class="field-row">
+        <label class="labelfirst">Mode</label>
+        <select>
+          <option value="0">Two lines, first line static text, second line scrolling text</option>
+        </select>
+       </div>
+       <div class="field-row">
+        <label class="labelfirst">Text Font</label>
+        <select id="scrollingtextfont">
+          <option value="0">Default</option>
+        </select>
+       </div>
+       <div class="field-row">
+          <label  class="labelfirst" for="scrollingline1text">Line 1 Text</label>
+            <input id="scrollingline1text" type="text" maxlength="30" size="30" /> 
+            <label for="scrollingline1x" class="labelnotfirst">X</label>
+            <input id="scrollingline1x" type="text" maxlength="2" size="2" value="0" />  
+            <label for="scrollingline1y" class="labelnotfirst">Y</label>
+            <input id="scrollingline1y" type="text" maxlength="2" size="2" value="0" />  
+       </div>
+       <div class="field-row">
+            <label  class="labelfirst" for="scrollingtexttext">Line 2 Scrolling Text</label>
+            <input id="scrollingtexttext" type="text" maxlength="32" size="32" /> 
+       </div>
+        <div class="field-row">&nbsp;</div>
+        <div class="field-row">&nbsp;</div>
+        <button id="scrollingtextbutton">Send</button>
+    </article>
+
+    
+    <div class="field-row">&nbsp;</div>
+        
+    <div class="status-bar">
+      <p class="status-bar-field">Current Command: <span id="currentRunningCommand">None</span></p>
+      <p class="status-bar-field">Command at Bootup time: <span id="currentBootCommand">Default</span> </p>
+      <p class="status-bar-field">Connected to Local Network</p>
+    </div>
+
+  </div>
+  </div>
+
+
+  <div id="windows-separator">&nbsp;</div>
+
+
+  <div class="window" style="margin-left: 32px; width: 800px;">
+  <div class="title-bar">
+    <div class="title-bar-text">Extras</div>
+    <div class="title-bar-controls">
+      <button aria-label="Minimize"></button>
+      <button aria-label="Maximize"></button>
+      <button aria-label="Close"></button>
+    </div>
+  </div>
+    <div class="window-body">
+    <menu role="tablist">
+      <button aria-selected="true" aria-controls="games">Games</button>
+      <button aria-controls="playlists">Playlists</button>
+      <button aria-controls="settings">Settings</button>
+      <button aria-controls="wifi">Wifi</button>
+      <button aria-controls="credits" id="creditsButton">Credits</button>
+    </menu>
+
+    <article role="tabpanel" id="games">
+      GAMES TODO
+    </article>
+
+    <article role="tabpanel" hidden id="playlists">
+      <button id="playalldemos">Play All Demos</button>
+
+      <div id="cmd" class="window cmd" hidden>
+      <div class="title-bar">
+      <div class="title-bar-text">Command Prompt</div>
+      <div class="title-bar-controls">
+      <button aria-label="Minimize"></button>
+      <button aria-label="Maximize"></button>
+      <button aria-label="Close"></button>
+      </div>
+      </div>
+      <div class="window-body">
+      <pre>Microsoft&#10094;R&#10095; Windows DOS 
+      &#10094;C&#10095; Copyright Microsoft Corp 1990-2001. 
+      <br>C:&#92;WINDOWS&#92;SYSTEM32> run.exe <br>
+      <span>Playing Demo 1 - Diamonds are forever ... </span>
+      <span>Playing Demo 2 - Four Corners ... </span>
+      <span>Playing Demo 3 - Humpty Dumpty ... </span>
+      <span>Playing Demo 4 - Scrolling Text ... </span>
+      <span>Playing Demo 5 - LED Matrix Pixel Tester ... </span>
+      <span>Playing Demo 6 - Roses are Red ... </span>
+      <span>Playing Demo 7 - Snake Game ... </span>
+      <span>Playing Demo 8 - Pong Game ... </span>
+      <span>Playing Demo 9 - Small Font ... </span>
+      <span>Playing Demo 10 - Merry Christmas ... </span>
+      </pre>
+      </div>
+      </div>
+
+    </article>
+
+    <article role="tabpanel" hidden id="settings">
+      <div class="field-row" style="width: 300px">
+        <span style="padding-right: 120px;">Brightness</span>
+        <label for="brightness">Low</label>
+        <input id="brightness" type="range" min="1" max="255" value="1" />
+        <label>High</label>
+      </div>
+      <div class="field-row">
+        <label class="labelfirst">Current Running Command:</label>
+        <span id="settingsCurrentCommand">None</span>
+      </div>
+      <div class="field-row">
+        <label class="labelfirst">Current Boot Command:</label>
+        <span id="settingsBootCommand">Default</span>
+      </div>      
+      <section class="field-row" style="justify-content: flex-start">
+      <button id="setbootupcommand" style="justify-content: flex-start;">Set Current Command As Bootup Command</button>
+      <button id="resetbootupcommand" style="justify-content: flex-start;">Reset Bootup Command</button>
+      </section>
+    </article>
+
+    <article role="tabpanel" hidden id="wifi">
+     <h4>Wifi Primary Connection Details</h4>
+     <div class="field-row-stacked" style="width: 200px">
+        <label for="wifiprimaryssid">Network Name/SSID</label>
+        <input id="wifiprimaryssid" type="text" />
+     </div>
+     <div class="field-row-stacked" style="width: 200px">
+        <label for="wifiprimarypassword">Password</label>
+        <input id="wifiprimarypassword" type="text" />
+     </div>
+
+     <h4>Wifi Secondary Connection Details</h4>
+     <div class="field-row-stacked" style="width: 200px">
+        <label for="wifisecondaryssid">Network Name/SSID</label>
+        <input id="wifisecondaryssid" type="text" />
+     </div>
+     <div class="field-row-stacked" style="width: 200px">
+        <label for="wifisecondarypassword">Password</label>
+        <input id="wifisecondarypassword" type="text" />
+     </div>    
+     
+     <div style="margin-top: 30px;" id="wifisave"><button>Save</button></div>
+
+    </article>
+
+    <article role="tabpanel" hidden id="credits">
+
+      <div style="margin:0; padding:0; border-left: 5px solid #fdfff5; border-right: 5px solid #fdfff5; border-top: 2px solid #fdfff5; border-bottom: 2px solid #fdfff5;">
+      <div class="lsl">
+       <div style="height: 30px;">&nbsp;</div>
+        Credits: 
+       <div style="height: 30px;">&nbsp;</div>
+       <div>
+          Mohan Gupta<br><br> 
+          John Shirt<br><br> 
+          Brian Davis<br><br> 
+          Sean Clarke<br><br>
+          Bernd Wachs<br><br>
+          John Macey<br><br>
+        </div>
+        <div style="height: 30px;">&nbsp;</div>
+       </div>
+    </div>
+        <div style="height: 10px;">&nbsp;</div>
+        <h3>More Info</h3>
+        <h4><a href="https://github.com/microcontrollersig/brian-led-matrix-petrol-signs">Project Home Page</a></h4>
+    </article>
+
+    </div>
+  </div>
+
+
+
+  
+    
+
+<form method="post" action="/command" name="noargs" id="noargs">
+  <input type="hidden" name="command"/>
+</form>
+
+<form method="post" action="/command" name="oneargs" id="oneargs">
+  <input type="hidden" name="command"/>
+  <input type="hidden" name="arg1">
+</form>
+
+<form method="post" action="/command" name="twoargs" id="twoargs">
+  <input type="hidden" name="command"/>
+  <input type="hidden" name="arg1">
+  <input type="hidden" name="arg2">
+</form>
+
+<form method="post" action="/command" name="fourargs" id="fourargs">
+  <input type="hidden" name="command"/>
+  <input type="hidden" name="arg1">
+  <input type="hidden" name="arg2">
+  <input type="hidden" name="arg3">
+  <input type="hidden" name="arg4">
+</form>
+
+<form method="post" action="/command" name="fiveargs" id="fiveargs">
+  <input type="hidden" name="command"/>
+  <input type="hidden" name="arg1">
+  <input type="hidden" name="arg2">
+  <input type="hidden" name="arg3">
+  <input type="hidden" name="arg4">
+  <input type="hidden" name="arg5">
+</form>
+
+<form method="post" action="/command" name="sevenargs" id="sevenargs">
+  <input type="hidden" name="command"/>
+  <input type="hidden" name="arg1">
+  <input type="hidden" name="arg2">
+  <input type="hidden" name="arg3">
+  <input type="hidden" name="arg4">
+  <input type="hidden" name="arg5">
+  <input type="hidden" name="arg6">
+  <input type="hidden" name="arg7"> 
+</form>
+
+ <script src="/js/script.js" ></script>
+</body>
+
+</html>

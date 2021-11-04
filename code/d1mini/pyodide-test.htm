@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <script src="https://cdn.jsdelivr.net/pyodide/v0.18.1/full/pyodide.js"></script>
+  </head>
+  <body>
+    <!--  http://people.sc.fsu.edu/~jburkardt/data/pbma/feep.png  
+          http://localhost/feep.png  
+    -->
+    Pyodide test page <br>
+    Open your browser console to see Pyodide output
+    <script type="text/javascript">
+      async function main(){
+        let pyodide = await loadPyodide({
+          indexURL : "https://cdn.jsdelivr.net/pyodide/v0.18.1/full/"
+        });
+        await pyodide.loadPackage('pillow');
+        console.log(pyodide.runPython(`
+            import sys    
+            from js import fetch, Request
+            from PIL import Image
+            sys.version          
+        `));
+        console.log(pyodide.runPython("print(1 + 2)"));
+        console.log(pyodide.runPython("print(dir())"));
+        console.log(pyodide.runPythonAsync(`
+          from PIL import Image
+          from js import fetch, Request
+          from io import BytesIO
+          req = Request.new('http://localhost/feep.png', {'mode': 'no-cors', 'header': {'Access-Control-Allow-Origin': '*'}})
+          response = await fetch(req)
+          js_buffer = await response.arrayBuffer()
+          py_buffer = js_buffer.to_py()
+          img = Image.open(BytesIO(js_buffer.to_py())).convert('1')
+          img_byte_arr = BytesIO()
+          img.save(img_byte_arr, format='PPM')
+          img.close()
+          req = Request.new('http://localhost/feep.pbm', {'mode': 'no-cors', 'header': {'Access-Control-Allow-Origin': '*'}})
+          response = await fetch(req)  
+          js_buffer = await response.arrayBuffer()        
+          b = BytesIO(js_buffer.to_py())
+          print(b.read())
+          print(img_byte_arr)
+          print(img_byte_arr.read())
+
+          print(img.size)
+        `));
+      }
+      main();
+    </script>
+  </body>
+</html>
