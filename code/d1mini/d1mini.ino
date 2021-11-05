@@ -243,6 +243,27 @@ AsyncCallbackJsonWebHandler* settingsSubmitHandler = new AsyncCallbackJsonWebHan
      response->setLength();
      request->send(response);
    });
+
+    server.on("/wifisettings", HTTP_POST, [](AsyncWebServerRequest *request) {
+         AsyncWebParameter *ssid1 = request->getParam(0);
+         AsyncWebParameter *password1 = request->getParam(1);
+         AsyncWebParameter *ssid2 = request->getParam(2);
+         AsyncWebParameter *password2 = request->getParam(3);
+
+         File settingsFile = LittleFS.open("/wifi.cfg", "w");
+
+         settingsFile.print(ssid1->value().c_str());
+         settingsFile.print('\n');
+         settingsFile.print(password1->value().c_str());
+         settingsFile.print('\n');
+         settingsFile.print(ssid2->value().c_str());
+         settingsFile.print('\n');
+         settingsFile.print(password2->value().c_str());
+         settingsFile.print('\n');
+         
+         settingsFile.close();  
+         request->send(204);               
+    });
   
    server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
      request->send(LittleFS,  "/index.htm", "text/html");
