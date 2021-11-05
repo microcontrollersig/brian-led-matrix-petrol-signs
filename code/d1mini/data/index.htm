@@ -243,8 +243,18 @@ background-color: #fdfff5; box-shadow: inset -4px 0 0 #aa0000, inset 0 -2px 0 #a
         const ssid2 = document.getElementById("wifisecondaryssid").value;
         const password2 = document.getElementById("wifisecondarypassword").value;
 
+        const forminputs = document.querySelector("#wifisettingsform").querySelectorAll("input");
+        forminputs[0].value = ssid1;
+        forminputs[1].value = password1;
+        forminputs[2].value = ssid2;
+        forminputs[3].value = password2;
+
+        document.querySelector("#wifisettingsform").submit();
+        alert("Saved.");
 
       });
+
+      
 
       hydrateSettings();
       
@@ -357,7 +367,11 @@ background-color: #fdfff5; box-shadow: inset -4px 0 0 #aa0000, inset 0 -2px 0 #a
           <div class="field-row">
             <input id="demo10" type="radio" name="demo" data-command="a">
             <label for="demo10">Demo 10 - Merry Christmas</label>
-          </div>          
+          </div>  
+          <div class="field-row">
+            <input id="demo11" type="radio" name="demo" data-command="b">
+            <label for="demo11">Demo 11 - QRCode</label>
+          </div>  
         </fieldset>
         <section class="field-row">
           <button id="clearleds">Clear LED Matrix</button>
@@ -469,7 +483,7 @@ background-color: #fdfff5; box-shadow: inset -4px 0 0 #aa0000, inset 0 -2px 0 #a
       <button aria-controls="playlists">Playlists</button>
       <button aria-controls="settings">Settings</button>
       <button aria-controls="wifi">Wifi</button>
-      <button aria-controls="credits" id="creditsButton">Credits</button>
+      <button aria-controls="credits">Credits</button>
     </menu>
 
     <article role="tabpanel" id="games">
@@ -626,6 +640,13 @@ background-color: #fdfff5; box-shadow: inset -4px 0 0 #aa0000, inset 0 -2px 0 #a
   <input type="hidden" name="arg5">
   <input type="hidden" name="arg6">
   <input type="hidden" name="arg7"> 
+</form>
+
+<form method="post" action="/wifisettings" name="wifisettingsform" id="wifisettingsform">
+  <input type="hidden" name="ssid1arg">
+  <input type="hidden" name="password1arg">
+  <input type="hidden" name="ssid2arg">
+  <input type="hidden" name="password2arg">
 </form>
 
  <script src="/js/script.js" ></script>
