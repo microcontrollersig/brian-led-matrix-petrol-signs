@@ -1,0 +1,151 @@
+name: Create Release
+on: 
+  workflow_dispatch:
+    inputs:
+      releasename:
+        description: Release Version
+        required: true
+      changes:
+        description: Changes(markdown/html)
+        required: true
+jobs:    
+  compile-pico-code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Create directory for build output artifacts
+        run: "mkdir -p ~/pico"   
+      - name: List pico source files
+        run: |
+          ls ${{ github.workspace }}/code/pico/demo-multipanel
+      - name: Compile Pico Sketch
+        uses: arduino/compile-sketches@v1.0.0
+        with:
+          fqbn: arduino:mbed_rp2040:pico
+          sketch-paths: |
+            - ${{ github.workspace }}/code/pico/demo-multipanel
+          cli-compile-flags: |
+            - --build-path
+            - /home/runner/pico
+          verbose: true
+      - name: List files in pico source directory
+        run: "ls  ${{ github.workspace }}/code/pico/demo-multipanel"
+      - name: list file listing in pico directory
+        run: "ls -R ~/pico"
+      - name: Setup cmake
+        uses: jwlawson/actions-setup-cmake@v1.9
+        with:
+          cmake-version: '3.16.x'
+      - name: Use cmake
+        run: cmake --version
+      - name: Install elf2uf2
+        run: "git clone https://github.com/raspberrypi/pico-sdk $HOME/pico-sdk; cd $HOME/pico-sdk/tools/elf2uf2; mkdir build; cd build; cmake ..;make; ./elf2uf2 -v ~/pico/demo-multipanel.ino.elf ~/pico/pico.uf2 "
+      - name: list file listing in Release directory
+        run: "ls -R ~/pico"
+      - name: Upload pico binary as workflow artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: pico-binary
+          path: ~/pico/pico.uf2
+          retention-days: 1
+
+  compile-d1mini-code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Create directory for build output artifacts
+        run: "mkdir -p ~/d1mini"           
+      - name: List Contents
+        run: "ls ${{ github.workspace }}/code/d1mini"        
+      - name: Compile D1 mini sketch
+        uses: arduino/compile-sketches@v1.0.0
+        with:
+          fqbn: esp8266:esp8266:d1_mini
+          sketch-paths: |
+            - ${{ github.workspace }}/code/d1mini
+          cli-compile-flags: |
+            - --build-path
+            - /home/runner/d1mini            
+          platforms: |
+            - name: esp8266:esp8266
+              source-url: https://arduino.esp8266.com/stable/package_esp8266com_index.json
+          libraries: |
+            - name: ESP AsyncTCP
+              source-url: https://github.com/me-no-dev/ESPAsyncTCP/archive/refs/heads/master.zip
+            - name: ESP Async WebServer
+              source-url: https://github.com/me-no-dev/ESPAsyncWebServer/archive/refs/heads/master.zip
+            - name: ArduinoJson
+              source-url: https://github.com/bblanchon/ArduinoJson/archive/refs/heads/6.x.zip
+          verbose: true
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'          
+      - name: Install esptool
+        run: "python -m pip install esptool"
+      - name: Download mklittlefs
+        run: "wget https://github.com/earlephilhower/mklittlefs/releases/download/3.0.0/x86_64-linux-gnu-mklittlefs-295fe9b.tar.gz; tar xvzf x86_64-linux-gnu-mklittlefs-295fe9b.tar.gz; ls mklittlefs"
+      - name: Run mklittlefs command
+        run: "./mklittlefs/mklittlefs -c ${{github.workspace}}/code/d1mini/data -p 256 -b 8192 -s 2072576 ~/d1mini/d1mini-littlefs.bin"
+      - name: merge binaries
+        run: "python -m esptool --chip esp8266 merge_bin -o ~/d1mini/d1mini.bin --flash_mode dio --flash_size 4MB 0x00000 ~/d1mini/d1mini.ino.bin 0x200000 ~/d1mini/d1mini-littlefs.bin"
+      - name: List files in d1mini source directory
+        run: "ls  ${{ github.workspace }}/code/d1mini"    
+      - name: list file listing in Release directory
+        run: "ls -R ~/d1mini"
+      - name: Upload d1mini binary as workflow artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: d1mini-binary
+          path: ~/d1mini/d1mini.bin          
+          retention-days: 1        
+        
+  prepare-release:
+    runs-on: ubuntu-latest
+    needs:
+      - compile-pico-code
+      - compile-d1mini-code
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2    
+      - name: Download pico binary
+        uses: actions/download-artifact@v2
+        with:
+          name: pico-binary
+          path: ~/Release/pico.uf2
+
+      - name: Download d1mini binary
+        uses: actions/download-artifact@v2
+        with:
+          name: d1mini-binary
+          path: ~/Release/d1mini.bin
+
+      - name: Create zip for source code
+        uses: papeloto/action-zip@v1
+        with:
+          files: code/
+          recursive: true
+          dest: release.zip
+
+      - name: List files in zip
+        run: "unzip -l release.zip"
+
+      - name: List files in workspace
+        run: "ls ${{ github.workspace }}"
+        
+
+      - name: Copy to right dir
+        run: "cp ${{ github.workspace }}/release.zip ~/Release/brian-petrol-signs-source-${{github.event.inputs.releasename}}.zip"
+
+      - name: Display structure of downloaded files
+        run: "ls -R ~/Release"
+        
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "~/Release/d1mini.bin/d1mini.bin,~/Release/pico.uf2/pico.uf2,~/Release/*.zip"
+          body: ${{github.event.inputs.changes}}
+          tag: ${{github.event.inputs.releasename}}
+          commit: "main"
+          token: ${{ secrets.GITHUB_TOKEN }}
