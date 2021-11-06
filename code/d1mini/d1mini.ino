@@ -303,6 +303,8 @@ bool attemptWifiConnection()
        return false;
      }         
   }
+
+  return false;
   
 }
 
