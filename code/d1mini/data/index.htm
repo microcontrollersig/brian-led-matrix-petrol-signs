@@ -168,11 +168,11 @@ background-color: #fdfff5; box-shadow: inset -4px 0 0 #aa0000, inset 0 -2px 0 #a
           const line2text = document.getElementById("scrollingtexttext");          
           const fontIndex = document.getElementById("scrollingtextfont").selectedIndex;
 
-          document.querySelector("#fiveargs input").value="Z";
-          document.querySelector("#fiveargs input[name='arg1']").value = line1x.value;
-          document.querySelector("#fiveargs input[name='arg2']").value = line1y.value;
-          document.querySelector("#fiveargs input[name='arg3']").value = line1text.value;
-          document.querySelector("#fiveargs input[name='arg4']").value = line2text.value;
+          document.querySelector("#fiveargs input").value="S";
+          document.querySelector("#fiveargs input[name='arg1']").value = line1text.value;  
+          document.querySelector("#fiveargs input[name='arg2']").value = line2text.value;                 
+          document.querySelector("#fiveargs input[name='arg3']").value = line1x.value;
+          document.querySelector("#fiveargs input[name='arg4']").value = line1y.value;
           document.querySelector("#fiveargs input[name='arg5']").value = fontIndex;
 
           document.querySelector("#fiveargs").submit();
