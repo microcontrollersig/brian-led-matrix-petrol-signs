@@ -2,7 +2,7 @@
 
 #include "command.h"
 
-class TestSetPixelCommand : public Command
+class TestSetPixelImmediateCommand : public Command
 {
   private:
     unsigned long timeStart = 0UL;
@@ -29,6 +29,9 @@ class TestSetPixelCommand : public Command
           canvas->setPixel(x, y);
         else
           canvas->clearPixel(x, y);
+        clearSerialMonitor();          
+        printCanvas(canvas);  
+        canvas->update();
         dirty = false;   
       }
     }

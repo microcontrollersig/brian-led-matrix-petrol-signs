@@ -7,11 +7,10 @@ class Test12Command : public Command
 {
   private:
     unsigned long timeStart = 0UL;
-    bool flag = true;
 
   public:
     void execute(DMD3 *canvas)  override {
-      if ( flag) {
+      if ( millis() - timeStart > 200) {
         clearSerialMonitor();
         canvas->clear();
 
@@ -34,7 +33,7 @@ class Test12Command : public Command
 
         printCanvas(canvas);
         canvas->update();
-        flag = false;
+        timeStart = millis();
       }
     }
 };

@@ -26,7 +26,8 @@
 #include "testTwoGenericText.h"
 #include "testBrightness.h"
 #include "testSetPixel.h"
-
+#include "testSetPixelImmediate.h"
+#include "testUpdate.h"
 
 class CommandList
 {
@@ -85,14 +86,11 @@ class CommandList
       TestTwoRowTextCommand *testTwoRowText = new TestTwoRowTextCommand();
       commands['*'] = testTwoRowText;     
 
-      TestSimpleScrollCommand *testSimpleScrollCommand = new TestSimpleScrollCommand();
-      commands['S'] = testSimpleScrollCommand;        
+      TestBrightnessCommand *testBrightnessCommand = new TestBrightnessCommand();
+      commands['B'] = testBrightnessCommand; 
 
       TestDebugCommand *testDebugCommand = new TestDebugCommand();
       commands['D'] = testDebugCommand;  
-
-      TestTimeoutCommand *testTimeoutCommand = new TestTimeoutCommand();
-      commands['O'] = testTimeoutCommand; 
 
       TestSingleTextWithFontCommand *testSingleTextWithFontCommand = new TestSingleTextWithFontCommand();
       commands['G'] = testSingleTextWithFontCommand; 
@@ -100,17 +98,28 @@ class CommandList
       TestTwoTextWithFontCommand *testTwoTextWithFontCommand = new TestTwoTextWithFontCommand();
       commands['H'] = testTwoTextWithFontCommand; 
 
-      TestSingleGenericTextCommand *testSingleGenericTextCommand = new TestSingleGenericTextCommand();
-      commands['Z'] = testSingleGenericTextCommand; 
+      TestTimeoutCommand *testTimeoutCommand = new TestTimeoutCommand();
+      commands['O'] = testTimeoutCommand; 
+
+      TestSetPixelCommand *testSetPixelCommand = new TestSetPixelCommand();
+      commands['P'] = testSetPixelCommand; 
+
+      TestSimpleScrollCommand *testSimpleScrollCommand = new TestSimpleScrollCommand();
+      commands['S'] = testSimpleScrollCommand;        
 
       TestTwoGenericTextCommand *testTwoGenericTextCommand = new TestTwoGenericTextCommand();
       commands['T'] = testTwoGenericTextCommand; 
 
-      TestBrightnessCommand *testBrightnessCommand = new TestBrightnessCommand();
-      commands['B'] = testBrightnessCommand; 
+      TestUpdateCommand *testUpdateCommand = new TestUpdateCommand();
+      commands['U'] = testUpdateCommand;
 
-      TestSetPixelCommand *testSetPixelCommand = new TestSetPixelCommand();
-      commands['P'] = testSetPixelCommand; 
+      TestSetPixelImmediateCommand *testSetPixelImmediateCommand = new TestSetPixelImmediateCommand();
+      commands['Y'] = testSetPixelImmediateCommand; 
+
+      TestSingleGenericTextCommand *testSingleGenericTextCommand = new TestSingleGenericTextCommand();
+      commands['Z'] = testSingleGenericTextCommand; 
+
+
  
       return commands;
     }
