@@ -18,7 +18,7 @@ class TestUpdateCommand : public Command
         clearSerialMonitor();
         printCanvas(canvas);
         canvas->update();
-        dirty = true;
+        dirty = false;
       }
     }
 };

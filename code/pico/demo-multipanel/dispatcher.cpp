@@ -38,7 +38,7 @@ void Dispatcher::handleSerialInput(Stream& serial)
 
    if (newData == true) {
         newData = false;
-        parseSerialInput();
+        parseSerialInput();        
    }
 
    
@@ -71,6 +71,10 @@ void Dispatcher::parseSerialInput()
     int len = v.size();
     //Serial.println((size_t) len);
     commands[command]->parseArgs(v);
+  }
+  else {
+     std::vector<std::string> v;
+     commands[command]->parseArgs(v);
   }
 
   receivedCharsCount = 0;  
