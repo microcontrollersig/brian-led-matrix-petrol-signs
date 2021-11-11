@@ -70,10 +70,11 @@ export default {
 		// If we're building for production (npm run build
 		// instead of npm run dev), minify
 		production && terser(),
-		copy({
+		production && copy({
 			targets: [
 				{ src: 'public/public.html', dest: 'public/build', rename: 'index.html' },
-				{ src: 'public/global.css',  dest: 'public/build'}
+				{ src: 'public/global.css',  dest: 'public/build'},
+				{ src: 'public/build/*', dest: '../data/games'}
 			]
 		})
 	],
