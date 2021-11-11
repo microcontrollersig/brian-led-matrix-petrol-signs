@@ -133,18 +133,29 @@ jobs:
 
       - name: List files in workspace
         run: "ls ${{ github.workspace }}"
-        
-
+          
       - name: Copy to right dir
         run: "cp ${{ github.workspace }}/release.zip ~/Release/brian-petrol-signs-source-${{github.event.inputs.releasename}}.zip"
 
+      - name: Create all-in-one-easy-install folder
+        run: "mkdir -p ~/Release/all-in-one-easy-install/{pico,d1mini}; mkdir -p ~/Release/all-in-one-easy-install/d1mini/windows_driver"
+       
+      - name: Copy firmware files
+        run: "cp ~/Release/d1mini.bin/d1mini.bin ~/Release/all-in-one-easy-install/d1mini; cp ~/Release/pico.uf2/pico.uf2 ~/Release/all-in-one-easy-install/pico"
+      
+      - name: Download windows driver
+        run: "wget -O ~/Release/all-in-one-easy-install/d1mini/windows_driver/windows_driver.zip  https://github.com/wemos/ch340_driver/raw/master/CH341SER_WIN_3.5.ZIP; cd ~/Release/all-in-one-easy-install/d1mini/windows_driver; unzip windows_driver; rm windows_driver.zip; cd"
+   
+      - name: Create all-in-one zip 
+        run: "cd ~/Release; zip -rv brian-petrol-signs-easy-firmware-upload.zip all-in-one-easy-install/; cd"
+                      
       - name: Display structure of downloaded files
         run: "ls -R ~/Release"
         
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "~/Release/d1mini.bin/d1mini.bin,~/Release/pico.uf2/pico.uf2,~/Release/*.zip"
+          artifacts: "~/Release/*.zip"
           body: ${{github.event.inputs.changes}}
           tag: ${{github.event.inputs.releasename}}
           commit: "main"
