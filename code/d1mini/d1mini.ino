@@ -45,6 +45,7 @@ public:
    server.serveStatic("/js/", LittleFS, "/js/");
    server.serveStatic("/fonts/", LittleFS, "/fonts/");
    server.serveStatic("/favicon.ico", LittleFS, "/favicon.ico");
+   server.serveStatic("/games/", LittleFS, "/games/").setDefaultFile("index.html");
     
     server.on("/wificredentials", HTTP_POST, [](AsyncWebServerRequest *request){
       int params = request->params();
@@ -146,6 +147,7 @@ void startWebServer()
    server.serveStatic("/js/", LittleFS, "/js/");
    server.serveStatic("/fonts/", LittleFS, "/fonts/");
    server.serveStatic("/favicon.ico", LittleFS, "/favicon.ico");
+   server.serveStatic("/games/", LittleFS, "/games/").setDefaultFile("index.html");
   
    server.on("/command", HTTP_POST, [](AsyncWebServerRequest *request){
          int params = request->params();
