@@ -8,7 +8,9 @@
 <h1>Apps</h1>
 <ul>
     <li><a href="#/imageupload">Image Upload</a></li>
+    <li><a href="#/imagecreator">Image Creator</a></li>
     <li><a href="#qrcode">QRCode</a></li>
+    <li><a href="#tetristime">Tetris Time</a></li>
     <li><a href="#abbrev">Internet Abbrevations</a></li>
     <li><a href="#maze">Maze</a></li>
     <li><a href="#scoreboard">Scoreboard</a></li>
