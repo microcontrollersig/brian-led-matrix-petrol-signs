@@ -138,6 +138,8 @@ void startCaptiveWebServer()
   dnsServer.start(53, "*", WiFi.softAPIP());
   server.addHandler(new CaptiveRequestHandler()).setFilter(ON_AP_FILTER);//only when requested from AP
   server.begin(); 
+  // brightness
+  update_ledmatrix_command_with_arg('B', brightness);
   update_ledmatrix_ipaddress("192.168.4.1"); 
 }
 
@@ -317,14 +319,17 @@ void send_bootcommand(const String& ipaddress) {
   JsonObject root = doc.as<JsonObject>();
   String bootcommand = root["bootcommand"];
   String brightness = root["brightness"];
+  update_ledmatrix_command_with_arg("B", brightness);
   if (bootcommand == "") {
+    debug_print("IP Address: ");
+    debug_println(ipaddress);
     update_ledmatrix_ipaddress(ipaddress);
   }
 
   else {
     update_ledmatrix_command(bootcommand);
   }
-  update_ledmatrix_command_with_arg("B", brightness);
+
   settingsFile.close();
 }
 
@@ -334,9 +339,7 @@ void wificonfig()
   
   if (successfulWifiConnection) {
     debug_println("Successfully connected to wifi.");
-    debug_print("IP Address: ");
-    debug_println(WiFi.localIP());
-    send_bootcommand(WiFi.localIP().toString());
+    send_bootcommand(WiFi.localIP().toString());    
     startWebServer();
   }
 
