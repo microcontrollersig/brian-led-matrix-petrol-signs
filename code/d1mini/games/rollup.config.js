@@ -42,7 +42,7 @@ export default {
 			compilerOptions: {
 				// enable run-time checks when not in production
 				dev: !production
-			}
+			},
 		}),
 		// we'll extract any component CSS out into
 		// a separate file - better for performance
@@ -74,7 +74,7 @@ export default {
 			targets: [
 				{ src: 'public/public.html', dest: 'public/build', rename: 'index.html' },
 				{ src: 'public/global.css',  dest: 'public/build'},
-				{ src: 'public/build/*', dest: '../data/games'}
+				{ src: 'public/build/*', dest: '../data/games/'}
 			]
 		})
 	],
