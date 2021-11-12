@@ -86,8 +86,8 @@
                     //Set pixel (row,column)
                     let response2 = await post_www_url_encoded({
                       "command": "P",
-                      "x": row,
-                      "y": column,
+                      "x": column,
+                      "y": row,
                       "val": 1
                     });
 
