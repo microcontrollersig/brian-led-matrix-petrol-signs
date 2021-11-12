@@ -139,7 +139,7 @@ void startCaptiveWebServer()
   server.addHandler(new CaptiveRequestHandler()).setFilter(ON_AP_FILTER);//only when requested from AP
   server.begin(); 
   // brightness
-  update_ledmatrix_command_with_arg('B', brightness);
+  update_ledmatrix_command_with_arg('B', "1");
   update_ledmatrix_ipaddress("192.168.4.1"); 
 }
 
