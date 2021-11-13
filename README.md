@@ -55,13 +55,22 @@ They usually come in 6 panels wide, 2 panels height (effectively becomes a 96x32
 
 # Software
 
-Firmware needs to be uploaded to Pico and d1mini.
+Steps needed to complete software setup:
+
+- Firmware needs to be uploaded to Pico, firmware also need to be uploaded to esp8266 D1 mini.
+- wifi configuration of D1 mini.
+
+In order to complete these steps, must first do the following steps on your computer:
+
+- Download zip file containing firmware files and CH340 Windows driver for D1 mini from [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/releases/download/latest/brian-petrol-signs-easy-firmware-upload.zip) . Unzip the file to a known location on your computer.
+- Download a ESP8266 flash utility. There are a number available, my preferred one is ESPHome-Flasher, which can be 
+  downloaded from [here](https://github.com/esphome/esphome-flasher/releases) .
 
 ## Uploading firmware to Raspberry Pico
 
 [Click here for details](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/tree/main/code/pico).
 
-## Uploading firmware to D1 mini
+## Uploading firmware to D1 mini and configuring wifi
 
 [Click here for details](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/tree/main/code/d1mini)
 
