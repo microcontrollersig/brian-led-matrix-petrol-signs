@@ -7,11 +7,9 @@
 
 ### Use ESPHome Flasher (easiest method)
 
-1. Download ESPHome Flasher [here](https://github.com/esphome/esphome-flasher/releases)
-![ESPHome Flasher](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/images/esphomeflasher.jpg)
-
-3. Download **d1mini.bin** file from [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/releases/latest)
-4. Open ESPHOME Flasher
+1. Need to complete steps from [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/blob/main/README.md#software)
+2. Find **d1mini.bin** inside the unzipped folder you downloaded in previous step.
+4. Open ESPHome-Flasher
     - Select Serial port
     - On the Firmware line, click **Browse** and open the **d1mini.bin** file
     - Press **Flash ESP** button
