@@ -62,7 +62,7 @@ Steps needed to complete software setup:
 
 In order to complete these steps, must first do the following steps on your computer:
 
-- Download zip file containing firmware files and CH340 Windows driver for D1 mini from [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/releases/download/latest/brian-petrol-signs-easy-firmware-upload.zip) . Unzip the file to a known location on your computer.
+- Download zip file containing firmware files and CH340 Windows driver for D1 mini from [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/releases/latest/download/brian-petrol-signs-easy-firmware-upload.zip) . Unzip the file to a known location on your computer.
 - Download a ESP8266 flash utility. There are a number available, my preferred one is ESPHome-Flasher, which can be 
   downloaded from [here](https://github.com/esphome/esphome-flasher/releases) .
 
