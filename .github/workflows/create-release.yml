@@ -146,6 +146,9 @@ jobs:
       - name: Download windows driver
         run: "wget -O ~/Release/all-in-one-easy-install/d1mini/windows_driver/windows_driver.zip  https://github.com/wemos/ch340_driver/raw/master/CH341SER_WIN_3.5.ZIP; cd ~/Release/all-in-one-easy-install/d1mini/windows_driver; unzip windows_driver; rm windows_driver.zip; cd"
    
+      - name: Add version file
+        run: "echo ${{github.event.inputs.releasename}} > ~/Release/all-in-one-easy-install/version"
+   
       - name: Create all-in-one zip 
         run: "cd ~/Release; zip -rv brian-petrol-signs-easy-firmware-upload.zip all-in-one-easy-install/; cd"
                       
