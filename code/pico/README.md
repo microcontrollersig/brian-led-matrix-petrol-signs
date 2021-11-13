@@ -2,28 +2,25 @@
 
 #### Method 1 Using the UF2 binary file (easiest)
 
-1. Find **pico.uf2** from the unzipped file you downloaded earlier in this [step](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/blob/main/README.md#software)
+1. Need to complete steps from [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/blob/main/README.md#software)
 
-2. Press and hold the **BOOTSEL** button on the Raspberry Pico while connecting the USB cable to the PC. Once USB is connected to PC, release button.
+2. Find **pico.uf2** from the unzipped file you downloaded earlier in this [step](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/blob/main/README.md#software)
+
+3. Press and hold the **BOOTSEL** button on the Raspberry Pico while connecting the USB cable to the PC. Once USB is connected to PC, release button.
 
 <img src="https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/images/pico-bootsel.png" width="300" />
 
-3. If successful, the Pico will show up as USB drive in File Explorer as **RPI-RP2**.
+4. If successful, the Pico will show up as USB drive in File Explorer as **RPI-RP2**.
 
 <img src="https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/images/rpi-rp2.png" width="500" />
 
-4. Copy **pico.uf2** to the USB drive marked **RPI-RP2**. After copying, the USB drive will disappear. The program has been
+5. Copy **pico.uf2** to the USB drive marked **RPI-RP2**. After copying, the USB drive will disappear. The program has been
    successfully uploaded!
 
 
 #### Method 2 Using the Arduino IDE (harder)
 You can pick out the important steps from [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/blob/main/code/pico/BUILDING.md)
 
-# Extras
-
-#### Fonts
-
-[1001freefonts](https://www.1001freefonts.com/lcd-fonts.php)
 
 # Troubleshooting a Raspberry Pico
 
