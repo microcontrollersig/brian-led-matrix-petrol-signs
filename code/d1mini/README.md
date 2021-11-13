@@ -9,7 +9,7 @@ Alternatively, a copy of the windows driver is also included in the zip file you
 
 ### Use ESPHome Flasher (easiest method)
 
-1. Need to complete steps from [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/blob/main/README.md#software)
+1. Need to complete steps from [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/blob/main/README.md#Software)
 2. Find **d1mini.bin** inside the unzipped folder you downloaded in previous step.
 4. Open ESPHome-Flasher
     - Select Serial port
