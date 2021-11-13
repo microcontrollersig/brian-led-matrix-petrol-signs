@@ -5,6 +5,8 @@
 2. Unzip CH341SER_WIN_3.5.ZIP .
 3. Open the CH341SER_WIN_3.5 folder and run SETUP.EXE
 
+Alternatively, a copy of the windows driver is also included in the zip file you download in the next step.
+
 ### Use ESPHome Flasher (easiest method)
 
 1. Need to complete steps from [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/blob/main/README.md#software)
