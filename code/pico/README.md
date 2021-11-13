@@ -2,7 +2,7 @@
 
 #### Method 1 Using the UF2 binary file (easiest)
 
-1. Need to complete steps from [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/blob/main/README.md#software)
+1. Need to complete steps from [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/blob/main/README.md#Software)
 
 2. Find **pico.uf2** from the unzipped file you downloaded earlier in the previous step.
 
