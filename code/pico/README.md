@@ -14,8 +14,7 @@
 
 <img src="https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/raw/main/images/rpi-rp2.png" width="500" />
 
-5. Copy **pico.uf2** to the USB drive marked **RPI-RP2**. After copying, the USB drive will disappear. The program has been
-   successfully uploaded!
+5. Copy **pico.uf2** to the USB drive marked **RPI-RP2**. After copying, the USB drive will disappear, and the File Explorer window will possibly also close. The program has been successfully uploaded! This complete installation of Raspberry Pico.
 
 
 #### Method 2 Using the Arduino IDE (harder)
