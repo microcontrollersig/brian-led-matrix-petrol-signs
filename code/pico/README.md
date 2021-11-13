@@ -4,7 +4,7 @@
 
 1. Need to complete steps from [here](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/blob/main/README.md#software)
 
-2. Find **pico.uf2** from the unzipped file you downloaded earlier in this [step](https://github.com/microcontrollersig/brian-led-matrix-petrol-signs/blob/main/README.md#software)
+2. Find **pico.uf2** from the unzipped file you downloaded earlier in this previous step.
 
 3. Press and hold the **BOOTSEL** button on the Raspberry Pico while connecting the USB cable to the PC. Once USB is connected to PC, release button.
 
