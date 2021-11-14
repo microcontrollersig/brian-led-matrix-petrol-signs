@@ -1,11 +1,81 @@
 <script>
+
+
+import { onMount } from "svelte";
+
+
+const LEDPanelCount = 3072;
+let LEDPanelData = new Array(LEDPanelCount).fill(0);  
 const LEDCount = 256;
 const hiddencheckboxclassName = Array.from(Array(LEDCount).keys(), x => "c" + x);
 const hiddenlabelclassName =    Array.from(Array(LEDCount).keys(), x => [ "s" + x,  "c" + x]);
+
+function str2ab(str) {
+  var buf = new ArrayBuffer(str.length); // 2 bytes for each char
+  var bufView = new Uint8Array(buf);
+  for (var i=0, strLen=str.length; i<strLen; i++) {
+    bufView[i] = str.charCodeAt(i);
+  }
+  return buf;
+}
+
+function SaveFile() {
+  const data = new Uint8Array(LEDPanelData);
+  const headerstring = "P4\n96 32\n"
+  //const header = new Uint8Array(9);
+  
+  const header = str2ab(headerstring);
+  const headerView = new Uint8Array(header);
+  const buf = new Uint8Array(data.length + headerView.length).fill(0);
+  buf.set(headerView, 0);
+  buf.set(data, headerView.length);
+  console.log(buf);
+  if (window.navigator.msSaveOrOpenBlob) {
+   window.navigator.msSaveOrOpenBlob(buf.buffer, "blob.pbm");
+  }
+  else {
+   const a = document.createElement("a");
+   document.body.appendChild(a);
+   const url = (window.URL ? URL : webkitURL).createObjectURL(new Blob([buf]), {type: "data:application/octet-stream;base64,"});
+   a.href = url;
+   const date = new Date(Date.now());
+   const options = {weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', seconds: 'numeric' };
+   a.download = "brians-petrol-signs-"  + date.toLocaleString('en-AU', options).replaceAll(",", "-").replace(/\s/g, "")  + ".pbm";
+   a.click();
+   setTimeout(() => {
+     window.URL.revokeObjectURL(url);
+     document.body.removeChild(a);
+   }, 0);
+  }
+} 
+
+onMount( () => {
+  document.getElementById("saveButton").addEventListener("click", (event) => {
+    //console.log(LEDPanelData);
+    SaveFile();
+  });
+
+  document.querySelectorAll('input[type=checkbox]').forEach( (checkbox) => {
+    checkbox.addEventListener("click", (event) => {      
+      const ledindex = event.target.id.substring(1);
+      if (event.target.checked === true)
+        LEDPanelData[ledindex] = 1;
+      else
+        LEDPanelData[ledindex] = 0;
+    });
+  });
+  
+
+} );
+
 </script>
 
 <main>
-
+<section id="menu">
+  <ul>
+    <li><button id="saveButton">SAVE</button></li>
+  </ul>
+</section>
 
     {#each hiddencheckboxclassName as checkboxclassname }
         <input type="checkbox" id="{checkboxclassname}" name="{checkboxclassname}" />    
@@ -23,6 +93,16 @@ const hiddenlabelclassName =    Array.from(Array(LEDCount).keys(), x => [ "s" + 
 </main>
 
 <style lang="scss">
+
+ul button {
+  margin:0;
+}
+
+ul {
+  padding: 0;
+  margin-bottom:5px;
+}
+
 .grid {
     display: -ms-grid;
     -ms-grid-columns: repeat(16, 1fr);
@@ -56,7 +136,7 @@ const hiddenlabelclassName =    Array.from(Array(LEDCount).keys(), x => [ "s" + 
   }
    .grid {
     max-width: 600px;
-    margin: 30px auto;
+    /*margin: 30px auto;*/
     box-sizing: border-box;
     border: 10px solid #2a351f;
   }
