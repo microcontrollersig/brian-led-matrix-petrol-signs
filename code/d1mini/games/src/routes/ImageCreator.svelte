@@ -11,6 +11,7 @@ const hiddencheckboxclassName = Array.from(Array(LEDCount).keys(), x => "c" + x)
 const hiddenlabelclassName =    Array.from(Array(LEDCount).keys(), x => [ "s" + x,  "c" + x]);
 const panels = Array.from(Array(12).keys(), x => x + 1);
 let current_panel = 1;
+const panel_width = 96;
 
 function str2ab(str) {
   var buf = new ArrayBuffer(str.length); // 2 bytes for each char
@@ -71,7 +72,7 @@ function drawPixel(x, y, val) {
 
 function hydrate() {
   console.log(LEDPanelData);
-  const panel_width = 96;
+
   const panel_x = (current_panel - 1) % 6;
   const panel_y = Math.floor( (current_panel - 1) /6 );
   let offset = 0;
@@ -104,7 +105,10 @@ onMount( () => {
       const ledindex = parseInt(event.target.id.substring(1));
       const panel_x = (current_panel - 1) % 6;
       const panel_y = Math.floor((current_panel - 1) / 6);
-      const dataIndex = 16 * panel_x + 96*panel_y + ledindex;
+      const offset_x = ledindex % 16;
+      const offset_y = Math.floor(ledindex / 16);
+      const dataIndex = (offset_x) + (panel_width * offset_y) + (16*panel_x) + (16*panel_y*panel_width);
+      console.log("ledindex", ledindex, "dataindex", dataIndex); 
       if (event.target.checked === true)
         LEDPanelData[dataIndex] = 1;
       else
