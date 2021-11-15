@@ -69,6 +69,30 @@ function drawPixel(x, y, val) {
    post_www_url_encoded(data); 
 }
 
+function hydrate() {
+  console.log(LEDPanelData);
+  const panel_width = 96;
+  const panel_x = (current_panel - 1) % 6;
+  const panel_y = Math.floor( (current_panel - 1) /6 );
+  let offset = 0;
+  let counter = 0;
+  for (let i=0; i<16; i++) {
+    for (let j=0; j<16; j++) {
+      offset = (16 * panel_x + j) + panel_width*i;       
+      document.getElementById(`c${counter}`).checked = (LEDPanelData[offset] === 1);
+      counter = counter + 1;
+      console.log("j",j,"i",i, "offset:",offset, " checked:", LEDPanelData[offset]);
+    }
+  }
+
+}
+
+function clearallcheckboxes() {
+  document.querySelectorAll("input").forEach((elem) => {
+    elem.checked = false;
+  });
+}
+
 onMount( () => {
   document.getElementById("saveButton").addEventListener("click", (event) => {
     //console.log(LEDPanelData);
@@ -77,18 +101,24 @@ onMount( () => {
 
   document.querySelectorAll('input[type=checkbox]').forEach( (checkbox) => {
     checkbox.addEventListener("click", (event) =>  {      
-      const ledindex = event.target.id.substring(1);
-      if (event.target.checked === true)
-        LEDPanelData[ledindex] = 1;
-      else
-        LEDPanelData[ledindex] = 0;
-
+      const ledindex = parseInt(event.target.id.substring(1));
       const panel_x = (current_panel - 1) % 6;
       const panel_y = Math.floor((current_panel - 1) / 6);
+      const dataIndex = 16 * panel_x + 96*panel_y + ledindex;
+      if (event.target.checked === true)
+        LEDPanelData[dataIndex] = 1;
+      else
+        LEDPanelData[dataIndex] = 0;
+
+      
+
+
+      
       const x = ledindex % 16 + 16*panel_x;
       const y = Math.floor(ledindex / 16) + 16*panel_y;      
-      console.log("x:", x, " y:", y, "val:", LEDPanelData[ledindex]);
-      drawPixel(x, y, LEDPanelData[ledindex]);
+      console.log("x:", x, " y:", y, "val:", LEDPanelData[dataIndex]);
+      console.log(LEDPanelData);
+      //drawPixel(x, y, LEDPanelData[dataIndex]);
       
     });
   });
@@ -102,6 +132,8 @@ onMount( () => {
       });
       event.target.classList.add("active");
       current_panel = parseInt(event.target.innerHTML);
+      clearallcheckboxes();
+      hydrate();
     });
   });
 
