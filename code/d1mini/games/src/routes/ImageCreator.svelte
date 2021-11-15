@@ -9,8 +9,8 @@ let LEDPanelData = new Array(LEDPanelCount).fill(0);
 const LEDCount = 256;
 const hiddencheckboxclassName = Array.from(Array(LEDCount).keys(), x => "c" + x);
 const hiddenlabelclassName =    Array.from(Array(LEDCount).keys(), x => [ "s" + x,  "c" + x]);
-let panel_x = 0;
-let panel_y = 0;
+const panels = Array.from(Array(12).keys(), x => x + 1);
+let current_panel = 1;
 
 function str2ab(str) {
   var buf = new ArrayBuffer(str.length); // 2 bytes for each char
@@ -83,14 +83,28 @@ onMount( () => {
       else
         LEDPanelData[ledindex] = 0;
 
+      const panel_x = (current_panel - 1) % 6;
+      const panel_y = Math.floor((current_panel - 1) / 6);
       const x = ledindex % 16 + 16*panel_x;
-      const y = Math.floor(ledindex / 16) + 16*panel_y;
+      const y = Math.floor(ledindex / 16) + 16*panel_y;      
       console.log("x:", x, " y:", y, "val:", LEDPanelData[ledindex]);
       drawPixel(x, y, LEDPanelData[ledindex]);
-  
+      
     });
   });
   
+  
+
+  document.querySelectorAll(".panel").forEach((panel) => {
+    panel.addEventListener("click", (event) => {
+      document.querySelectorAll(".panel").forEach((p)=> {
+        p.classList.remove("active");
+      });
+      event.target.classList.add("active");
+      current_panel = parseInt(event.target.innerHTML);
+    });
+  });
+
 
 } );
 
@@ -117,7 +131,14 @@ onMount( () => {
         {/each}
         
     </div>
-    <div id="panelselection">PANEL SELECTION</div>
+    <div id="panelselection">
+      <h2>PANEL SELECTION</h2>
+      <div class="panels">
+        {#each panels as panel}
+        <button class="panel {panel === current_panel?'active':'' }" id="panel{panel}">{panel}</button>        
+        {/each}
+      </div>
+    </div>
   </section>    
 
 </main>
@@ -127,6 +148,40 @@ onMount( () => {
 #guts {
   display:grid;
   grid-template-columns: repeat(2, 1fr);
+}
+
+.panels {
+  display:grid;
+  grid-template-columns: repeat(6, 1fr);
+  background-color: #c4c4c4;
+
+}
+
+.panel:hover {
+  background-color: #e4e4e4;
+}
+
+
+.panel {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+  background-color: #fff;
+  border: 2px solid #c4c4c4;
+  font-size: 2rem;
+  color: #333;
+  text-shadow: 0 1px rgba(255,255,255,0.4);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+  background-image: linear-gradient(to bottom, transparent, transparent, 50%, rgba(0,0,0,0.04));
+}
+
+.active {
+  border: 2px solid green;
+  color: red;
+  background-color: lightcyan;
 }
 
 ul button {
