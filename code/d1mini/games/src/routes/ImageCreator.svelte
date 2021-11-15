@@ -9,6 +9,8 @@ let LEDPanelData = new Array(LEDPanelCount).fill(0);
 const LEDCount = 256;
 const hiddencheckboxclassName = Array.from(Array(LEDCount).keys(), x => "c" + x);
 const hiddenlabelclassName =    Array.from(Array(LEDCount).keys(), x => [ "s" + x,  "c" + x]);
+let panel_x = 0;
+let panel_y = 0;
 
 function str2ab(str) {
   var buf = new ArrayBuffer(str.length); // 2 bytes for each char
@@ -49,6 +51,24 @@ function SaveFile() {
   }
 } 
 
+function post_www_url_encoded(data) {
+    const body = new URLSearchParams();
+    for (let key in data) {
+      body.append(key, data[key]);
+    }
+    fetch('/command', {method: "POST", body}); 
+}
+
+function drawPixel(x, y, val) {
+   const data = {
+     "command": "Y",
+     "x": x,
+     "y": y,
+     "val": val
+   };
+   post_www_url_encoded(data); 
+}
+
 onMount( () => {
   document.getElementById("saveButton").addEventListener("click", (event) => {
     //console.log(LEDPanelData);
@@ -56,12 +76,18 @@ onMount( () => {
   });
 
   document.querySelectorAll('input[type=checkbox]').forEach( (checkbox) => {
-    checkbox.addEventListener("click", (event) => {      
+    checkbox.addEventListener("click", (event) =>  {      
       const ledindex = event.target.id.substring(1);
       if (event.target.checked === true)
         LEDPanelData[ledindex] = 1;
       else
         LEDPanelData[ledindex] = 0;
+
+      const x = ledindex % 16 + 16*panel_x;
+      const y = Math.floor(ledindex / 16) + 16*panel_y;
+      console.log("x:", x, " y:", y, "val:", LEDPanelData[ledindex]);
+      drawPixel(x, y, LEDPanelData[ledindex]);
+  
     });
   });
   
@@ -75,7 +101,7 @@ onMount( () => {
   <ul>
     <li><button id="saveButton">SAVE</button></li>
   </ul>
-</section>
+</section> 
 
     {#each hiddencheckboxclassName as checkboxclassname }
         <input type="checkbox" id="{checkboxclassname}" name="{checkboxclassname}" />    
@@ -83,16 +109,25 @@ onMount( () => {
     
 
     
+    <section id="guts">
+
     <div id="board" class="grid">
         {#each hiddenlabelclassName as label}
         <label for="{label[1]}" id="{label[0]}" class="grid__item"></label>
         {/each}
         
     </div>
+    <div id="panelselection">PANEL SELECTION</div>
+  </section>    
 
 </main>
 
 <style lang="scss">
+
+#guts {
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+}
 
 ul button {
   margin:0;
@@ -150,7 +185,7 @@ ul {
   $columns: 255;
 
   @for $i from 0 through $columns {
-    #c#{$i}:checked ~ .grid #s#{$i} {        
+    #c#{$i}:checked ~ section .grid #s#{$i} {        
         background-color: green;    
         margin: 0px;  
         transform: scale(1.0);      
