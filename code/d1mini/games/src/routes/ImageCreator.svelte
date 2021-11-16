@@ -75,15 +75,14 @@ function hydrate() {
 
   const panel_x = (current_panel - 1) % 6;
   const panel_y = Math.floor( (current_panel - 1) /6 );
-  let offset = 0;
-  let counter = 0;
-  for (let i=0; i<16; i++) {
-    for (let j=0; j<16; j++) {
-      offset = (16 * panel_x + j) + panel_width*i;       
-      document.getElementById(`c${counter}`).checked = (LEDPanelData[offset] === 1);
-      counter = counter + 1;
-      console.log("j",j,"i",i, "offset:",offset, " checked:", LEDPanelData[offset]);
-    }
+  let offset =  (16 * panel_x) + (16 * panel_width * panel_y);
+  let index = offset;
+  for (let i=0; i<256; i++) {    
+      document.getElementById(`c${i}`).checked = (LEDPanelData[index] === 1);
+      index = index + 1;
+      if ( (index % 16)  === 0 ) {
+        index = index + panel_width - 16;
+      }
   }
 
 }
