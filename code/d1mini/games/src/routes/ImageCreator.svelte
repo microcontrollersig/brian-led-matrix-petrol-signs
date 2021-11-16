@@ -121,7 +121,7 @@ onMount( () => {
       const y = Math.floor(ledindex / 16) + 16*panel_y;      
       console.log("x:", x, " y:", y, "val:", LEDPanelData[dataIndex]);
       console.log(LEDPanelData);
-      //drawPixel(x, y, LEDPanelData[dataIndex]);
+      drawPixel(x, y, LEDPanelData[dataIndex]);
       
     });
   });
