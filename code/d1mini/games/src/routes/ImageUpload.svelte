@@ -29,9 +29,10 @@
                 console.log(rawbuffer[i]);
               }
               */
-      let startofWidth;
+      let startofWidth=3;
       let newlinecounter = 0;
-      for (let i = 0; i < pbmfile.size ; i++) {
+      if (rawbuffer[startofWidth] === 0x23) {      
+        for (let i = 0; i < pbmfile.size ; i++) {
           if  (rawbuffer[i] === 0x0A) {
             newlinecounter = newlinecounter + 1;
           }
@@ -47,17 +48,10 @@
             break;
           }
       }
+    }
       const width1 = rawbuffer[startofWidth];
       const width2 = rawbuffer[startofWidth + 1];
-      let width;
-      if (width2 == 0x10) {
-
-      }
-
-      else {
-          width = 10 * (width1 - 0x30) + (width2 - 0x30);
-      }
-
+      let width = 10 * (width1 - 0x30) + (width2 - 0x30);      
       console.log("width:", width);
       let column = 0; 
       let row = 0;
