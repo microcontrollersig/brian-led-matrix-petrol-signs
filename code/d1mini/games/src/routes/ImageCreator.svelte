@@ -22,8 +22,27 @@ function str2ab(str) {
   return buf;
 }
 
+function binaryToByteArray() {
+  const pbmData = new Uint8Array(Math.floor(LEDPanelCount / 8));
+  let index;
+  let val = 0;
+  let pbmIndex = 0;
+  let endOfByte;
+  for (let i=0; i<LEDPanelCount; i++) {
+    val = val | (LEDPanelData[i] << 7 - i%8);
+    endOfByte = (i + 1) % 8;
+    if (endOfByte === 0) {
+      pbmData[pbmIndex] = val;
+      val = 0;
+      pbmIndex = pbmIndex + 1;
+    }
+  }
+  return pbmData;
+}
+
 function SaveFile() {
-  const data = new Uint8Array(LEDPanelData);
+  //const data = new Uint8Array(LEDPanelData);
+  const data = binaryToByteArray();
   const headerstring = "P4\n96 32\n"
   //const header = new Uint8Array(9);
   
@@ -39,7 +58,7 @@ function SaveFile() {
   else {
    const a = document.createElement("a");
    document.body.appendChild(a);
-   const url = (window.URL ? URL : webkitURL).createObjectURL(new Blob([buf]), {type: "data:application/octet-stream;base64,"});
+   const url = (window.URL ? URL : webkitURL).createObjectURL(new Blob([buf]), {type: "data:application/octet-stream"});
    a.href = url;
    const date = new Date(Date.now());
    const options = {weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', seconds: 'numeric' };
