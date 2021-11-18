@@ -28,6 +28,7 @@
 #include "testSetPixel.h"
 #include "testSetPixelImmediate.h"
 #include "testUpdate.h"
+#include "testTetrisAnimation.h"
 
 class CommandList
 {
@@ -113,13 +114,16 @@ class CommandList
       TestUpdateCommand *testUpdateCommand = new TestUpdateCommand();
       commands['U'] = testUpdateCommand;
 
+      TestTetrisAnimationCommand *testTetrisAnimationCommand = new TestTetrisAnimationCommand();
+      commands['V'] = testTetrisAnimationCommand; 
+
       TestSetPixelImmediateCommand *testSetPixelImmediateCommand = new TestSetPixelImmediateCommand();
       commands['Y'] = testSetPixelImmediateCommand; 
 
       TestSingleGenericTextCommand *testSingleGenericTextCommand = new TestSingleGenericTextCommand();
       commands['Z'] = testSingleGenericTextCommand; 
 
-
+ 
  
       return commands;
     }
