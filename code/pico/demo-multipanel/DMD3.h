@@ -42,7 +42,7 @@ public:
     void clear(Color color = Black);
 
     Color pixel(int x, int y) const;
-    void setPixel(int x, int y, Color color = White);
+    void setPixel(int x, int y, Color color = White);   
     void clearPixel(int x, int y);
 
     void drawLine(int x1, int y1, int x2, int y2, Color color = White);
@@ -76,7 +76,7 @@ int drawCharVariable(int x, int y, char ch);
     int textHeight() const;
 
     void copy(int x, int y, int width, int height, Bitmap *dest, int destX, int destY);
-    void fill(int x, int y, int width, int height, Color color);
+    void fill(int x, int y, int width, int height, Color color = White);
     void fill(int x, int y, int width, int height, Bitmap::ProgMem pattern, Color color = White);
 
     void scroll(int dx, int dy, Color fillColor = Black);

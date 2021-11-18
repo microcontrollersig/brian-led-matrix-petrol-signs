@@ -40,7 +40,7 @@ class Test4Command : public Command
     }
   
     void execute(DMD3 *canvas)  override {
-      if ( millis() - timeStart > 60) {        
+      if ( millis() - timeStart > 40) {        
         clearSerialMonitor();
         canvas->clear();        
         canvas->drawText(8,0,"TL;DR");

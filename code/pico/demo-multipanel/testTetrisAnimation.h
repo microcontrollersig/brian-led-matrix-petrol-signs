@@ -257,7 +257,7 @@ class GenericDisplay {
       this->cvs = canvas;  
     }
     void fillRect(int x1, int y1, int width, int height, uint16_t color) {
-      //cvs->drawFilledRect(x1, y1, x1 + width, y1 + height);
+      cvs->fill(x1, y1, width, height);
     }
     
     void drawPixel(int x, int y, uint16_t color) {
