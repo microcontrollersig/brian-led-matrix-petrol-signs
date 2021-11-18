@@ -132,11 +132,43 @@
     });
   }
 
-  function loadCheckboxes() {}
+  function loadCheckboxes() {
+    const pbmfile = document.getElementById("input").files[0];
+    console.log(pbmfile.name);
+    console.log(pbmfile.size);
+    const reader = new FileReader();
+    reader.addEventListener("loadend", async () => {
+      console.log(reader.result);
+      const rawbuffer = new Uint8Array(reader.result);
+      console.log(rawbuffer);
+      let index = 0;
+      for (let i = 9; i < pbmfile.size; i++) {
+        const val = rawbuffer[i];
+        for (let j = 7; j >= 0; j--) {
+          if (val & (1 << j)) {
+            LEDPanelData[index] = 1;
+          } else {
+            LEDPanelData[index] = 0;
+          }
+
+          index = index + 1;
+        }
+      }
+      console.log(LEDPanelData);
+      document.getElementById("panel" + current_panel).click();
+    });
+    reader.readAsArrayBuffer(pbmfile);
+  }
+
+  function handleLoadFile() {
+    handleFiles();
+    loadCheckboxes();
+  }
 
   onMount(() => {
+    post_www_url_encoded({ command: "@" }); //clear LEDs
     const inputElement = document.getElementById("input");
-    inputElement.addEventListener("change", handleFiles, false);
+    inputElement.addEventListener("change", handleLoadFile, false);
 
     document.getElementById("saveButton").addEventListener("click", (event) => {
       SaveFile();
@@ -152,6 +184,8 @@
       .addEventListener("click", (event) => {
         const data = { command: "@" };
         post_www_url_encoded(data);
+        LEDPanelData.fill(0);
+        document.getElementById("panel" + current_panel).click();
       });
 
     document.querySelectorAll("input[type=checkbox]").forEach((checkbox) => {
