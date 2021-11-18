@@ -249,10 +249,19 @@ typedef struct
 
 
 class GenericDisplay {
+  private:
+   DMD3* cvs;
+  
   public:
-    void fillRect(int x, int y, int scalex, int scaley, uint16_t color) {
+    GenericDisplay(DMD3 *canvas) {
+      this->cvs = canvas;  
     }
+    void fillRect(int x1, int y1, int width, int height, uint16_t color) {
+      //cvs->drawFilledRect(x1, y1, x1 + width, y1 + height);
+    }
+    
     void drawPixel(int x, int y, uint16_t color) {
+      cvs->setPixel(x,y);
     }
 };
 
@@ -261,11 +270,25 @@ class GenericDisplay {
 class TetrisMatrixDraw
 {
   public:
-    GenericDisplay  *display;
+    GenericDisplay *display;
+    bool initialisedDisplay = false;
+
+    TetrisMatrixDraw() {
+       
+    }
+
+    void setDisplay(DMD3* canvas) {
+      if (!initialisedDisplay) {
+        display =  new GenericDisplay(canvas);
+        initialisedDisplay = true;
+      }
+    }
+    
+    /*
     TetrisMatrixDraw (GenericDisplay *display) {
       this->display = display;
     }
-
+    */
 
 
     bool drawNumbers(int x = 0, int yFinish = 0, bool displayColon = false) {
@@ -902,38 +925,26 @@ class TetrisMatrixDraw
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 class TestTetrisAnimationCommand : public Command
 {
   private:
     unsigned long timeStart = 0UL;
     char text1[100];
+    TetrisMatrixDraw tetris;
 
   public:
     void parseArgs(std::vector<std::string> args) override {
       strcpy(text1, args.at(0).c_str());
+      tetris.setTime(text1, true);
     }
 
     void execute(DMD3 *canvas)  override {
       if ( millis() - timeStart > 200) {
+        
         clearSerialMonitor();
         canvas->clear();
-        canvas->setPixel(0, 0);
-        canvas->setPixel(95, 0);
-        canvas->setPixel(0, 31);
-        canvas->setPixel(95, 31);
+        tetris.setDisplay(canvas);
+        tetris.drawNumbers(10,26, true);
         printCanvas(canvas);
         canvas->update();
         timeStart = millis();
