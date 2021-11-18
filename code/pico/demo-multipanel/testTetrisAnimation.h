@@ -935,6 +935,7 @@ class TestTetrisAnimationCommand : public Command
   public:
     void parseArgs(std::vector<std::string> args) override {
       strcpy(text1, args.at(0).c_str());
+      tetris.scale = 2;
       tetris.setTime(text1, true);
     }
 
