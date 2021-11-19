@@ -142,7 +142,23 @@
       const rawbuffer = new Uint8Array(reader.result);
       console.log(rawbuffer);
       let index = 0;
-      for (let i = 9; i < pbmfile.size; i++) {
+
+      let startOfCommentsIndex = 3;
+      let newlinecounter = 0;
+      let startOfDataIndex = 9;
+
+      if (rawbuffer[startOfCommentsIndex] === 0x23) {
+        for (let i = startOfCommentsIndex; i < pbmfile.size; i++) {
+          if (rawbuffer[i] === 0x0a) newlinecounter = newlinecounter + 1;
+
+          if (newlinecounter === 2) {
+            startOfDataIndex = i + 1;
+            break;
+          }
+        }
+      }
+
+      for (let i = startOfDataIndex; i < pbmfile.size; i++) {
         const val = rawbuffer[i];
         for (let j = 7; j >= 0; j--) {
           if (val & (1 << j)) {
