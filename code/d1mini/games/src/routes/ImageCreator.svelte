@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
-  import { handleFiles, post_www_url_encoded } from "./imageupload.js";
+  import { handleFiles } from "./imageupload.js";
+  import { post_www_url_encoded } from "./sendcommmand.js";
 
   const LEDPanelCount = 3072;
   let LEDPanelData = new Array(LEDPanelCount).fill(0);
@@ -182,9 +183,9 @@
   }
 
   onMount(() => {
-    post_www_url_encoded({ command: "@" }); //clear LEDs
-    const inputElement = document.getElementById("input");
-    inputElement.addEventListener("change", handleLoadFile, false);
+    //post_www_url_encoded({ command: "@" }); //clear LEDs
+    //const inputElement = document.getElementById("input");
+    //inputElement.addEventListener("change", handleLoadFile, false);
 
     document.getElementById("saveButton").addEventListener("click", (event) => {
       SaveFile();

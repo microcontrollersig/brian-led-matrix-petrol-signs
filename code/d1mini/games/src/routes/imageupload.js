@@ -1,10 +1,4 @@
-async function post_www_url_encoded(data) {
-  const body = new URLSearchParams();
-  for (let key in data) {
-    body.append(key, data[key]);
-  }
-  return await fetch('/command', { method: "POST", body });
-}
+import { post_www_url_encoded } from './sendcommmand.js';
 
 
 function handleFiles() {
@@ -105,4 +99,4 @@ function handleFiles() {
   reader.readAsArrayBuffer(pbmfile);
 }
 
-export { post_www_url_encoded, handleFiles };
+export { handleFiles };

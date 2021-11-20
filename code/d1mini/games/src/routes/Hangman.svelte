@@ -1,5 +1,5 @@
 <script>
-    import { post_www_url_encoded } from "./imageupload";
+    import { post_www_url_encoded } from "./sendcommmand.js";
 
     let categories = [
         {
@@ -25,8 +25,9 @@
     ];
 
     let answer;
-    let revealedLetters = new Set();
+    let revealedLetters;
     let categorySelection = "";
+    let itemCapitalized;
     let availableLetters = [
         "A",
         "B",
@@ -71,7 +72,7 @@
             .then((data) => {
                 console.log(data);
                 const item = data[Math.floor(Math.random() * data.length)];
-                const itemCapitalized = item.toUpperCase();
+                itemCapitalized = item.toUpperCase();
 
                 const categoryNameSize = selectedCategoryName.length;
                 const itemSize = itemCapitalized.length;
@@ -86,8 +87,9 @@
 
                 const spaces = Array(itemSize).fill(" ");
                 const underscores = Array(itemSize).fill("_");
+                revealedLetters = underscores;
 
-                var words = underscores.reduce(function (arr, v, i) {
+                const words = underscores.reduce(function (arr, v, i) {
                     return arr.concat([v, " "]);
                 }, []);
 
@@ -104,6 +106,37 @@
                     fontIndex: 1,
                 });
             });
+    }
+
+    function guessLetter(letter) {
+        availableLetters = availableLetters.filter((elem) => elem !== letter);
+        if (itemCapitalized.indexOf(letter) !== -1) {
+            console.log("letter in word");
+            console.log(revealedLetters);
+            console.log(answer);
+            const indexes = answer
+                .split("")
+                .map((v, i) => (v === letter ? i : -1))
+                .filter((elem) => elem !== -1);
+            console.log(indexes);
+            for (let i = 0; i < indexes.length; i++) {
+                const j = indexes[i];
+                revealedLetters[j] = letter;
+            }
+            console.log(revealedLetters);
+            const b = revealedLetters.reduce(function (arr, v, i) {
+                return arr.concat([v, " "]);
+            }, []);
+            const text = b.join("");
+            console.log(text);
+            const trimmedtext = text.replace(/\s+/g, "");
+            console.log(trimmedtext);
+            if (trimmedtext === answer) {
+                console.log("word is revealed.");
+            }
+        } else {
+            console.log("letter not in word.");
+        }
     }
 </script>
 
@@ -131,7 +164,9 @@
     <section>
         <h2>Select Letter</h2>
         {#each availableLetters as letter}
-            <button class="letters">{letter}</button>
+            <button class="letters" on:click={() => guessLetter(letter)}
+                >{letter}</button
+            >
         {/each}
     </section>
 </main>
