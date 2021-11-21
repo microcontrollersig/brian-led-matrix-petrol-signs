@@ -111,6 +111,8 @@
             });
     }
 
+    function startNewGame() {}
+
     function guessLetter(letter) {
         availableLetters = availableLetters.filter((elem) => elem !== letter);
         let text = "";
@@ -137,18 +139,20 @@
             console.log(trimmedtext);
             if (trimmedtext === answer) {
                 console.log("word is revealed.");
-            } else {
-                post_www_url_encoded({
-                    command: "T",
-                    x1: 0,
-                    y1: 16,
-                    text1: selectedCategoryName,
-                    x2: 0,
-                    y2: 24,
-                    text: text,
-                    fontIndex: 1,
-                });
+                setTimeout(() => {
+                    startNewGame();
+                }, 10000);
             }
+            post_www_url_encoded({
+                command: "M",
+                x1: 0,
+                y1: 16,
+                text1: selectedCategoryName,
+                x2: 0,
+                y2: 24,
+                text: text,
+                fontIndex: 1,
+            });
         } else {
             console.log("letter not in word.");
             incorrectAttempts = incorrectAttempts + 1;
@@ -157,18 +161,13 @@
                 //game over
                 //reveal answer
             } else {
-                /*
                 post_www_url_encoded({
-                    command: "T",
-                    x1: 0,
-                    y1: 16,
-                    text1: selectedCategoryName,
-                    x2: 0,
-                    y2: 24,
-                    text: text,
+                    command: "R",
+                    x1: 48,
+                    y1: 0,
+                    text1: incorrrectLetters,
                     fontIndex: 1,
                 });
-                */
             }
         }
         console.log(incorrectAttempts);
