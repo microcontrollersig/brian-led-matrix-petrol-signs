@@ -345,6 +345,8 @@ void wificonfig()
 
   else {
     debug_println("Starting captive portal...");
+    debug_println("Creating WIFI network: brianLEDPanels");
+    debug_println("IP address: 192.168.4.1");
     startCaptiveWebServer();           
   }
 
