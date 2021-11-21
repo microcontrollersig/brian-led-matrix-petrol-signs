@@ -29,6 +29,7 @@
 #include "testSetPixelImmediate.h"
 #include "testUpdate.h"
 #include "testTetrisAnimation.h"
+#include "testSingleLineTextCanvas.h"
 
 class CommandList
 {
@@ -105,6 +106,9 @@ class CommandList
       TestSetPixelCommand *testSetPixelCommand = new TestSetPixelCommand();
       commands['P'] = testSetPixelCommand; 
 
+      TestSingleLineTextCanvasCommand *testSingleLineTextCanvasCommand = new TestSingleLineTextCanvasCommand();
+      commands['R'] = testSingleLineTextCanvasCommand;       
+
       TestSimpleScrollCommand *testSimpleScrollCommand = new TestSimpleScrollCommand();
       commands['S'] = testSimpleScrollCommand;        
 
@@ -122,6 +126,7 @@ class CommandList
 
       TestSingleGenericTextCommand *testSingleGenericTextCommand = new TestSingleGenericTextCommand();
       commands['Z'] = testSingleGenericTextCommand; 
+
 
  
  
