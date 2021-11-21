@@ -30,6 +30,8 @@
 #include "testUpdate.h"
 #include "testTetrisAnimation.h"
 #include "testSingleLineTextCanvas.h"
+#include "testFillCanvas.h"
+#include "testCircleCanvas.h"
 
 class CommandList
 {
@@ -100,11 +102,17 @@ class CommandList
       TestTwoTextWithFontCommand *testTwoTextWithFontCommand = new TestTwoTextWithFontCommand();
       commands['H'] = testTwoTextWithFontCommand; 
 
+      TestCircleCanvasCommand *testCircleCanvasCommand = new TestCircleCanvasCommand();
+      commands['N'] = testCircleCanvasCommand; 
+
       TestTimeoutCommand *testTimeoutCommand = new TestTimeoutCommand();
       commands['O'] = testTimeoutCommand; 
 
       TestSetPixelCommand *testSetPixelCommand = new TestSetPixelCommand();
-      commands['P'] = testSetPixelCommand; 
+      commands['P'] = testSetPixelCommand;
+
+      TestFillCanvasCommand *testFillCanvasCommand = new TestFillCanvasCommand();
+      commands['Q'] = testFillCanvasCommand;        
 
       TestSingleLineTextCanvasCommand *testSingleLineTextCanvasCommand = new TestSingleLineTextCanvasCommand();
       commands['R'] = testSingleLineTextCanvasCommand;       

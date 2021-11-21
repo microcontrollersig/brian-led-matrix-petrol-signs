@@ -1,7 +1,7 @@
 #pragma once
 
 #include "MBI5039.h"
-
+#include "color.h"
 
 
 
@@ -18,7 +18,7 @@ public:
 
     bool isValid() const { return fb != 0; }
 
-    typedef uint8_t Color;
+
 
     #if defined(ARDUINO_ARCH_RP2040)
       #define PGM_VOID_P const void *
@@ -27,9 +27,7 @@ public:
     typedef PGM_VOID_P ProgMem;
     typedef PGM_VOID_P Font;
 
-    static const Color White  = 0;
-    static const Color Black  = 1;
-    static const Color NoFill = 2;
+
 
     int width() const { return _width; }
     int height() const { return _height; }

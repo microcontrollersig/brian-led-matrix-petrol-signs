@@ -73,7 +73,7 @@ void Bitmap::clear(Color color)
  *
  * \sa setPixel(), data()
  */
-Bitmap::Color Bitmap::pixel(int x, int y) const
+Color Bitmap::pixel(int x, int y) const
 {
     if (((unsigned int)x) >= ((unsigned int)_width) ||
             ((unsigned int)y) >= ((unsigned int)_height))
