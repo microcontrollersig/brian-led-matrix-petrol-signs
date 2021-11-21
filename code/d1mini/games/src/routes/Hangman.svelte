@@ -28,6 +28,9 @@
     let revealedLetters;
     let categorySelection = "";
     let itemCapitalized;
+    let incorrectAttempts = 0;
+    let incorrrectLetters = "";
+    let selectedCategoryName;
     let availableLetters = [
         "A",
         "B",
@@ -63,7 +66,7 @@
         );
         const selectedCategory = selectedCategories[0];
         categorySelection = selectedCategory.name;
-        const selectedCategoryName = selectedCategory.name.toLocaleUpperCase();
+        selectedCategoryName = selectedCategory.name.toLocaleUpperCase();
         const selectedCategoryURL = selectedCategory.url;
 
         // converted github link to jsdelivr CDN
@@ -110,6 +113,7 @@
 
     function guessLetter(letter) {
         availableLetters = availableLetters.filter((elem) => elem !== letter);
+        let text = "";
         if (itemCapitalized.indexOf(letter) !== -1) {
             console.log("letter in word");
             console.log(revealedLetters);
@@ -127,16 +131,47 @@
             const b = revealedLetters.reduce(function (arr, v, i) {
                 return arr.concat([v, " "]);
             }, []);
-            const text = b.join("");
+            text = b.join("");
             console.log(text);
             const trimmedtext = text.replace(/\s+/g, "");
             console.log(trimmedtext);
             if (trimmedtext === answer) {
                 console.log("word is revealed.");
+            } else {
+                post_www_url_encoded({
+                    command: "T",
+                    x1: 0,
+                    y1: 16,
+                    text1: selectedCategoryName,
+                    x2: 0,
+                    y2: 24,
+                    text: text,
+                    fontIndex: 1,
+                });
             }
         } else {
             console.log("letter not in word.");
+            incorrectAttempts = incorrectAttempts + 1;
+            incorrrectLetters = incorrrectLetters + letter;
+            if (incorrectAttempts === 7) {
+                //game over
+                //reveal answer
+            } else {
+                /*
+                post_www_url_encoded({
+                    command: "T",
+                    x1: 0,
+                    y1: 16,
+                    text1: selectedCategoryName,
+                    x2: 0,
+                    y2: 24,
+                    text: text,
+                    fontIndex: 1,
+                });
+                */
+            }
         }
+        console.log(incorrectAttempts);
     }
 </script>
 
