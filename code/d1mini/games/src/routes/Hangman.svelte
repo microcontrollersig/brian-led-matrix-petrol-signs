@@ -171,6 +171,8 @@
                     text1: incorrrectLetters,
                     fontIndex: 1,
                 });
+
+                drawHangmanPart(incorrectAttempts);
             }
         }
         console.log(incorrectAttempts);
