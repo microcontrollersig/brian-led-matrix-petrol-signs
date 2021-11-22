@@ -102,7 +102,7 @@
                 drawHangmanPart(incorrectAttempts);
 
                 post_www_url_encoded({
-                    command: "T",
+                    command: "M",
                     x1: 0,
                     y1: 16,
                     text1: selectedCategoryName,
