@@ -1,5 +1,6 @@
 <script>
     import { post_www_url_encoded } from "./sendcommmand.js";
+    import { drawHangmanPart } from "./drawhangman.js";
 
     let categories = [
         {
@@ -97,6 +98,8 @@
                 }, []);
 
                 console.log(words);
+
+                drawHangmanPart(incorrectAttempts);
 
                 post_www_url_encoded({
                     command: "T",

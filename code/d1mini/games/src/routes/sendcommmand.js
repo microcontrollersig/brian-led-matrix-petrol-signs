@@ -3,6 +3,7 @@ async function post_www_url_encoded(data) {
     for (let key in data) {
         body.append(key, data[key]);
     }
+    //console.log(body);
     return await fetch('/command', { method: "POST", body });
 }
 
