@@ -33,6 +33,7 @@
 #include "testTwoLinesTextCanvas.h"
 #include "testFillCanvas.h"
 #include "testCircleCanvas.h"
+#include "testDrawLineCanvas.h"
 
 class CommandList
 {
@@ -102,6 +103,9 @@ class CommandList
 
       TestTwoTextWithFontCommand *testTwoTextWithFontCommand = new TestTwoTextWithFontCommand();
       commands['H'] = testTwoTextWithFontCommand; 
+
+      TestDrawLineCanvasCommand *testDrawLineCanvasCommand = new TestDrawLineCanvasCommand();
+      commands['L'] = testDrawLineCanvasCommand; 
 
       TestTwoLinesTextCanvasCommand *testTwoLinesTextCanvasCommand = new TestTwoLinesTextCanvasCommand();
       commands['M'] = testTwoLinesTextCanvasCommand; 
