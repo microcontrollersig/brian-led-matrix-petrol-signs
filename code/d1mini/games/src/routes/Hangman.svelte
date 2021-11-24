@@ -157,7 +157,7 @@
             console.log(trimmedtext);
             if (trimmedtext === answer) {
                 console.log("word is revealed.");
-                startNewGame();
+                hangmanGameState = HANGMAN_GAMESTATE.ENDGAME;
             }
             post_www_url_encoded({
                 command: "M",
