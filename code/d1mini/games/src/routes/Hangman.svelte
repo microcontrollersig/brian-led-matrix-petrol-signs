@@ -76,6 +76,38 @@
         availableLetters = availableLettersCopy;
     }
 
+    function displayIncorrectLetters(letters) {
+        const l = letters.split("").reduce(function (arr, v, i) {
+            return arr.concat([v, " "]);
+        }, []);
+        if (letters.length >= 5) {
+            post_www_url_encoded({
+                command: "R",
+                x1: 48,
+                y1: 0,
+                text1: l.slice(0, 8).join(""),
+                fontIndex: 1,
+            });
+
+            post_www_url_encoded({
+                command: "R",
+                x1: 48,
+                y1: 8,
+                text1: l.slice(8).join(""),
+                fontIndex: 1,
+            });
+        } else {
+            console.log(l.join(""));
+            post_www_url_encoded({
+                command: "R",
+                x1: 48,
+                y1: 0,
+                text1: l.join(""),
+                fontIndex: 1,
+            });
+        }
+    }
+
     function selectCategory(id) {
         const selectedCategories = categories.filter(
             (category) => category.id === id
@@ -193,14 +225,7 @@
                 });
             }
 
-            post_www_url_encoded({
-                command: "R",
-                x1: 48,
-                y1: 0,
-                text1: incorrrectLetters,
-                fontIndex: 1,
-            });
-
+            displayIncorrectLetters(incorrrectLetters);
             drawHangmanPart(incorrectAttempts);
         }
         console.log(incorrectAttempts);
