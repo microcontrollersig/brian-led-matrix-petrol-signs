@@ -24,7 +24,13 @@
             url: "https://cdn.jsdelivr.net/gh/raspberrypisig/corpora/custom/animals-limited.json",
         },
     ];
-
+    const HANGMAN_GAMESTATE = {
+        STARTGAME: 0,
+        SELECTCATEGORY: 1,
+        PLAYING: 2,
+        ENDGAME: 3,
+    };
+    let hangmanGameState = HANGMAN_GAMESTATE.SELECTCATEGORY;
     let answer;
     let revealedLetters;
     let categorySelection = "";
@@ -70,6 +76,8 @@
         selectedCategoryName = selectedCategory.name.toLocaleUpperCase();
         const selectedCategoryURL = selectedCategory.url;
 
+        hangmanGameState = HANGMAN_GAMESTATE.PLAYING;
+
         // converted github link to jsdelivr CDN
         fetch(selectedCategoryURL)
             .then((response) => response.json())
@@ -113,8 +121,6 @@
                 });
             });
     }
-
-    function startNewGame() {}
 
     function guessLetter(letter) {
         availableLetters = availableLetters.filter((elem) => elem !== letter);
@@ -161,19 +167,34 @@
             incorrectAttempts = incorrectAttempts + 1;
             incorrrectLetters = incorrrectLetters + letter;
             if (incorrectAttempts === 7) {
-                //game over
-                //reveal answer
-            } else {
+                hangmanGameState = HANGMAN_GAMESTATE.ENDGAME;
+                const formattedAnswer = answer
+                    .split("")
+                    .reduce(function (arr, v, i) {
+                        return arr.concat([v, " "]);
+                    }, []);
+                console.log(formattedAnswer.join(""));
                 post_www_url_encoded({
-                    command: "R",
-                    x1: 48,
-                    y1: 0,
-                    text1: incorrrectLetters,
+                    command: "M",
+                    x1: 0,
+                    y1: 16,
+                    text1: selectedCategoryName,
+                    x2: 0,
+                    y2: 24,
+                    text: formattedAnswer.join(""),
                     fontIndex: 1,
                 });
-
-                drawHangmanPart(incorrectAttempts);
             }
+
+            post_www_url_encoded({
+                command: "R",
+                x1: 48,
+                y1: 0,
+                text1: incorrrectLetters,
+                fontIndex: 1,
+            });
+
+            drawHangmanPart(incorrectAttempts);
         }
         console.log(incorrectAttempts);
     }
@@ -181,33 +202,45 @@
 
 <main>
     <h1>Hangman</h1>
-    <section>
-        <h2>Select category</h2>
-        <ul>
-            {#each categories as category}
-                <li>
-                    <a
-                        class="categories"
-                        id={category.id}
-                        on:click={() => selectCategory(category.id)}
-                        >{category.name}</a
-                    >
-                </li>
+    {#if hangmanGameState == HANGMAN_GAMESTATE.ENDGAME}
+        <section>
+            <button>NEW GAME</button>
+            <div>ANSWER: <span>{answer}</span></div>
+        </section>
+    {/if}
+    {#if hangmanGameState == HANGMAN_GAMESTATE.SELECTCATEGORY}
+        <section>
+            <h2>Select category</h2>
+            <ul>
+                {#each categories as category}
+                    <li>
+                        <a
+                            class="categories"
+                            id={category.id}
+                            on:click={() => selectCategory(category.id)}
+                            >{category.name}</a
+                        >
+                    </li>
+                {/each}
+            </ul>
+        </section>
+    {/if}
+    {#if hangmanGameState == HANGMAN_GAMESTATE.PLAYING}
+        <section>
+            <h2>Category</h2>
+            <p>{categorySelection}</p>
+        </section>
+    {/if}
+    {#if hangmanGameState == HANGMAN_GAMESTATE.PLAYING}
+        <section>
+            <h2>Select Letter</h2>
+            {#each availableLetters as letter}
+                <button class="letters" on:click={() => guessLetter(letter)}
+                    >{letter}</button
+                >
             {/each}
-        </ul>
-    </section>
-    <section>
-        <h2>Category</h2>
-        <p>{categorySelection}</p>
-    </section>
-    <section>
-        <h2>Select Letter</h2>
-        {#each availableLetters as letter}
-            <button class="letters" on:click={() => guessLetter(letter)}
-                >{letter}</button
-            >
-        {/each}
-    </section>
+        </section>
+    {/if}
 </main>
 
 <style lang="scss">
