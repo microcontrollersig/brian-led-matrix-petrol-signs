@@ -38,7 +38,7 @@
     let incorrectAttempts = 0;
     let incorrrectLetters = "";
     let selectedCategoryName;
-    let availableLetters = [
+    const availableLettersCopy = [
         "A",
         "B",
         "C",
@@ -66,6 +66,15 @@
         "Y",
         "Z",
     ];
+    let availableLetters = availableLettersCopy;
+
+    function startNewGame() {
+        hangmanGameState = HANGMAN_GAMESTATE.SELECTCATEGORY;
+        revealedLetters = "";
+        incorrectAttempts = 0;
+        incorrrectLetters = "";
+        availableLetters = availableLettersCopy;
+    }
 
     function selectCategory(id) {
         const selectedCategories = categories.filter(
@@ -148,9 +157,7 @@
             console.log(trimmedtext);
             if (trimmedtext === answer) {
                 console.log("word is revealed.");
-                setTimeout(() => {
-                    startNewGame();
-                }, 10000);
+                startNewGame();
             }
             post_www_url_encoded({
                 command: "M",
@@ -204,7 +211,7 @@
     <h1>Hangman</h1>
     {#if hangmanGameState == HANGMAN_GAMESTATE.ENDGAME}
         <section>
-            <button>NEW GAME</button>
+            <button on:click={() => startNewGame()}>NEW GAME</button>
             <div>ANSWER: <span>{answer}</span></div>
         </section>
     {/if}
