@@ -36,7 +36,7 @@ const hangman =
                 ["x1", 31],
                 ["y1", 2],
                 ["x2", 31],
-                ["y2", 4],
+                ["y2", 3],
                 ["color", 1]
             ]
             )
@@ -46,7 +46,7 @@ const hangman =
             new Map([
                 ["command", "N"],
                 ["centerx", 31],
-                ["centery", 6],
+                ["centery", 5],
                 ["radius", 2],
                 ["bordercolor", 1],
                 ["fillcolor", 0]
@@ -69,8 +69,8 @@ const hangman =
             new Map([
                 ["command", "L"],
                 ["x1", 31],
-                ["y1", 9],
-                ["x2", 25],
+                ["y1", 10],
+                ["x2", 27],
                 ["y2", 6],
                 ["color", 1]
             ]
@@ -81,8 +81,8 @@ const hangman =
             new Map([
                 ["command", "L"],
                 ["x1", 31],
-                ["y1", 9],
-                ["x2", 37],
+                ["y1", 10],
+                ["x2", 35],
                 ["y2", 6],
                 ["color", 1]
             ]
@@ -95,7 +95,7 @@ const hangman =
                 ["x1", 31],
                 ["y1", 9],
                 ["x2", 31],
-                ["y2", 10],
+                ["y2", 11],
                 ["color", 1]
             ]
             )
@@ -105,8 +105,8 @@ const hangman =
             new Map([
                 ["command", "L"],
                 ["x1", 31],
-                ["y1", 10],
-                ["x2", 25],
+                ["y1", 11],
+                ["x2", 28],
                 ["y2", 14],
                 ["color", 1]
             ]
@@ -117,8 +117,8 @@ const hangman =
             new Map([
                 ["command", "L"],
                 ["x1", 31],
-                ["y1", 10],
-                ["x2", 37],
+                ["y1", 11],
+                ["x2", 34],
                 ["y2", 14],
                 ["color", 1]
             ]
