@@ -2,6 +2,7 @@
 
 #include "command.h"
 #include "games/dino/SmallCactus1.h"
+#include "games/dino/DinoStart.h"
 
 class GameDino : public Command
 {
@@ -34,7 +35,7 @@ class GameDino : public Command
         for (int j = 7; j >= 0; j--) {
           uint8_t pixel = (1 << j) & val;
           if (pixel != 0) 
-            canvas->setPixel(7 - j, i);
+            canvas->setPixel(7 - j + x, i + y);
         }
       }
 
@@ -43,9 +44,41 @@ class GameDino : public Command
 
     }
 
+    void drawDinosaur(DMD3 *canvas) {
+            clearSerialMonitor();
+      //canvas->clear();
+      int k = 0;
+      int l = 0;
+      int bytesPerRow = DINOSTART_WIDTH / 8;
+
+      for (int i = 0; i < DINOSTART_LENGTH; i++) {
+        
+        uint8_t val = DINOSTART[i];
+        for (int j = 7; j >= 0; j--) {
+          uint8_t pixel = (1 << j) & val;
+          if (pixel != 0) {           
+            canvas->setPixel(7 - j + x + k, y + l);
+          }
+        }
+
+        if ( ((i + 1) % bytesPerRow) == 0) 
+        {
+          k= 0;  
+          l++;
+        }
+
+        else 
+           k = k + 8;
+      }
+
+      printCanvas(canvas);
+      //canvas->update();
+    }
+
     void execute(DMD3 *canvas)  override {
       if (dirty) {
-        drawCactus(canvas);
+        //drawCactus(canvas);
+        drawDinosaur(canvas);
         dirty = false;
       }
       /*
