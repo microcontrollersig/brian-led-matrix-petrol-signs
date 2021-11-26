@@ -35,6 +35,7 @@
 #include "testCircleCanvas.h"
 #include "testDrawLineCanvas.h"
 #include "testRandomNumber.h"
+#include "gameDino.h"
 
 class CommandList
 {
@@ -83,6 +84,9 @@ class CommandList
 
       Test12Command *test12 = new Test12Command();
       commands['b'] = test12;
+
+      GameDino *gameDino = new GameDino();
+      commands['z'] = gameDino;
 
       TestIdleCommand *testidle = new TestIdleCommand();
       commands['@'] = testidle;
