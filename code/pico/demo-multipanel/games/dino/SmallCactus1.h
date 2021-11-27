@@ -1,6 +1,6 @@
 #pragma once
 
-const static uint8_t SmallCactus1[] = {
+const  uint8_t SmallCactus1[] = {
   0x00, 0x18, 0x18, 0x99, 0x99, 0xff, 0x7e, 0x18
 };
 const static int SMALLCACTUS1_LENGTH = 8;
