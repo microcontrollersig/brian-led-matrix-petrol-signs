@@ -4,28 +4,47 @@
 
     let isInitializing = true;
     let timeRemaining = 60;
+    let prevSeconds = 0;
 
     function updateTime() {
-        setInterval(() => {
-            const currentDate = new Date();
-            const time =
-                currentDate.getHours() + ":" + currentDate.getMinutes();
-            post_www_url_encoded({
-                command: "V",
-                time: time,
-            });
-        }, 60000);
+        const currentDate = new Date();
+        const hours =
+            currentDate.getHours() < 10 ? "0" : "" + currentDate.getHours();
+        const minutes =
+            currentDate.getMinutes() < 10 ? "0" : "" + currentDate.getMinutes();
+        const time = hours + ":" + minutes;
+        post_www_url_encoded({
+            command: "V",
+            time: time,
+        });
+    }
+
+    function setTime() {
+        let currentDate = new Date();
+        let currentSeconds = currentDate.getSeconds();
+        if (prevSeconds === 59 && currentSeconds === 0) {
+            prevSeconds = 0;
+            updateTime();
+        } else {
+            prevSeconds = currentSeconds;
+        }
+        setTimeout(() => setTime(), 250);
+    }
+
+    function updateTimeRemaining() {
+        const currentDate = new Date();
+        const seconds = currentDate.getSeconds();
+        if (seconds > 0) {
+            timeRemaining = 60 - seconds;
+            setTimeout(() => updateTimeRemaining(), 250);
+        } else {
+            isInitializing = false;
+        }
     }
 
     onMount(() => {
-        const currentDate = new Date();
-        const seconds = currentDate.getSeconds();
-        timeRemaining = 60 - seconds;
-
-        setTimeout(() => {
-            isInitializing = false;
-            updateTime();
-        }, timeRemaining * 1000);
+        updateTimeRemaining();
+        setTime();
     });
 </script>
 
