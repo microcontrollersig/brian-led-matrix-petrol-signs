@@ -11,6 +11,7 @@
             <li><a href="#/tetristime">Tetris Time</a></li>
             <li><a href="#/abbrev">Internet Abbrevations</a></li>
             <li><a href="#/maze">Maze</a></li>
+            <li><a href="#/randomnumber">Random Number Generator</a></li>
             <li><a href="#/scoreboard">Scoreboard</a></li>
         </ul>
     </section>
