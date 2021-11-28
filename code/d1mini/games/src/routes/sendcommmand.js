@@ -7,4 +7,11 @@ async function post_www_url_encoded(data) {
     return await fetch('/command', { method: "POST", body });
 }
 
-export { post_www_url_encoded };
+function send_multiple(dataCollection) {
+    dataCollection.forEach(element => {
+        post_www_url_encoded(element);
+    });
+
+}
+
+export { post_www_url_encoded, send_multiple };
