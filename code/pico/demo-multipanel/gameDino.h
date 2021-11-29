@@ -16,7 +16,7 @@ private:
 public:
   DMD3 *virtualCanvas;
 
-  GameDino() { virtualCanvas = new DMD3(18, 2); }
+  GameDino() { virtualCanvas = new DMD3(24, 2); }
   void parseArgs(std::vector<std::string> args) override {
     std::stringstream ss1, ss2, ss3, ss4, ss5;
     ss1 << args.at(0);
