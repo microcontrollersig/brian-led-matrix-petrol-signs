@@ -134,6 +134,10 @@ public:
 
 void startCaptiveWebServer()
 {
+  WiFi.disconnect();
+  delay(50);
+  WiFi.mode(WIFI_AP); // Access Point mode
+  delay(50);
   WiFi.softAP("brianLEDPanels");
   dnsServer.start(53, "*", WiFi.softAPIP());
   server.addHandler(new CaptiveRequestHandler()).setFilter(ON_AP_FILTER);//only when requested from AP
