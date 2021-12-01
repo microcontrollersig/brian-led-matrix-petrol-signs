@@ -3,13 +3,19 @@
   import { post_www_url_encoded, send_multiple } from "./sendcommmand.js";
 
   let x = 0;
+  let isJumping = false;
+  const y_initial = 5;
+  const velocity_initial = 20;
+  const g = 1;
+  let y = y_initial;
+  let velocity = velocity_initial;
 
   function arrowDownPressed() {
     //
   }
 
   function arrowUpPressed() {
-    //
+    isJumping = true;
   }
 
   function spaceBarPressed() {
@@ -86,12 +92,20 @@
           typeindex: 2,
           objectindex: 0,
           x: 5,
-          y: 5,
+          y: y,
         },
       ];
       send_multiple(data);
       x = x + 1;
       if (x === 96 * 3) x = 0;
+
+      if (isJumping) {
+        y = y - 1;
+        if (y === -1) {
+          y = 5;
+          isJumping = false;
+        }
+      }
     }, 200);
   }
 
