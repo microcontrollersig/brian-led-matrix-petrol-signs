@@ -66,6 +66,20 @@ background-color: #fdfff5; box-shadow: inset -4px 0 0 #aa0000, inset 0 -2px 0 #a
       background: rgb(85, 251, 251);
     }
 
+    .nobullet {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .nicemargin {
+      margin-bottom: 10px;
+    }
+
+    .nicemargin a {
+      text-decoration-style: none;
+      color: black;
+    }
+
   </style>
   <script>
     /*
@@ -254,6 +268,14 @@ background-color: #fdfff5; box-shadow: inset -4px 0 0 #aa0000, inset 0 -2px 0 #a
 
       });
 
+      document.querySelectorAll(".gamelink").forEach((element) => {
+        element.addEventListener("click", (event) => {
+            const link = document.createElement('a');
+            link.href = event.target.dataset.url;
+            document.body.appendChild(link);
+            link.click();   
+        });
+      });
       
 
       hydrateSettings();
@@ -480,7 +502,7 @@ background-color: #fdfff5; box-shadow: inset -4px 0 0 #aa0000, inset 0 -2px 0 #a
   </div>
     <div class="window-body">
     <menu role="tablist">
-      <button aria-selected="true" aria-controls="games">Games</button>
+      <button aria-selected="true" aria-controls="games">Apps & Games</button>
       <button aria-controls="playlists">Playlists</button>
       <button aria-controls="settings">Settings</button>
       <button aria-controls="wifi">Wifi</button>
@@ -488,7 +510,18 @@ background-color: #fdfff5; box-shadow: inset -4px 0 0 #aa0000, inset 0 -2px 0 #a
     </menu>
 
     <article role="tabpanel" id="games">
-      GAMES TODO
+      <div>Apps</div>
+      <ul class="nobullet">
+        <li class="nicemargin"><button class="gamelink" data-url="/games#/imageupload">Image Upload</button></li>
+        <li class="nicemargin"><button class="gamelink" data-url="/games#/imagecreator">Image Creator</button></li>
+        <li class="nicemargin"><button class="gamelink" data-url="/games#/tetristime">Tetris Time</button></li>
+        <li class="nicemargin"><button class="gamelink" data-url="/games#/randomnumber">Random Number Generator</button></li>        
+      </ul>
+      <div>Games</div>
+      <ul class="nobullet">
+        <li class="nicemargin"><button class="gamelink" data-url="/games#/hangman">Hangman</button></li>
+        <li class="nicemargin"><button class="gamelink" data-url="/games#/dino">Dino</button></li>
+      </ul>
     </article>
 
     <article role="tabpanel" hidden id="playlists">
