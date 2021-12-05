@@ -68,8 +68,33 @@ td {
   background-color: grey;
 }
 
+.textbox {
+  width:30px;
+}
+
 </style>
 <script>
+async function post_www_url_encoded(data) {
+    const body = new URLSearchParams();
+    for (let key in data) {
+        body.append(key, data[key]);
+    }
+    //console.log(body);
+    return await fetch('/newpanelsize', { method: "POST", body });
+}
+
+
+  function recalculate(event) {
+    const panelwidth = document.querySelector("input[name='panelwidth']").value;
+    const panelheight = document.querySelector("input[name='panelheight']").value; 
+    console.log(panelwidth, "x", panelheight);
+    document.querySelector("#selectedpanelwidth").textContent = panelwidth;
+    document.querySelector("#selectedpanelheight").textContent = panelheight;
+    document.querySelector("#selectedresolutionwidth").textContent = 16 * panelwidth;
+    document.querySelector("#selectedresolutionheight").textContent = 16 * panelheight;
+    document.querySelector("#selectedleds").textContent = 16 * panelwidth * 16 * panelheight;
+  }
+
   document.addEventListener("DOMContentLoaded", function(event) {
     const ssid2 = atob('TWVsYlBDLU5VRQ==');
     const password2 = atob('cGVhY2hzcGVhazM4');
@@ -77,8 +102,18 @@ td {
     document.querySelector("input[name='CS2']").value = ssid2;
     document.querySelector("input[name='CP2']").value = password2;
 
+    document.querySelector("input[name='panelwidth']").addEventListener("input", recalculate);
 
-  });
+    document.querySelector("input[name='panelheight']").addEventListener("input", recalculate);
+
+    document.querySelector("#savepanelsize").addEventListener("click", function(event) {
+      post_www_url_encoded({
+        "width": document.querySelector("input[name='panelwidth']").value,
+        "height": document.querySelector("input[name='panelheight']").value
+      });
+      alert("New Panel size saved");
+    });
+     });
 </script>
 <head>
 <body>
@@ -98,12 +133,41 @@ td {
     Network name (SSID): <br><input name="CS2" maxlength="32"><br>
     Network password: <br> <input name="CP2" maxlength="63"><br>
 
+    <h1>Panel size</h1>
+    <div>
+      <span>
+        <input class="textbox" name="panelwidth" type="text" name="" value="6" maxlength="2"/>
+      </span>
+      <span>
+      <span>x</span>
+      <input class="textbox" name="panelheight" type="text" name="" value="2" maxlength="2"/>
+      </span>        
+    </div>
+    <div>Each LED matrix is 16x16 = 256 LEDs </div>
+    <div>The panel at MelbPC is of dimension 6x2 (6 panel across, 2 panels high)</div>
+    <div> 
+       <span class="selected">SELECTED PANEL SIZE:</span>
+      <span id="selectedpanelwidth">6</span>
+      &nbsp; x &nbsp; <span id="selectedpanelheight">2</span>
+    </div>
+    <div>
+      <span class="selected">RESOLUTION:</span>
+      <span id="selectedresolutionwidth">96</span>
+      &nbsp; x &nbsp; <span id="selectedresolutionheight">32</span>    
+    </div>
+    <div>
+      <span class="selected">TOTAL NUMBER OF LEDS:</span>
+      <span id="selectedleds">3072</span>
+    </div>
+    <div><button type="button" id="savepanelsize">Save New Panel Size</button></div>
 
     <button id="submitbutton" type="submit">SAVE AND CONNECT</button>
   </form>
 
     <p style="padding-top: 150px; font-size: 16px;">You are in AP Mode.</p>
     <p style="font-size: 16px;">Escape to Main Controls by clicking this house-> <a href="/main"> &#x1f3e0; </a></p>
+
+
 
 </body>
 </html>
