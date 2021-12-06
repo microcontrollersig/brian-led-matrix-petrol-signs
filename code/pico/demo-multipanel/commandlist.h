@@ -36,6 +36,7 @@
 #include "testDrawLineCanvas.h"
 #include "testRandomNumber.h"
 #include "gameDino.h"
+#include "testChangePanelSize.h"
 
 class CommandList
 {
@@ -150,6 +151,9 @@ class CommandList
 
       TestRandomNumberCommand *testRandomNumberCommand = new TestRandomNumberCommand();
       commands['^'] = testRandomNumberCommand;
+
+      TestChangePanelSizeCommand *testChangePanelSizeCommand = new TestChangePanelSizeCommand();
+      commands['~'] = testChangePanelSizeCommand;
 
 
 
