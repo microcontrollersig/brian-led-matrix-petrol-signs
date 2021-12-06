@@ -72,15 +72,19 @@ td {
   width:30px;
 }
 
+.actionbuttons {
+  margin-bottom: 20px;
+}
+
 </style>
 <script>
-async function post_www_url_encoded(data) {
+function post_www_url_encoded(url, data) {
     const body = new URLSearchParams();
     for (let key in data) {
         body.append(key, data[key]);
     }
     //console.log(body);
-    return await fetch('/newpanelsize', { method: "POST", body });
+    fetch(url, { method: "POST", body }).then(response => alert("Panel size changed.") );
 }
 
 
@@ -107,18 +111,36 @@ async function post_www_url_encoded(data) {
     document.querySelector("input[name='panelheight']").addEventListener("input", recalculate);
 
     document.querySelector("#savepanelsize").addEventListener("click", function(event) {
-      post_www_url_encoded({
+      post_www_url_encoded('/newpanelsize', {
         "width": document.querySelector("input[name='panelwidth']").value,
         "height": document.querySelector("input[name='panelheight']").value
       });
-      alert("New Panel size saved");
     });
-     });
+
+    document.querySelector("#submitbutton").addEventListener("click", function(event) {
+      const wifi1ssid = document.querySelector("input[name='CS']").value;
+      const wifi1password = document.querySelector("input[name='CP']").value;
+      const wifi2ssid = document.querySelector("input[name='CS2']").value;
+      const wifi2password = document.querySelector("input[name='CP2']").value;
+      document.querySelector("#wificredentials input[name='arg1']").value = wifi1ssid;
+      document.querySelector("#wificredentials input[name='arg2']").value = wifi1password;
+      document.querySelector("#wificredentials input[name='arg3']").value = wifi2ssid;
+      document.querySelector("#wificredentials input[name='arg4']").value = wifi2password;
+      document.querySelector("#wificredentials").submit();
+
+    });
+
+    document.querySelector("#escapehatch").addEventListener("click", function(event) {
+       const a = document.createElement("a");
+       a.href = "/main";
+       document.body.append(a);
+       a.click();
+    });
+
+  });
 </script>
 <head>
 <body>
-<form id="form_s" name="Sf" method="post" action="/wificredentials">
-
     <h2>WiFi setup for Brian's LED Panels</h2>
 
 
@@ -161,13 +183,20 @@ async function post_www_url_encoded(data) {
     </div>
     <div><button type="button" id="savepanelsize">Save New Panel Size</button></div>
 
-    <button id="submitbutton" type="submit">SAVE AND CONNECT</button>
-  </form>
-
-    <p style="padding-top: 150px; font-size: 16px;">You are in AP Mode.</p>
-    <p style="font-size: 16px;">Escape to Main Controls by clicking this house-> <a href="/main"> &#x1f3e0; </a></p>
+     <h1>Two Options Now</h1>
+    <div class="actionbuttons"><button type="button" id="submitbutton">SAVE AND RESTART TO CONNECT TO LOCAL WIFI</button></div>
+    <div class="actionbuttons"><button type="button" id="escapehatch">ESCAPE TO MAIN CONTROLS WITHOUT CONNECTING TO LOCAL WIFI </button></div>
 
 
+
+    
+
+<form method="post" action="/wificredentials" name="wificredentials" id="wificredentials">
+  <input type="hidden" name="arg1">
+  <input type="hidden" name="arg2">
+  <input type="hidden" name="arg3">
+  <input type="hidden" name="arg4">
+</form>
 
 </body>
 </html>

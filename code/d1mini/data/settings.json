@@ -1,5 +1,7 @@
 {
 	"brightness" : "1",
 	"bootcommand" : "",
-	"bootcommanddescription": ""
+	"bootcommanddescription": "",
+	"panelwidth": "6",
+    "panelheight": "2"
 }
