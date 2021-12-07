@@ -9,7 +9,7 @@ class Test2Command : public Command
 
   public:
     void execute(DMD3 *canvas)  override {
-      if ( millis() - timeStart > TIMEOUT) {
+      if ( millis() - timeStart > 2000) {
         int width = canvas->width();
         int height = canvas->height();
         int topRightCorner_x = width - 1;

@@ -9,10 +9,11 @@ class Test1Command : public Command
   
   public:
     void execute(DMD3 *canvas)  override {
-      if ( millis() - timeStart > TIMEOUT) {  
+      if ( millis() - timeStart > 2000) {  
         clearSerialMonitor();
         canvas->clear();
-        for (int i=0; i<6; i++) {
+        int width = canvas->width();
+        for (int i=0; i< width; i++) {
           //top row outer corners
           canvas->setPixel(16*i + 1, 1);
           canvas->setPixel(16*i + 14, 1);
