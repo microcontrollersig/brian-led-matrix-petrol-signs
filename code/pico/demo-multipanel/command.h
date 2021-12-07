@@ -27,6 +27,7 @@ class Command
           canvas->debugPixelLine(i, buf);
           Serial.println(buf);    
         }
+        delete[] buf;
       } 
     }
     virtual void parseArgs(std::vector<std::string> args) {}

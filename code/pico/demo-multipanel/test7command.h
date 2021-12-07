@@ -14,19 +14,19 @@ class Test7Command : public Command
     TestDirectionMode currentDirection = TestDirectionMode::RIGHT;
     TestDirectionMode previousDirection = TestDirectionMode::RIGHT;
     bool gameEnded = true;
-    
+
     void printSnakeBody() {
       //Serial.println("---");
-      for (int i=0; i<snake.body_size; i++) {
-       int x = snake.body[i].x;
-       int y = snake.body[i].y;
-       _canvas->setPixel(x,y);  
-       //Serial.print("i:");
-       //Serial.print(i);
-       //Serial.print(" x:");
-       //Serial.print(x);
-       //Serial.print(" y:");
-       //Serial.println(y);
+      for (int i = 0; i < snake.body_size; i++) {
+        int x = snake.body[i].x;
+        int y = snake.body[i].y;
+        _canvas->setPixel(x, y);
+        //Serial.print("i:");
+        //Serial.print(i);
+        //Serial.print(" x:");
+        //Serial.print(x);
+        //Serial.print(" y:");
+        //Serial.println(y);
       }
       //Serial.println("---");
     }
@@ -39,42 +39,42 @@ class Test7Command : public Command
     void printFruit() {
       _canvas->setPixel(fruit.x, fruit.y);
     }
-    
+
     /*
-    void moveRight() {
+      void moveRight() {
       for (int i=0; i<snake.body_size; i++) {
         snake.body[i].x += 1;
-        _canvas->setPixel(snake.body[i].x, snake.body[i].y);  
-      }  
+        _canvas->setPixel(snake.body[i].x, snake.body[i].y);
+      }
 
-      
-    }
+
+      }
     */
 
     void moveSnake(TestDirectionMode d) {
-      for (int i=snake.body_size - 2; i >= 0; i--) {
-        snake.body[i+1].x = snake.body[i].x;
-        snake.body[i+1].y = snake.body[i].y;
-      }  
-      
-      switch(d) {
+      for (int i = snake.body_size - 2; i >= 0; i--) {
+        snake.body[i + 1].x = snake.body[i].x;
+        snake.body[i + 1].y = snake.body[i].y;
+      }
+
+      switch (d) {
         case TestDirectionMode::RIGHT :
           snake.body[0].y = snake.body[0].y;
-          snake.body[0].x = snake.body[0].x + 1; 
+          snake.body[0].x = snake.body[0].x + 1;
           break;
         case TestDirectionMode::DOWN :
           snake.body[0].x = snake.body[0].x;
-          snake.body[0].y = snake.body[0].y + 1;           
+          snake.body[0].y = snake.body[0].y + 1;
           break;
         case TestDirectionMode::LEFT :
           snake.body[0].y = snake.body[0].y;
-          snake.body[0].x = snake.body[0].x - 1; 
+          snake.body[0].x = snake.body[0].x - 1;
           break;
         case TestDirectionMode::UP :
           snake.body[0].x = snake.body[0].x;
-          snake.body[0].y = snake.body[0].y - 1;           
-          break;          
-      }    
+          snake.body[0].y = snake.body[0].y - 1;
+          break;
+      }
 
       currentDirection = d;
     }
@@ -83,28 +83,28 @@ class Test7Command : public Command
     }
 
     void moveHorizontal() {
-      if (fruit.x > snake.body[0].x) 
-        moveSnake(TestDirectionMode::RIGHT);          
-      else if (fruit.x < snake.body[0].x ) 
-        moveSnake(TestDirectionMode::LEFT); 
+      if (fruit.x > snake.body[0].x)
+        moveSnake(TestDirectionMode::RIGHT);
+      else if (fruit.x < snake.body[0].x )
+        moveSnake(TestDirectionMode::LEFT);
       else {
-        if (snake.body[0].y <8) 
+        if (snake.body[0].y < 8)
           moveSnake(TestDirectionMode::DOWN);
         else
-          moveSnake(TestDirectionMode::UP);        
-      }        
+          moveSnake(TestDirectionMode::UP);
+      }
     }
 
     void moveVertical() {
-      if (fruit.y > snake.body[0].y) 
-        moveSnake(TestDirectionMode::DOWN);      
-      else if (fruit.y < snake.body[0].y ) 
-        moveSnake(TestDirectionMode::UP);           
+      if (fruit.y > snake.body[0].y)
+        moveSnake(TestDirectionMode::DOWN);
+      else if (fruit.y < snake.body[0].y )
+        moveSnake(TestDirectionMode::UP);
       else {
-        if (snake.body[0].x <8) 
+        if (snake.body[0].x < 8)
           moveSnake(TestDirectionMode::RIGHT);
         else
-          moveSnake(TestDirectionMode::LEFT);  
+          moveSnake(TestDirectionMode::LEFT);
       }
     }
 
@@ -112,22 +112,22 @@ class Test7Command : public Command
       if (currentDirection == TestDirectionMode::RIGHT) {
         if (fruit.x >  snake.body[0].x)
           moveSnake(TestDirectionMode::RIGHT);
-        else 
-          moveVertical();        
+        else
+          moveVertical();
       }
 
       else if (currentDirection == TestDirectionMode::DOWN) {
-        if (fruit.y > snake.body[0].y) 
-           moveSnake(TestDirectionMode::DOWN);        
-        else 
-           moveHorizontal();        
+        if (fruit.y > snake.body[0].y)
+          moveSnake(TestDirectionMode::DOWN);
+        else
+          moveHorizontal();
       }
 
       else if (currentDirection == TestDirectionMode::LEFT) {
-        if (fruit.x < snake.body[0].x) 
-          moveSnake(TestDirectionMode::LEFT);        
+        if (fruit.x < snake.body[0].x)
+          moveSnake(TestDirectionMode::LEFT);
         else
-          moveVertical();        
+          moveVertical();
       }
 
       else if (currentDirection == TestDirectionMode::UP) {
@@ -135,7 +135,7 @@ class Test7Command : public Command
           moveSnake(TestDirectionMode::UP);
         else
           moveHorizontal();
-      }            
+      }
     }
 
     bool hasGameEnded() {
@@ -143,30 +143,30 @@ class Test7Command : public Command
     }
 
     bool hasSnakeEatenFruit() {
-      return (snake.body[0].x == fruit.x) && (snake.body[0].y == fruit.y); 
+      return (snake.body[0].x == fruit.x) && (snake.body[0].y == fruit.y);
     }
 
     bool isPositionOnSnakeBody(int pos_x, int pos_y) {
-      for (int i=0; i<snake.body_size; i++) {
+      for (int i = 0; i < snake.body_size; i++) {
         Position p = snake.body[i];
         if (p.x == pos_x && p.y == pos_y)
-            return true;  
+          return true;
       }
       return false;
     }
 
     void randomFruitPosition(int w, int h) {
-       
-       int random_x = random(0, w);
-       int random_y = random(0, h);
-       if (!isPositionOnSnakeBody(random_x, random_y)) {
-           fruit.x = random_x;
-           fruit.y = random_y;  
-       }
-       else 
-         randomFruitPosition(w, h);
+
+      int random_x = random(0, w);
+      int random_y = random(0, h);
+      if (!isPositionOnSnakeBody(random_x, random_y)) {
+        fruit.x = random_x;
+        fruit.y = random_y;
+      }
+      else
+        randomFruitPosition(w, h);
     }
-  
+
   public:
     void execute(DMD3 *canvas)  override {
 
@@ -175,35 +175,39 @@ class Test7Command : public Command
         clearSerialMonitor();
         canvas->clear();
         if (gameEnded) {
-         gameEnded = false;
-         resetFruitPosition();
-         snake.resetBody();
+          gameEnded = false;
+          resetFruitPosition();
+          snake.resetBody();
         }
-        else 
+        else
           nextMove();
         printSnakeBody();
-        printFruit(); 
-        int width = 96;
-        int height = 32; 
-        char buf[100];
-        
-        for (int z=0; z< height; z++) {
+        printFruit();
+        /*
+          int width = 96;
+          int height = 32;
+          char buf[100];
+
+
+          for (int z=0; z< height; z++) {
           canvas->debugPixelLine(z, buf);
-          Serial.println(buf);    
-        }
-        
+          Serial.println(buf);
+          }
+        */
+        printCanvas(canvas);
+
         if (hasGameEnded()) {
           gameEnded = true;
         }
 
-        if (hasSnakeEatenFruit()){
+        if (hasSnakeEatenFruit()) {
           int width = canvas->width();
           int height = canvas->height();
-          randomFruitPosition(width -1 , height -1);  
+          randomFruitPosition(width - 1 , height - 1);
         }
 
         canvas->update();
         timeStart = millis();
-      }     
+      }
     }
 };
