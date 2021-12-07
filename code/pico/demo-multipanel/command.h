@@ -20,7 +20,7 @@ class Command
     {
       if (DEBUG)
       {
-        char buf[100];
+        char *buf = new char[100];
         int height = canvas->height();
         for (int i=0; i < height; i++) 
         {
