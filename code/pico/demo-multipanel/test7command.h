@@ -155,15 +155,16 @@ class Test7Command : public Command
       return false;
     }
 
-    void randomFruitPosition() {
-       int random_x = random(0, 95);
-       int random_y = random(0, 31);
+    void randomFruitPosition(int w, int h) {
+       
+       int random_x = random(0, w);
+       int random_y = random(0, h);
        if (!isPositionOnSnakeBody(random_x, random_y)) {
            fruit.x = random_x;
            fruit.y = random_y;  
        }
        else 
-         randomFruitPosition();
+         randomFruitPosition(w, h);
     }
   
   public:
@@ -196,7 +197,9 @@ class Test7Command : public Command
         }
 
         if (hasSnakeEatenFruit()){
-          randomFruitPosition();  
+          int width = canvas->width();
+          int height = canvas->height();
+          randomFruitPosition(width -1 , height -1);  
         }
 
         canvas->update();

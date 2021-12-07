@@ -19,7 +19,7 @@ public:
       canvas->clear();
       Bitmap::Font defaultFont = canvas->font();
       canvas->setFont(System5x7);
-      canvas->drawText(1, 0, text, true);
+      canvas->drawText(1, 4, text, true);
       canvas->setFont(defaultFont);
       printCanvas(canvas);
       canvas->update();

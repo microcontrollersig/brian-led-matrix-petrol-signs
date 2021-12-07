@@ -21,7 +21,8 @@ class Command
       if (DEBUG)
       {
         char buf[100];
-        for (int i=0; i < 32; i++) 
+        int height = canvas->height();
+        for (int i=0; i < height; i++) 
         {
           canvas->debugPixelLine(i, buf);
           Serial.println(buf);    
