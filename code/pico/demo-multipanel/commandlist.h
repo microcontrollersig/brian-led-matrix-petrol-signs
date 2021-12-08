@@ -37,6 +37,7 @@
 #include "testRandomNumber.h"
 #include "gameDino.h"
 #include "testChangePanelSize.h"
+#include "reboot.h"
 
 class CommandList
 {
@@ -149,11 +150,15 @@ class CommandList
       TestSingleGenericTextCommand *testSingleGenericTextCommand = new TestSingleGenericTextCommand();
       commands['Z'] = testSingleGenericTextCommand;
 
+      RebootCommand *rebootCommand = new RebootCommand();
+      commands['!'] = rebootCommand;
+
       TestRandomNumberCommand *testRandomNumberCommand = new TestRandomNumberCommand();
       commands['^'] = testRandomNumberCommand;
 
       TestChangePanelSizeCommand *testChangePanelSizeCommand = new TestChangePanelSizeCommand();
       commands['~'] = testChangePanelSizeCommand;
+
 
 
 
