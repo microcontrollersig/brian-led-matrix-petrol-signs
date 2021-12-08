@@ -122,8 +122,20 @@ class CaptiveRequestHandler : public AsyncWebHandler {
         char height[10];
         strcpy(width,  c->value().c_str() );
         strcpy(height, d->value().c_str() );
+  
+        File settingsFile = LittleFS.open("/settings.json", "r");
+        DynamicJsonDocument doc(1024);
+        deserializeJson(doc, settingsFile);
+        JsonObject root = doc.as<JsonObject>();
+        settingsFile.close();
+        File settings2File = LittleFS.open("/settings.json", "w");
+        root["panelwidth"] = String(width);
+        root["panelheight"] = String(height);
+        serializeJson(doc, settings2File);
+        settings2File.close();
+        
         update_ledmatrix_command_with_two_args("~", width, height);
-        //TODO SAVE NEW PANEL SETTINGS in settings.json
+        
         request->send(204);
       });
 
