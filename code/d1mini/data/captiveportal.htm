@@ -9,11 +9,12 @@ Brian's LED Panel Captive Portal Page
 <style>
 body {
   font-family: Verdana, sans-serif;
-  text-align: center;
   background: #222;
   color: #fff;
   line-height: 200%;
-  margin: 0;
+  margin: 0 auto;
+  max-width: 1200px;
+  overflow: visible;
 }
 hr {
   border-color: #666;
@@ -76,16 +77,32 @@ td {
   margin-bottom: 20px;
 }
 
+h1 {
+  font-size: 2rem;
+    margin-bottom: 16px;
+    line-height: 1.167;
+    font-weight: 400;
+    letter-spacing: 0em;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    text-align: center;
+}
+
+.panelsizewidthheight {
+  text-align: center;
+}
+
 </style>
 <script>
-function post_www_url_encoded(url, data) {
+function  post_www_url_encoded(url, data) {
     const body = new URLSearchParams();
     for (let key in data) {
         body.append(key, data[key]);
     }
     //console.log(body);
-    fetch(url, { method: "POST", body }).then(response => alert("Panel size changed.") );
+    return fetch(url, { method: "POST", body });
 }
+
+const asyncWait = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 
   function recalculate(event) {
@@ -110,11 +127,19 @@ function post_www_url_encoded(url, data) {
 
     document.querySelector("input[name='panelheight']").addEventListener("input", recalculate);
 
-    document.querySelector("#savepanelsize").addEventListener("click", function(event) {
-      post_www_url_encoded('/newpanelsize', {
+    document.querySelector("#savepanelsize").addEventListener("click", async function(event) {
+     
+      
+      await post_www_url_encoded('/newpanelsize', {
         "width": document.querySelector("input[name='panelwidth']").value,
         "height": document.querySelector("input[name='panelheight']").value
       });
+      await asyncWait(1000);
+      await post_www_url_encoded('/command', {
+          "command": encodeURIComponent("!")
+      });      
+      await asyncWait(1000);
+      alert("new panel size saved.");
     });
 
     document.querySelector("#submitbutton").addEventListener("click", function(event) {
@@ -130,18 +155,52 @@ function post_www_url_encoded(url, data) {
 
     });
 
-    document.querySelector("#escapehatch").addEventListener("click", function(event) {
-       const a = document.createElement("a");
-       a.href = "/main";
-       document.body.append(a);
-       a.click();
-    });
-
   });
 </script>
 <head>
 <body>
-    <h2>WiFi setup for Brian's LED Panels</h2>
+  <section>
+    <h1>Panel size</h1>
+    <div class="panelsizewidthheight">
+      <span>
+        <input class="textbox" name="panelwidth" type="text" name="" value="6" maxlength="2"/>
+      </span>
+      <span>
+      <span>x</span>
+      <input class="textbox" name="panelheight" type="text" name="" value="2" maxlength="2"/>
+      </span>
+      <span><button type="button" id="savepanelsize">Save New Panel Size</button></span>
+    </div>
+    
+    <div> 
+       <span class="selected">SELECTED PANEL SIZE:</span>
+      <span id="selectedpanelwidth">6</span>&nbsp; x &nbsp; <span id="selectedpanelheight">2</span>
+    </div>
+    <div>
+      <span class="selected">RESOLUTION:</span>
+      <span id="selectedresolutionwidth">96</span>
+      &nbsp; x &nbsp; <span id="selectedresolutionheight">32</span>    
+    </div>
+    <div>
+      <span class="selected">TOTAL NUMBER OF LEDS:</span>
+      <span id="selectedleds">3072</span>
+    </div>
+    <div>Each LED matrix is 16x16 = 256 LEDs. The panel at MelbPC is of dimension 6x2 (6 LED matrix across, 2 LED matrix high)</div>
+
+  </section>
+
+  <section>
+    <h1>Escape to Main Control Interface</h1>
+    <p>If you can't remember your wifi password, <a style="color:white;" href="/main">CLICK HERE </a> to enter the Main Control Interface.
+    </p>
+    <p>
+      Please note there is limited functionality, to get full functionality, connect to your local wifi network
+      below.
+    </p>
+  </section>
+
+  <section style="text-align: center;">
+    <h1>WiFi setup for Brian's LED Panels</h1>
 
 
     
@@ -155,38 +214,8 @@ function post_www_url_encoded(url, data) {
     Network name (SSID): <br><input name="CS2" maxlength="32"><br>
     Network password: <br> <input name="CP2" maxlength="63"><br>
 
-    <h1>Panel size</h1>
-    <div>
-      <span>
-        <input class="textbox" name="panelwidth" type="text" name="" value="6" maxlength="2"/>
-      </span>
-      <span>
-      <span>x</span>
-      <input class="textbox" name="panelheight" type="text" name="" value="2" maxlength="2"/>
-      </span>        
-    </div>
-    <div>Each LED matrix is 16x16 = 256 LEDs </div>
-    <div>The panel at MelbPC is of dimension 6x2 (6 panel across, 2 panels high)</div>
-    <div> 
-       <span class="selected">SELECTED PANEL SIZE:</span>
-      <span id="selectedpanelwidth">6</span>
-      &nbsp; x &nbsp; <span id="selectedpanelheight">2</span>
-    </div>
-    <div>
-      <span class="selected">RESOLUTION:</span>
-      <span id="selectedresolutionwidth">96</span>
-      &nbsp; x &nbsp; <span id="selectedresolutionheight">32</span>    
-    </div>
-    <div>
-      <span class="selected">TOTAL NUMBER OF LEDS:</span>
-      <span id="selectedleds">3072</span>
-    </div>
-    <div><button type="button" id="savepanelsize">Save New Panel Size</button></div>
-
-     <h1>Two Options Now</h1>
-    <div class="actionbuttons"><button type="button" id="submitbutton">SAVE AND RESTART TO CONNECT TO LOCAL WIFI</button></div>
-    <div class="actionbuttons"><button type="button" id="escapehatch">ESCAPE TO MAIN CONTROLS WITHOUT CONNECTING TO LOCAL WIFI </button></div>
-
+    <div class="actionbuttons"><button type="button" id="submitbutton">SAVE AND RESTART TO CONNECT TO LOCAL WIFI</button></div>    
+  </section>
 
 
     
