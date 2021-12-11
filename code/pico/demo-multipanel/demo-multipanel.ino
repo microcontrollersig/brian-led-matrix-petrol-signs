@@ -40,6 +40,7 @@
 Dispatcher *runner;
 
 DMD3* determinePanelSize() {
+  // 512KB block device, starting 1MB inside the flash
   FlashIAPBlockDevice bd(XIP_BASE + 1024 * 1024, 1024 * 512);
   mbed::TDBStore eeprom(&bd);
   eeprom.init();

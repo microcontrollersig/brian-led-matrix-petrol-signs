@@ -1,98 +1,66 @@
 <!DOCTYPE html>
-<html lang="en" class="">
+<html>
 <head>
-<meta charset='utf-8'>
-<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
-<title>
-Brian's LED Panel Captive Portal Page
-</title>
-<style>
-body {
-  font-family: Verdana, sans-serif;
-  background: #222;
-  color: #fff;
-  line-height: 200%;
-  margin: 0 auto;
-  max-width: 1200px;
-  overflow: visible;
-}
-hr {
-  border-color: #666;
-}
-button {
-  background: #333;
-  color: #fff;
-  font-family: Verdana, sans-serif;
-  border: 0.3ch solid #333;
-  display: inline-block;
-  font-size: 20px;
-  margin: 8px;
-  margin-top: 12px;
-}
-.helpB {
-  text-align: left;
-  position: absolute;
-  width: 60px;
-}
-input {
-  background: #333;
-  color: #fff;
-  font-family: Verdana, sans-serif;
-  border: 0.5ch solid #333;
-}
-input[type="number"] {
-  width: 4em;
-}
-select {
-  background: #333;
-  color: #fff;
-  font-family: Verdana, sans-serif;
-  border: 0.5ch solid #333;
-}
-td {
-  padding: 2px;
-}
-.d5 {
-  width: 4.5em !important;
-}
+	<meta charset="utf-8">
+	<title>Brian's Petrol Signs Setup Page</title>
+	<meta name="description" content="">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<style>
+  		body {
+  			background-color: #BDBDBD;
 
-.spacing {
-  padding-top: 12px;
-}
+  		}
 
-#submitbutton {
-  margin-top: 60px;
-  font-size: 1.5rem;
-}
+  		section {
+  			max-width: 500px;
+  			margin: 3rem auto;
+  			background: #eceff1;
+            padding: 0 0 1rem; 
+  		}
 
-#submitbutton:hover {
-  background-color: grey;
-}
+        button {
+    padding: 0.75rem 1.5rem;
+    margin: 0.5rem 0 0;
+    outline: 0;
+    border: 0;
+    background: #2196f3;
+    border-radius: 4px;
+    color: #FFF;
+    font-weight: 700;
+    font-size: .875rem;
+    letter-spacing: .25px;
+    transition: background .3s ease;        	
+        }
 
-.textbox {
-  width:30px;
-}
-
-.actionbuttons {
-  margin-bottom: 20px;
-}
-
-h1 {
-  font-size: 2rem;
-    margin-bottom: 16px;
-    line-height: 1.167;
-    font-weight: 400;
-    letter-spacing: 0em;
-    font-family: Roboto, Helvetica, Arial, sans-serif;
+  		.form-header {
+background: #fff;
     text-align: center;
-}
+    font-size: 2rem;
+    font-weight: 600;
+    color: #212121;
+    padding: 1rem;
+    margin: 0 0 1rem;
+    position: relative;  			
+  		}
 
-.panelsizewidthheight {
-  text-align: center;
-}
+   .form-group {
+margin: 0 2rem 1rem;   	
+   }
 
-</style>
-<script>
+  		.form-group label {
+display: block;
+    margin: 0 0 0.5rem;
+    font-weight: 700;
+    letter-spacing: .2px;
+    font-size: 1.25rem;
+    color: #212121;  			
+  		}
+
+  	.subheading {
+  		text-align: center;
+  	}
+  	</style>
+  	<script type="text/javascript">
 function  post_www_url_encoded(url, data) {
     const body = new URLSearchParams();
     for (let key in data) {
@@ -109,44 +77,29 @@ const asyncWait = ms => new Promise(resolve => setTimeout(resolve, ms))
     const panelwidth = document.querySelector("input[name='panelwidth']").value;
     const panelheight = document.querySelector("input[name='panelheight']").value; 
     console.log(panelwidth, "x", panelheight);
-    document.querySelector("#selectedpanelwidth").textContent = panelwidth;
-    document.querySelector("#selectedpanelheight").textContent = panelheight;
-    document.querySelector("#selectedresolutionwidth").textContent = 16 * panelwidth;
-    document.querySelector("#selectedresolutionheight").textContent = 16 * panelheight;
-    document.querySelector("#selectedleds").textContent = 16 * panelwidth * 16 * panelheight;
   }
 
   document.addEventListener("DOMContentLoaded", function(event) {
     const ssid2 = atob('TWVsYlBDLU5VRQ==');
     const password2 = atob('cGVhY2hzcGVhazM4');
 
-    document.querySelector("input[name='CS2']").value = ssid2;
-    document.querySelector("input[name='CP2']").value = password2;
-
-    document.querySelector("input[name='panelwidth']").addEventListener("input", recalculate);
-
-    document.querySelector("input[name='panelheight']").addEventListener("input", recalculate);
+    document.querySelector("input[name='wifi2ssid']").value = ssid2;
+    document.querySelector("input[name='wifi2password']").value = password2;
 
     document.querySelector("#savepanelsize").addEventListener("click", async function(event) {
-     
-      
       await post_www_url_encoded('/newpanelsize', {
         "width": document.querySelector("input[name='panelwidth']").value,
         "height": document.querySelector("input[name='panelheight']").value
       });
-      await asyncWait(1000);
-      await post_www_url_encoded('/command', {
-          "command": encodeURIComponent("!")
-      });      
-      await asyncWait(1000);
+      await asyncWait(1500);
       alert("new panel size saved.");
     });
 
-    document.querySelector("#submitbutton").addEventListener("click", function(event) {
-      const wifi1ssid = document.querySelector("input[name='CS']").value;
-      const wifi1password = document.querySelector("input[name='CP']").value;
-      const wifi2ssid = document.querySelector("input[name='CS2']").value;
-      const wifi2password = document.querySelector("input[name='CP2']").value;
+    document.querySelector("#savewifi").addEventListener("click", function(event) {
+      const wifi1ssid = document.querySelector("input[name='wifi1ssid']").value;
+      const wifi1password = document.querySelector("input[name='wifi1password']").value;
+      const wifi2ssid = document.querySelector("input[name='wifi2ssid']").value;
+      const wifi2password = document.querySelector("input[name='wifi2password']").value;
       document.querySelector("#wificredentials input[name='arg1']").value = wifi1ssid;
       document.querySelector("#wificredentials input[name='arg2']").value = wifi1password;
       document.querySelector("#wificredentials input[name='arg3']").value = wifi2ssid;
@@ -156,69 +109,64 @@ const asyncWait = ms => new Promise(resolve => setTimeout(resolve, ms))
     });
 
   });
-</script>
-<head>
+  		
+  	</script>
+</head>
 <body>
-  <section>
-    <h1>Panel size</h1>
-    <div class="panelsizewidthheight">
-      <span>
-        <input class="textbox" name="panelwidth" type="text" name="" value="6" maxlength="2"/>
-      </span>
-      <span>
-      <span>x</span>
-      <input class="textbox" name="panelheight" type="text" name="" value="2" maxlength="2"/>
-      </span>
-      <span><button type="button" id="savepanelsize">Save New Panel Size</button></span>
-    </div>
-    
-    <div> 
-       <span class="selected">SELECTED PANEL SIZE:</span>
-      <span id="selectedpanelwidth">6</span>&nbsp; x &nbsp; <span id="selectedpanelheight">2</span>
-    </div>
-    <div>
-      <span class="selected">RESOLUTION:</span>
-      <span id="selectedresolutionwidth">96</span>
-      &nbsp; x &nbsp; <span id="selectedresolutionheight">32</span>    
-    </div>
-    <div>
-      <span class="selected">TOTAL NUMBER OF LEDS:</span>
-      <span id="selectedleds">3072</span>
-    </div>
-    <div>Each LED matrix is 16x16 = 256 LEDs. The panel at MelbPC is of dimension 6x2 (6 LED matrix across, 2 LED matrix high)</div>
 
-  </section>
+<section>
+	<div class="form-header">Panel Size</div>
+	<div class="form-group">
+		<label>Panel Dimensions <span title="Panel at MelbPC is 6x2 (6 LED matrix across, 2 LED matrix high)" style="color:blue;">&#8505;</span></label>
+		<input name="panelwidth" type="text" maxlength="2" size="2" value="6" /> x <input name="panelheight" type="text" maxlength="2" size="2" value="2" />
+	</div>
+	<div class="form-group">
+		<button id="savepanelsize" type="button">Change</button>
+	</div>
+</section>
+   
 
-  <section>
-    <h1>Escape to Main Control Interface</h1>
-    <p>If you can't remember your wifi password, <a style="color:white;" href="/main">CLICK HERE </a> to enter the Main Control Interface.
-    </p>
-    <p>
-      Please note there is limited functionality, to get full functionality, connect to your local wifi network
-      below.
-    </p>
-  </section>
-
-  <section style="text-align: center;">
-    <h1>WiFi setup for Brian's LED Panels</h1>
-
-
-    
-    <h3>WIFI network Primary Connection</h3>
-    Network name (SSID): <br><input name="CS" maxlength="32"><br>
-    Network password: <br> <input name="CP" maxlength="63"><br>
-    
-    <div class="spacing">&nbsp;</div>
-
-    <h3>WIFI network Secondary Connection</h3>
-    Network name (SSID): <br><input name="CS2" maxlength="32"><br>
-    Network password: <br> <input name="CP2" maxlength="63"><br>
-
-    <div class="actionbuttons"><button type="button" id="submitbutton">SAVE AND RESTART TO CONNECT TO LOCAL WIFI</button></div>    
-  </section>
-
-
-    
+<section>
+	<div class="form-header">Escape to Main Control Panel</div>	
+	<div class="form-group">
+		<p>
+		  If you don't know any local wifi passwords, you can still access the Main Control Panel <a href="/main">here</a>
+		</p>
+	</div>
+</section>
+   
+<section>
+	<div class="form-header">Connect to a Local Wifi network</div>
+	<div class="form-group subheading"><label>PRIMARY CONNECTION</label></div>
+	<div class="form-group">
+		<label>Network Name (SSID)</label>
+	</div>
+	<div class="form-group">
+		<input name="wifi1ssid" />
+	</div>	
+	<div class="form-group">
+		<label>Password</label>
+	</div>
+	<div class="form-group">
+		<input name="wifi1password" />
+	</div>		
+	<div class="form-group subheading"><label>SECONDARY CONNECTION</label></div>
+	<div class="form-group">
+		<label>Network Name (SSID)</label>
+	</div>
+	<div class="form-group">
+		<input name="wifi2ssid" />
+	</div>	
+	<div class="form-group">
+		<label>Password</label>
+	</div>
+	<div class="form-group">
+		<input name="wifi2password" />
+	</div>
+	<div class="form-group">
+		<button id="savewifi" type="button">SAVE</button>
+	</div>
+</section>
 
 <form method="post" action="/wificredentials" name="wificredentials" id="wificredentials">
   <input type="hidden" name="arg1">
@@ -229,3 +177,4 @@ const asyncWait = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 </body>
 </html>
+
