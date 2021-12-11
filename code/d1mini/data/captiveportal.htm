@@ -59,6 +59,11 @@ display: block;
   	.subheading {
   		text-align: center;
   	}
+
+    #savestatus {
+      display: none;
+    }
+
   	</style>
   	<script type="text/javascript">
 function  post_www_url_encoded(url, data) {
@@ -92,7 +97,7 @@ const asyncWait = ms => new Promise(resolve => setTimeout(resolve, ms))
         "height": document.querySelector("input[name='panelheight']").value
       });
       await asyncWait(1500);
-      alert("new panel size saved.");
+      document.getElementById("savestatus").style.display = "block";
     });
 
     document.querySelector("#savewifi").addEventListener("click", function(event) {
@@ -123,6 +128,9 @@ const asyncWait = ms => new Promise(resolve => setTimeout(resolve, ms))
 	<div class="form-group">
 		<button id="savepanelsize" type="button">Change</button>
 	</div>
+  <div id="savestatus" class="form-group">
+    <span style="color: green;">Panel sized change saved.</span>
+  </div>
 </section>
    
 
