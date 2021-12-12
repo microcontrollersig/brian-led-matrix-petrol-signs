@@ -141,8 +141,8 @@ function createRipple(event) {
 
     document.querySelector("#savepanelsize").addEventListener("click", async function(event) {
       await post_www_url_encoded('/newpanelsize', {
-        "width": document.querySelector("input[name='panelwidth']").value,
-        "height": document.querySelector("input[name='panelheight']").value
+        "width": document.querySelector("input[name='panelwidth']").value.toString(),
+        "height": document.querySelector("input[name='panelheight']").value.toString()
       });
       await asyncWait(1500);
       document.getElementById("savestatus").style.display = "block";
@@ -162,7 +162,6 @@ function createRipple(event) {
     });
 
     document.querySelector("#savepanelsize").addEventListener("click", createRipple);
-
   });
   		
   	</script>
@@ -173,7 +172,7 @@ function createRipple(event) {
 	<div class="form-header">Panel Size</div>
 	<div class="form-group">
 		<label>Panel Dimensions (width x height) </label>
-		<input name="panelwidth" type="text" maxlength="2" size="2" value="6" /> x <input name="panelheight" type="text" maxlength="2" size="2" value="2" />
+		<input name="panelwidth" class="panelsize" type="number" maxlength="2" size="2" value="6" min="1" max="99" /> x <input name="panelheight" class="panelsize" type="number" maxlength="2" size="2" value="2" min="1"  max="99" />
 	</div>
 	<div class="form-group">
 		<button id="savepanelsize" type="button">Change</button>
