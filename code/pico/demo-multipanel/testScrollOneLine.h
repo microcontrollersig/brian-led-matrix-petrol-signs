@@ -2,10 +2,9 @@
 
 #include "command.h"
 
-class TestSimpleScrollCommand : public Command {
+class TestScrollOneLineCommand : public Command {
 private:
   unsigned long timeStart = 0UL;
-  char text1[200];
   char text2[500];
   int fontIndex = 0;
   int x = 0;
@@ -26,31 +25,26 @@ private:
 public:
   DMD3 *scrollingCanvas;
 
-  TestSimpleScrollCommand() {
+  TestScrollOneLineCommand() {
     scrollingCanvas = new DMD3(40, 1);
     scrollingCanvas->setFont(VerdanaFont16x16);
     scrollingCanvas->clear();
+
+    
   }
 
   void parseArgs(std::vector<std::string> args) override {
-    std::stringstream ss1, ss2, ss3, ss4;
-    memset(text1, 0, sizeof(text1));
+    std::stringstream ss1;
+
     memset(text2, 0, sizeof(text2));
-    ss1 << args.at(0);
-    ss1 >> x;
-    ss2 << args.at(1);
-    ss2 >> y;
-    strcpy(text1, args.at(2).c_str());
-    strcpy(text2, args.at(3).c_str());
-    ss3 << args.at(4);
-    ss3 >> fontIndex;
+    strcpy(text2, args.at(0).c_str());
+    ss1 << args.at(1);
+    ss1 >> fontIndex;
     dirty = true;
     scrollingCanvas->clear();
-   
   }
 
   void execute(DMD3 *canvas) override {
-
     if (dirty) {
       panelWidthPixels = canvas->width();
       panelHeightPixels = canvas->height();
@@ -72,21 +66,10 @@ public:
       dirty = false;
     }
 
-    if (millis() - timeStart > 40) {
+    if (millis() - timeStart > 60) {
       clearSerialMonitor();
       canvas->clear();
-      switch (fontIndex) {
-      case 0:
-        canvas->drawText(x, y, text1);
-        break;
-      default:
-        Bitmap::Font defaultFont = canvas->font();
-        canvas->setFont(fonts[fontIndex]);
-        canvas->drawText(x, y, text1, true);
-        canvas->setFont(defaultFont);
-        break;
-      }
-
+      
       scrollingCanvas->copy(currentScrollX, 0, panelWidthPixels, panelHeightPixels/2, canvas, 0, panelHeightPixels/2);
       printCanvas(canvas);
       canvas->update();

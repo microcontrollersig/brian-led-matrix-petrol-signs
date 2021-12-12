@@ -38,6 +38,7 @@
 #include "gameDino.h"
 #include "testChangePanelSize.h"
 #include "reboot.h"
+#include "testScrollOneLine.h"
 
 class CommandList
 {
@@ -110,6 +111,9 @@ class CommandList
 
       TestTwoTextWithFontCommand *testTwoTextWithFontCommand = new TestTwoTextWithFontCommand();
       commands['H'] = testTwoTextWithFontCommand;
+
+      TestScrollOneLineCommand *testScrollOneLineCommand = new TestScrollOneLineCommand();
+      commands['K'] = testScrollOneLineCommand;
 
       TestDrawLineCanvasCommand *testDrawLineCanvasCommand = new TestDrawLineCanvasCommand();
       commands['L'] = testDrawLineCanvasCommand;
