@@ -26,7 +26,7 @@ public:
   DMD3 *scrollingCanvas;
 
   TestScrollOneLineCommand() {
-    scrollingCanvas = new DMD3(40, 1);
+    scrollingCanvas = new DMD3(50, 1);
     scrollingCanvas->setFont(VerdanaFont16x16);
     scrollingCanvas->clear();
 
@@ -36,12 +36,13 @@ public:
   void parseArgs(std::vector<std::string> args) override {
     std::stringstream ss1;
 
-    memset(text2, 0, sizeof(text2));
+    memset(text2, ' ', sizeof(text2));
     strcpy(text2, args.at(0).c_str());
     ss1 << args.at(1);
     ss1 >> fontIndex;
     dirty = true;
     scrollingCanvas->clear();
+    currentScrollX = 0;
   }
 
   void execute(DMD3 *canvas) override {

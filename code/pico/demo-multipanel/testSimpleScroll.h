@@ -27,15 +27,15 @@ public:
   DMD3 *scrollingCanvas;
 
   TestSimpleScrollCommand() {
-    scrollingCanvas = new DMD3(40, 1);
+    scrollingCanvas = new DMD3(50, 1);
     scrollingCanvas->setFont(VerdanaFont16x16);
     scrollingCanvas->clear();
   }
 
   void parseArgs(std::vector<std::string> args) override {
     std::stringstream ss1, ss2, ss3, ss4;
-    memset(text1, 0, sizeof(text1));
-    memset(text2, 0, sizeof(text2));
+    memset(text1, ' ', sizeof(text1));
+    memset(text2, ' ', sizeof(text2));
     ss1 << args.at(0);
     ss1 >> x;
     ss2 << args.at(1);
@@ -46,7 +46,7 @@ public:
     ss3 >> fontIndex;
     dirty = true;
     scrollingCanvas->clear();
-   
+    currentScrollX = 0;
   }
 
   void execute(DMD3 *canvas) override {
