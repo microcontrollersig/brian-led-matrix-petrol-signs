@@ -70,8 +70,12 @@ public:
     if (millis() - timeStart > 60) {
       clearSerialMonitor();
       canvas->clear();
-      
-      scrollingCanvas->copy(currentScrollX, 0, panelWidthPixels, panelHeightPixels/2, canvas, 0, panelHeightPixels/2);
+
+      if (fontIndex == 0)
+        scrollingCanvas->copy(currentScrollX, 0, panelWidthPixels, 16, canvas, 0, 0);
+      else 
+        scrollingCanvas->copy(currentScrollX, 0, panelWidthPixels, panelHeightPixels/2, canvas, 0, panelHeightPixels/2);
+
       printCanvas(canvas);
       canvas->update();
       if (currentScrollX++ > scrollTextSize) {
