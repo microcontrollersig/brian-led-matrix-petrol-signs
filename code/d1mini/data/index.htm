@@ -176,20 +176,36 @@ background-color: #fdfff5; box-shadow: inset -4px 0 0 #aa0000, inset 0 -2px 0 #a
       }
       
       document.getElementById("scrollingtextbutton").onclick = function(event) {
-          const line1x = document.getElementById("scrollingline1x");
-          const line1y = document.getElementById("scrollingline1y");
-          const line1text = document.getElementById("scrollingline1text");
-          const line2text = document.getElementById("scrollingtexttext");          
-          const fontIndex = document.getElementById("scrollingtextfont").selectedIndex;
+          const mode = document.getElementById("scrollingmode").selectedIndex;
+        
+          if ( mode === 0 ) {
+            const line1x = document.getElementById("scrollingline1x");
+            const line1y = document.getElementById("scrollingline1y");
+            const line1text = document.getElementById("scrollingline1text");
+            const line2text = document.getElementById("scrollingtexttext");          
+            const fontIndex = document.getElementById("scrollingtextfont").selectedIndex;
 
-          document.querySelector("#fiveargs input").value="S";
-          document.querySelector("#fiveargs input[name='arg1']").value = line1x.value;
-          document.querySelector("#fiveargs input[name='arg2']").value = line1y.value;
-          document.querySelector("#fiveargs input[name='arg3']").value = line1text.value;  
-          document.querySelector("#fiveargs input[name='arg4']").value = line2text.value;                 
-          document.querySelector("#fiveargs input[name='arg5']").value = fontIndex;
+            document.querySelector("#fiveargs input").value="S";
+            document.querySelector("#fiveargs input[name='arg1']").value = line1x.value;
+            document.querySelector("#fiveargs input[name='arg2']").value = line1y.value;
+            document.querySelector("#fiveargs input[name='arg3']").value = line1text.value;  
+            document.querySelector("#fiveargs input[name='arg4']").value = line2text.value;                 
+            document.querySelector("#fiveargs input[name='arg5']").value = fontIndex;
 
-          document.querySelector("#fiveargs").submit();
+            document.querySelector("#fiveargs").submit();
+          }
+
+          else if ( mode === 1) {
+            const scrollingtext = document.getElementById("scrollingtexttextoneline");          
+            const fontIndex = document.getElementById("scrollingtextfont").selectedIndex;
+
+            document.querySelector("#twoargs input").value="K";
+            document.querySelector("#twoargs input[name='arg1']").value = scrollingtext.value;                 
+            document.querySelector("#twoargs input[name='arg2']").value = fontIndex;
+            document.querySelector("#twoargs").submit();
+          }
+
+
       }
 
       document.getElementById("brightness").addEventListener("input",  function(event) {
@@ -207,7 +223,24 @@ background-color: #fdfff5; box-shadow: inset -4px 0 0 #aa0000, inset 0 -2px 0 #a
          if (selectedindex === 1) {
             document.getElementById("line2").classList.remove("hidden");
          }
-      })
+      });
+
+      document.querySelector("#scrollingmode").addEventListener("change", (event) => {
+        const mode = event.target.selectedIndex;
+        if (mode === 0) {
+           document.getElementById("scrollingtexttext1").classList.remove("hidden");
+           document.getElementById("scrollingtexttext2").classList.add("hidden");
+           document.getElementById("scrollingtextstatictext").classList.remove("hidden");
+        }
+
+        else if (mode === 1) {
+          document.getElementById("scrollingtexttext2").classList.remove("hidden");
+          document.getElementById("scrollingtexttext1").classList.add("hidden");
+          document.getElementById("scrollingtextstatictext").classList.add("hidden");
+        }
+        
+
+      });
 
       document.getElementById("playalldemos").addEventListener("click", function(event) {
         currentPlaylistNumber = 0;
@@ -447,8 +480,9 @@ background-color: #fdfff5; box-shadow: inset -4px 0 0 #aa0000, inset 0 -2px 0 #a
     <article role="tabpanel" hidden id="scrollingtext">
        <div class="field-row">
         <label class="labelfirst">Mode</label>
-        <select>
+        <select id="scrollingmode">
           <option value="0">Two lines, first line static text, second line scrolling text</option>
+          <option value="1">One line scrolling text</option>
         </select>
        </div>
        <div class="field-row">
@@ -458,7 +492,9 @@ background-color: #fdfff5; box-shadow: inset -4px 0 0 #aa0000, inset 0 -2px 0 #a
           <option value="1">Small Font</option>
         </select>
        </div>
-       <div class="field-row">
+       
+      
+       <div id="scrollingtextstatictext" class="field-row">
           <label  class="labelfirst" for="scrollingline1text">Line 1 Text</label>
             <input id="scrollingline1text" type="text" maxlength="30" size="30" /> 
             <label for="scrollingline1x" class="labelnotfirst">X</label>
@@ -466,13 +502,20 @@ background-color: #fdfff5; box-shadow: inset -4px 0 0 #aa0000, inset 0 -2px 0 #a
             <label for="scrollingline1y" class="labelnotfirst">Y</label>
             <input id="scrollingline1y" type="text" maxlength="2" size="2" value="0" />  
        </div>
-       <div class="field-row">
+       <div id="scrollingtexttext1" class="field-row">
             <label  class="labelfirst" for="scrollingtexttext">Line 2 Scrolling Text</label>
             <input id="scrollingtexttext" type="text" /> 
        </div>
+       <div id="scrollingtexttext2" class="field-row hidden">
+        <label  class="labelfirst" for="scrollingtexttext">Scrolling Text</label>
+        <input id="scrollingtexttextoneline" type="text" /> 
+       </div>       
+      
+      
+  
         <div class="field-row">&nbsp;</div>
         <div class="field-row">&nbsp;</div>
-        <button id="scrollingtextbutton">Send</button>
+        <button id="scrollingtextbutton">Send</button>  
     </article>
 
     
