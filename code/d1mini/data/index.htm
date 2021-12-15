@@ -231,15 +231,31 @@ background-color: #fdfff5; box-shadow: inset -4px 0 0 #aa0000, inset 0 -2px 0 #a
            document.getElementById("scrollingtexttext1").classList.remove("hidden");
            document.getElementById("scrollingtexttext2").classList.add("hidden");
            document.getElementById("scrollingtextstatictext").classList.remove("hidden");
+           document.getElementById("scrollingtexttext2yposition").classList.add("hidden");        
         }
 
         else if (mode === 1) {
           document.getElementById("scrollingtexttext2").classList.remove("hidden");
           document.getElementById("scrollingtexttext1").classList.add("hidden");
           document.getElementById("scrollingtextstatictext").classList.add("hidden");
+          document.getElementById("scrollingtexttext2yposition").classList.remove("hidden");
         }
         
 
+      });
+
+      document.getElementById("scrollingtextfont").addEventListener("change", (event) => {
+        const mode = document.getElementById("scrollingmode").value;
+        if (mode == 1) {
+          const fontIndex = event.target.value;
+          if (fontIndex == 1) {
+            document.getElementById("scrollingtexttextonelineyposition").value = 4;
+          }
+
+          else {
+            document.getElementById("scrollingtexttextonelineyposition").value = 0;
+          }
+        }
       });
 
       document.getElementById("playalldemos").addEventListener("click", function(event) {
@@ -504,12 +520,16 @@ background-color: #fdfff5; box-shadow: inset -4px 0 0 #aa0000, inset 0 -2px 0 #a
        </div>
        <div id="scrollingtexttext1" class="field-row">
             <label  class="labelfirst" for="scrollingtexttext">Line 2 Scrolling Text</label>
-            <input id="scrollingtexttext" type="text" /> 
+            <input id="scrollingtexttext" type="text" size="50"/> 
        </div>
        <div id="scrollingtexttext2" class="field-row hidden">
-        <label  class="labelfirst" for="scrollingtexttext">Scrolling Text</label>
-        <input id="scrollingtexttextoneline" type="text" /> 
-       </div>       
+        <label  class="labelfirst" for="scrollingtexttextoneline">Scrolling Text</label>
+        <input id="scrollingtexttextoneline" type="text" size="50"/> 
+       </div>  
+       <div id="scrollingtexttext2yposition" class="field-row hidden">
+        <label  class="labelfirst" for="scrollingtexttextonelineyposition">Y Position</label>
+        <input id="scrollingtexttextonelineyposition" type="number" value="0" /> 
+       </div>              
       
       
   
