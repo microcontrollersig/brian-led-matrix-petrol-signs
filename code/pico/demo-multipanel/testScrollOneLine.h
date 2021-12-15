@@ -20,6 +20,8 @@ private:
   bool scrollingMode = false;
   int timeOutMs = 60;
 
+  int yoffset = 0;
+
   bool dirty = false;
 
 public:
@@ -34,11 +36,13 @@ public:
   }
 
   void parseArgs(std::vector<std::string> args) override {
-    std::stringstream ss1;
+    std::stringstream ss1, ss2;
 
     memset(text2, ' ', sizeof(text2));
     strcpy(text2, args.at(0).c_str());
-    ss1 << args.at(1);
+    ss2 << args.at(1);
+    ss2 >> yoffset;
+    ss1 << args.at(2);
     ss1 >> fontIndex;
     dirty = true;
     scrollingCanvas->clear();
@@ -67,14 +71,14 @@ public:
       dirty = false;
     }
 
-    if (millis() - timeStart > 60) {
+    if (millis() - timeStart > 40) {
       clearSerialMonitor();
       canvas->clear();
 
       if (fontIndex == 0)
-        scrollingCanvas->copy(currentScrollX, 0, panelWidthPixels, 16, canvas, 0, 0);
+        scrollingCanvas->copy(currentScrollX, 0, panelWidthPixels, 16, canvas, 0, yoffset);
       else 
-        scrollingCanvas->copy(currentScrollX, 0, panelWidthPixels, panelHeightPixels/2, canvas, 0, panelHeightPixels/2);
+        scrollingCanvas->copy(currentScrollX, 0, panelWidthPixels, panelHeightPixels/2, canvas, 0, yoffset);
 
       printCanvas(canvas);
       canvas->update();
