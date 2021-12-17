@@ -139,6 +139,12 @@ class CaptiveRequestHandler : public AsyncWebHandler {
         request->send(204);
       });
 
+      server.on("/settings", HTTP_GET, [](AsyncWebServerRequest * request) {
+        File settingsFile = LittleFS.open("/settings.json", "r");
+        request->send(200, "application/json", settingsFile.readString());
+        settingsFile.close();
+      });
+
     }
     virtual ~CaptiveRequestHandler() {}
 

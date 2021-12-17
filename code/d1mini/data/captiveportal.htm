@@ -136,6 +136,14 @@ function createRipple(event) {
     const ssid2 = atob('TWVsYlBDLU5VRQ==');
     const password2 = atob('cGVhY2hzcGVhazM4');
 
+    fetch('/settings').then(response => response.json()).then(data => {
+      console.log(data);
+      const panelwidth = data["panelwidth"];
+      const panelheight = data["panelheight"];
+      document.querySelector("input[name='panelwidth']").value = panelwidth;
+      document.querySelector("input[name='panelheight']").value = panelheight;
+    });
+
     document.querySelector("input[name='wifi2ssid']").value = ssid2;
     document.querySelector("input[name='wifi2password']").value = password2;
 
